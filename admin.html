@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบหลังบ้านจัดการข่าวสาร | พรรคพิง (PAKPING)</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <style>
+    /* Custom CSS for Admin Panel (Glassmorphism & Neon Glow) */
+    .admin-body {
+      background-color: #03000a;
+      color: #cbd5e1;
+      font-family: 'Kanit', 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #0f051d 0%, #03000a 100%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s;
+    }
+
+    .login-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .login-card {
+      background: rgba(15, 15, 25, 0.65);
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 15px rgba(139, 92, 246, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      transform: translateY(0);
+      transition: transform 0.4s ease;
+    }
+
+    .login-logo {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
+    }
+
+    .login-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #8b5cf6 100%);
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-subtitle {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .admin-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      flex: 1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .admin-container.visible {
+      opacity: 1;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .admin-header-title h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #8b5cf6 100%);
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .admin-header-title p {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.95rem;
+      margin-top: 0.2rem;
+    }
+
+    .btn-logout {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-logout:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: rgba(239, 68, 68, 0.4);
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Tab controls */
+    .admin-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 1rem;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 0.8rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+      border: none;
+      color: white;
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 992px) {
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .admin-card {
+      background: rgba(15, 15, 26, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .admin-card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding-bottom: 0.8rem;
+      color: #fff;
+    }
+
+    .admin-card-title svg {
+      color: #a855f7;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: rgba(139, 92, 246, 0.5);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .radio-option {
+      flex: 1;
+      position: relative;
+    }
+
+    .radio-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .radio-label {
+      display: block;
+      text-align: center;
+      padding: 0.6rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .radio-option input[type="radio"]:checked+.radio-label {
+      background: rgba(139, 92, 246, 0.1);
+      border-color: #8b5cf6;
+      color: #c084fc;
+      box-shadow: 0 0 8px rgba(139, 92, 246, 0.1);
+    }
+
+    .gradient-selector {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .gradient-item {
+      position: relative;
+      height: 45px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .gradient-item:hover {
+      transform: scale(1.05);
+    }
+
+    .gradient-item input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .gradient-preview {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .gradient-item input[type="radio"]:checked+.gradient-preview {
+      border: 2px solid #fff;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    }
+
+    .gradient-item::after {
+      content: attr(data-name);
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.4);
+      white-space: nowrap;
+    }
+
+    .upload-box {
+      border: 2px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.01);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .upload-box:hover {
+      border-color: rgba(139, 92, 246, 0.4);
+      background: rgba(139, 92, 246, 0.02);
+    }
+
+    .upload-box input[type="file"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .upload-preview-container {
+      margin-top: 1rem;
+      text-align: center;
+      position: relative;
+      display: none;
+    }
+
+    .upload-preview {
+      max-width: 100%;
+      max-height: 150px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-remove-preview {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(239, 68, 68, 0.8);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn-admin {
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: inherit;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+      border: none;
+      color: white;
+      flex: 2;
+    }
+
+    .btn-submit:hover {
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+      flex: 1;
+    }
+
+    .btn-cancel:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* List Column Styles */
+    .admin-list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 700px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .admin-list-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .admin-list-container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .admin-list-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .admin-list-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .item-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.2rem;
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .item-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(139, 92, 246, 0.2);
+    }
+
+    .item-preview-img {
+      width: 80px;
+      height: 60px;
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.2rem;
+    }
+
+    .item-meta {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .item-badge {
+      background: rgba(139, 92, 246, 0.15);
+      color: #c084fc;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-action {
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      color: white;
+    }
+
+    .btn-edit {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-edit:hover {
+      background: rgba(59, 130, 246, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-delete {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-delete:hover {
+      background: rgba(239, 68, 68, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Control Panel Section */
+    .control-panel {
+      margin-top: 2rem;
+      background: rgba(25, 20, 45, 0.4);
+      border: 1px solid rgba(139, 92, 246, 0.15);
+    }
+
+    .control-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn-control {
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-download {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .btn-download:hover {
+      background: rgba(16, 185, 129, 0.25);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .btn-reset {
+      background: rgba(245, 158, 11, 0.1);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .btn-reset:hover {
+      background: rgba(245, 158, 11, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .instruction-box {
+      margin-top: 1.2rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      border-left: 3px solid #8b5cf6;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .instruction-box strong {
+      color: #c084fc;
+    }
+
+    /* Form Feedback Alerts */
+    .alert {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    .alert-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .alert-error {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Supabase Settings Style */
+    .supabase-settings {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      border-radius: 10px;
+    }
+
+    .supabase-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .supabase-toggle span {
+      font-weight: 600;
+      color: #fff;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .supabase-toggle span::before {
+      content: '🟢';
+      font-size: 0.8rem;
+    }
+
+    .supabase-fields {
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .supabase-fields.visible {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="admin-body">
+
+  <div class="noise-overlay" aria-hidden="true" style="left: 0px; top: -1px;"></div>
+
+  <!-- Particle Background Canvas -->
+  <div class="particle-background" style="pointer-events: none;">
+    <div class="hero-gradient-orb orb-1" style="position: absolute; top: -10%; right: -10%;"></div>
+    <div class="hero-gradient-orb orb-2" style="position: absolute; bottom: -10%; left: -10%;"></div>
+    <canvas id="particlesCanvas"></canvas>
+  </div>
+
+  <!-- 1. Login Screen Overlay -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-logo">⚡</div>
+      <h2 class="login-title">ระบบจัดการหลังบ้าน</h2>
+      <p class="login-subtitle">พรรคพิง PAKPING | โรงเรียนอ่าวลึกประชาสรรค์</p>
+
+      <div class="alert alert-error" id="loginAlert" style="margin-bottom: 1.5rem;">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่
+      </div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="adminPassword">รหัสผ่านเพื่อเข้าใช้งาน</label>
+          <input type="password" id="adminPassword" class="form-control" placeholder="••••••••" required
+            style="text-align: center; letter-spacing: 0.2em; font-size: 1.2rem;">
+        </div>
+        <button type="submit" class="btn-admin btn-submit" style="width: 100%; margin-top: 1rem; font-size: 1rem;">
+          เข้าสู่ระบบหลังบ้าน
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Main Admin Dashboard -->
+  <div class="admin-container" id="adminDashboard">
+
+    <!-- Header Navigation -->
+    <header class="admin-header">
+      <div class="admin-header-title">
+        <h1>แผงควบคุมระบบหลังบ้าน</h1>
+        <p>สำหรับจัดการข่าวสาร กิจกรรมหาเสียง และคลังภาพ ของพรรคพิง</p>
+      </div>
+      <button class="btn-logout" onclick="handleLogout()">
+        🚪 ออกจากระบบ
+      </button>
+    </header>
+
+    <!-- Tab Navigation -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" id="tabAnnouncements" onclick="switchTab('announcements')">
+        📰 จัดการข่าวสารและประกาศ
+      </button>
+      <button class="tab-btn" id="tabPolicies" onclick="switchTab('policies')">
+        💡 จัดการนโยบายพรรค
+      </button>
+    </div>
+
+    <!-- Announcements Grid Container -->
+    <div id="annGridContainer">
+      <div class="admin-grid">
+
+        <!-- Column Left: Form -->
+        <div>
+          <div class="admin-card">
+            <h2 class="admin-card-title" id="formTitle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              เพิ่มข่าวสาร / ประกาศใหม่
+            </h2>
+
+            <div class="alert alert-success" id="formAlertSuccess">บันทึกข้อมูลเรียบร้อยแล้ว</div>
+            <div class="alert alert-error" id="formAlertError">เกิดข้อผิดพลาดในการบันทึก</div>
+
+            <form id="announcementForm" onsubmit="handleFormSubmit(event)">
+              <input type="hidden" id="editIndex" value="">
+
+              <div class="form-group">
+                <label class="form-label" for="annTitle">หัวข้อประกาศ <span style="color:#ef4444;">*</span></label>
+                <input type="text" id="annTitle" class="form-control"
+                  placeholder="เช่น ภาพกิจกรรมหาเสียงวันที่ 14 มกราคม" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="annExcerpt">รายละเอียดข่าวสั้น <span
+                    style="color:#ef4444;">*</span></label>
+                <textarea id="annExcerpt" class="form-control" rows="3"
+                  placeholder="เช่น ประมวลภาพบรรยากาศกิจกรรมหาเสียง สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้..."
+                  required></textarea>
+              </div>
+
+              <div class="form-group" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1rem;">
+                <div>
+                  <label class="form-label" for="annDate">วันที่ประกาศ</label>
+                  <input type="text" id="annDate" class="form-control" placeholder="เช่น 14 มกราคม 2569">
+                </div>
+                <div style="display: flex; align-items: flex-end; padding-bottom: 0.2rem;">
+                  <label class="checkbox-label"
+                    style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; font-size: 0.85rem; color: rgba(255,255,255,0.7);">
+                    <input type="checkbox" id="annDateToday" onchange="toggleDateToday(this)"
+                      style="cursor: pointer; width: 16px; height: 16px;">
+                    <span>ใช้วันนี้อัตโนมัติ</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1rem;">
+                <div>
+                  <label class="form-label" for="annLinkUrl">ลิงก์ปลายทาง (URL)</label>
+                  <input type="url" id="annLinkUrl" class="form-control"
+                    placeholder="เช่น https://drive.google.com/...">
+                </div>
+                <div>
+                  <label class="form-label" for="annLinkText">ข้อความปุ่มลิงก์</label>
+                  <input type="text" id="annLinkText" class="form-control" placeholder="คลิกเพื่อดาวน์โหลดภาพ">
+                </div>
+              </div>
+
+              <div class="form-group" style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 1rem;">
+                <div>
+                  <label class="form-label" for="annTagMini">ป้ายประกาศสั้น (Mini Tag)</label>
+                  <input type="text" id="annTagMini" class="form-control" placeholder="เช่น download, announcement">
+                </div>
+                <div>
+                  <label class="form-label" for="annTags">แฮชแท็ก (คั่นด้วยเครื่องหมายจุลภาค ,)</label>
+                  <input type="text" id="annTags" class="form-control" placeholder="เช่น #campaign, #photos">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">รูปภาพหรือภาพหน้าปกประกาศ</label>
+                <div class="radio-group">
+                  <div class="radio-option">
+                    <input type="radio" id="imgTypeSvg" name="annImgType" value="svg" checked
+                      onchange="handleImageTypeChange('svg')">
+                    <label for="imgTypeSvg" class="radio-label">SVG นีออน (พรีเมียม)</label>
+                  </div>
+                  <div class="radio-option">
+                    <input type="radio" id="imgTypeUpload" name="annImgType" value="upload"
+                      onchange="handleImageTypeChange('upload')">
+                    <label for="imgTypeUpload" class="radio-label">อัปโหลดภาพ</label>
+                  </div>
+                  <div class="radio-option">
+                    <input type="radio" id="imgTypeUrl" name="annImgType" value="url"
+                      onchange="handleImageTypeChange('url')">
+                    <label for="imgTypeUrl" class="radio-label">ระบุลิงก์ภาพ (URL)</label>
+                  </div>
+                </div>
+
+                <!-- Options 1: SVG gradient selector -->
+                <div id="svgSelectorBlock" style="margin-top: 1rem;">
+                  <label class="form-label" style="font-size: 0.8rem; color: rgba(255,255,255,0.5);">
+                    เลือกสีกราเดียนท์แม่แบบนีออน:
+                  </label>
+                  <div class="gradient-selector">
+                    <div class="gradient-item" data-name="ม่วง-ชมพู">
+                      <input type="radio" id="grad1" name="svgGradient" value="1" checked>
+                      <div class="gradient-preview"
+                        style="background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);"></div>
+                    </div>
+                    <div class="gradient-item" data-name="ฟ้า-น้ำเงิน">
+                      <input type="radio" id="grad2" name="svgGradient" value="2">
+                      <div class="gradient-preview"
+                        style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);"></div>
+                    </div>
+                    <div class="gradient-item" data-name="ม่วง-ฟ้า">
+                      <input type="radio" id="grad3" name="svgGradient" value="3">
+                      <div class="gradient-preview"
+                        style="background: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);"></div>
+                    </div>
+                    <div class="gradient-item" data-name="ชมพู-ทอง">
+                      <input type="radio" id="grad5" name="svgGradient" value="5">
+                      <div class="gradient-preview"
+                        style="background: linear-gradient(135deg, #ec4899 0%, #ffd700 100%);"></div>
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top: 1.8rem; margin-bottom: 0;">
+                    <label class="form-label" for="annSvgBadgeText">ข้อความกลางภาพ (กรณีใช้ SVG นีออน)</label>
+                    <input type="text" id="annSvgBadgeText" class="form-control" placeholder="CLOUD PHOTO DRIVE">
+                  </div>
+                </div>
+
+                <!-- Options 2: File upload block -->
+                <div id="fileUploadBlock" style="margin-top: 1rem; display: none;">
+                  <div class="upload-box">
+                    <span class="upload-icon">📤</span>
+                    <p style="font-size: 0.85rem; font-weight:600; margin-bottom: 0.2rem;">คลิกเพื่ออัปโหลดไฟล์รูปภาพ
+                    </p>
+                    <p style="font-size: 0.75rem; color:rgba(255,255,255,0.4)">รองรับ JPG, PNG (ระบบจะย่อรูปให้เหมาะสม)
+                    </p>
+                    <input type="file" id="annFile" accept="image/*" onchange="handleFileSelect(event)">
+                  </div>
+                  <div class="upload-preview-container" id="uploadPreviewContainer">
+                    <img src="" id="uploadPreview" class="upload-preview" alt="Preview">
+                    <button type="button" class="btn-remove-preview" onclick="removeImagePreview()">&times;</button>
+                  </div>
+                </div>
+
+                <!-- Options 3: External URL block -->
+                <div id="urlBlock" style="margin-top: 1rem; display: none;">
+                  <label class="form-label" for="annImgUrl">URL ของรูปภาพภายนอก</label>
+                  <input type="url" id="annImgUrl" class="form-control"
+                    placeholder="เช่น https://imgur.com/your-image.jpg">
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn-admin btn-cancel" id="btnCancelEdit" onclick="resetForm()"
+                  style="display: none;">
+                  ยกเลิก
+                </button>
+                <button type="submit" class="btn-admin btn-submit" id="btnSubmitForm">
+                  💾 บันทึกข้อมูล
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Column Right: List & Control Panel -->
+        <div>
+          <div class="admin-card">
+            <h2 class="admin-card-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+              </svg>
+              รายการข่าวสารและประกาศทั้งหมด (<span id="announcementCount">0</span>)
+            </h2>
+
+            <div class="admin-list-container" id="announcementsList">
+              <!-- Dynamic list items will go here -->
+            </div>
+          </div>
+
+          <!-- Control Panel Section -->
+          <div class="admin-card control-panel">
+            <h2 class="admin-card-title" style="color: #c084fc; border-color: rgba(139,92,246,0.15);">
+              ⚙️ ระบบส่งออกและกู้คืนข้อมูล (Database Control)
+            </h2>
+
+            <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.5;">
+              หลังจากที่คุณแก้ไข เพิ่ม หรือลบข้อมูลข่าวสารในหน้าเว็บนี้จนพอใจแล้ว
+              คุณสามารถดาวน์โหลดไฟล์ข้อมูลเพื่อเผยแพร่ให้ผู้ใช้อื่นเข้าถึงจากอุปกรณ์อื่นได้โดยทำตามคู่มือด้านล่าง
+            </p>
+
+            <div class="control-buttons">
+              <button class="btn-control btn-download" onclick="downloadJSON()">
+                📥 ดาวน์โหลด JSON
+              </button>
+              <button class="btn-control btn-reset" onclick="resetToDefaults()">
+                🔄 รีเซ็ตค่าเริ่มต้น
+              </button>
+            </div>
+
+            <div class="instruction-box">
+              <strong>วิธีทำให้หน้าเว็บแสดงผลสำหรับทุกคน:</strong>
+              <ol style="margin-top: 0.4rem; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
+                <li>กดปุ่ม <strong>"ดาวน์โหลด JSON"</strong> จะได้ไฟล์ชื่อ <code>announcements_data.json</code></li>
+                <li>คัดลอกไฟล์ดังกล่าวไปวางไว้ในโฟลเดอร์โครงการ (โฟลเดอร์เดียวกันกับ <code>announcements.html</code>)
+                </li>
+                <li>อัปโหลดขึ้นโฮสติ้งหลักของคุณ เมื่อผู้ใช้งานทั่วไปเข้ามาที่หน้าเว็บ
+                  ระบบจะดึงข้อมูลข่าวสารล่าสุดไปแสดงทันที!</li>
+              </ol>
+            </div>
+
+            <!-- Supabase settings form for later -->
+            <div class="supabase-settings">
+              <div class="supabase-toggle" onclick="toggleSupabaseSettings()">
+                <span>เชื่อมต่อฐานข้อมูลคลาวด์ Supabase (ฟรี/ออนไลน์ทันที)</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  id="supabaseChevron">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="supabase-fields" id="supabaseFields">
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin: 0.5rem 0 1rem 0; line-height: 1.4;">
+                  หากต้องการให้ข้อมูลแชร์ร่วมกันในทุกอุปกรณ์แบบสดๆ ผ่านคลาวด์ออนไลน์ (ไม่จำเป็นต้องคอยก๊อปปี้ไฟล์ JSON)
+                  คุณสามารถนำ Project URL และ API Key จากหน้าแดชบอร์ดของ Supabase มาผูกเข้ากับระบบหลังบ้านได้
+                </p>
+                <div class="form-group">
+                  <label class="form-label" style="font-size: 0.8rem;" for="sbUrl">Supabase URL</label>
+                  <input type="text" id="sbUrl" class="form-control" placeholder="https://xxxx.supabase.co"
+                    oninput="saveSbConfig()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="font-size: 0.8rem;" for="sbKey">Supabase Anon Key</label>
+                  <input type="password" id="sbKey" class="form-control" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI..."
+                    oninput="saveSbConfig()">
+                </div>
+                <p style="font-size: 0.75rem; color: #a855f7;">* ระบบหลังบ้านและหน้าเว็บบอร์ดจะดึงข้อมูลแบบ Dynamic
+                  อัตโนมัติเมื่อกำหนดสองช่องนี้</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Policies Grid Container -->
+      <div id="polGridContainer" style="display: none;">
+        <div class="admin-grid">
+          <!-- Column Left: Policy Form -->
+          <div>
+            <div class="admin-card">
+              <h2 class="admin-card-title" id="polFormTitle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                เพิ่มนโยบายใหม่
+              </h2>
+
+              <div class="alert alert-success" id="polFormAlertSuccess">บันทึกข้อมูลเรียบร้อยแล้ว</div>
+              <div class="alert alert-error" id="polFormAlertError">เกิดข้อผิดพลาดในการบันทึก</div>
+
+              <form id="policyForm" onsubmit="handlePolicyFormSubmit(event)">
+                <input type="hidden" id="polEditIndex" value="">
+
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div>
+                    <label class="form-label" for="polNumber">ลำดับนโยบาย <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="polNumber" class="form-control" placeholder="เช่น 01, 02" required>
+                  </div>
+                  <div>
+                    <label class="form-label" for="polTag">กลุ่มนโยบาย <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="polTag" class="form-control" placeholder="เช่น สุขภาพจิต, กิจกรรม" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="polTitle">หัวข้อนโยบาย <span style="color:#ef4444;">*</span></label>
+                  <input type="text" id="polTitle" class="form-control" placeholder="เช่น Ngl หรือ โครงการกีฬา"
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="polSubtitle">สโลแกนนโยบายสั้น</label>
+                  <input type="text" id="polSubtitle" class="form-control"
+                    placeholder="เช่น พื้นที่แลกเปลี่ยนความคิดเห็น">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="polDescription">รายละเอียดนโยบายหลัก <span
+                      style="color:#ef4444;">*</span></label>
+                  <textarea id="polDescription" class="form-control" rows="4"
+                    placeholder="ระบุรายละเอียดโครงการของนโยบาย..." required></textarea>
+                </div>
+
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div>
+                    <label class="form-label" for="polIcon">ไอคอนนโยบาย (Emoji)</label>
+                    <input type="text" id="polIcon" class="form-control" placeholder="เช่น 📵, 🎬, 🎮" value="💡">
+                  </div>
+                  <div>
+                    <label class="form-label">แม่แบบชุดสี (Gradient)</label>
+                    <select id="polGradientStyle" class="form-control"
+                      style="background:#150f2d; color:#fff; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.5rem; height:42px;">
+                      <option value="1">1: ม่วง-คราม (Violet)</option>
+                      <option value="2">2: เขียวมรกต (Emerald)</option>
+                      <option value="3">3: ฟ้าใส (Sky Blue)</option>
+                      <option value="4">4: ชมพู-เหลือง (Rose Gold)</option>
+                      <option value="5">5: ม่วงอ่อน-แดง (Fuchsia)</option>
+                      <option value="6">6: เขียวมิ้นต์-ม่วง (Mint)</option>
+                      <option value="7">7: ชมพูพีช (Peach)</option>
+                      <option value="8">8: ฟ้าน้ำ-ชมพู (Pastel)</option>
+                      <option value="9">9: ส้ม-ทอง (Amber)</option>
+                      <option value="10">10: เขียวสด (Lime)</option>
+                      <option value="11">11: แดงเข้ม-ม่วง (Crimson)</option>
+                      <option value="12">12: กรมท่า-น้ำเงิน (Navy)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">รูปภาพประกอบนโยบาย</label>
+                  <div class="radio-group" style="display: flex; gap: 1rem; margin-bottom: 0.5rem;">
+                    <div class="radio-option">
+                      <input type="radio" id="polImgTypeEmoji" name="polImgType" value="emoji" checked
+                        onchange="handlePolImageTypeChange('emoji')">
+                      <label for="polImgTypeEmoji" class="radio-label">ใช้ Emoji</label>
+                    </div>
+                    <div class="radio-option">
+                      <input type="radio" id="polImgTypeUpload" name="polImgType" value="upload"
+                        onchange="handlePolImageTypeChange('upload')">
+                      <label for="polImgTypeUpload" class="radio-label">อัปโหลดรูปภาพ</label>
+                    </div>
+                    <div class="radio-option">
+                      <input type="radio" id="polImgTypeUrl" name="polImgType" value="url"
+                        onchange="handlePolImageTypeChange('url')">
+                      <label for="polImgTypeUrl" class="radio-label">ระบุ URL</label>
+                    </div>
+                  </div>
+
+                  <!-- Option: Upload image block -->
+                  <div id="polFileUploadBlock" style="margin-top: 1rem; display: none;">
+                    <div class="upload-box"
+                      style="border: 2px dashed rgba(255,255,255,0.1); border-radius:12px; padding:2rem; text-align:center; position:relative; cursor:pointer; background:rgba(255,255,255,0.02); transition:all 0.3s ease;">
+                      <span class="upload-icon" style="font-size: 2rem; display:block; margin-bottom:0.5rem;">📤</span>
+                      <p style="font-size: 0.85rem; font-weight:600; margin-bottom: 0.2rem;">คลิกเพื่ออัปโหลดไฟล์รูปภาพ
+                      </p>
+                      <input type="file" id="polFile" accept="image/*" onchange="handlePolFileSelect(event)"
+                        style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;">
+                    </div>
+                    <div class="upload-preview-container" id="polUploadPreviewContainer"
+                      style="display: none; position: relative; margin-top: 1rem; border-radius: 12px; overflow: hidden; max-height: 200px; border: 1px solid rgba(255,255,255,0.15);">
+                      <img src="" id="polUploadPreview" class="upload-preview" alt="Preview"
+                        style="width:100%; height:100%; object-fit:cover;">
+                      <button type="button" class="btn-remove-preview" onclick="removePolImagePreview()"
+                        style="position:absolute; top:8px; right:8px; width:30px; height:30px; border-radius:50%; background:rgba(0,0,0,0.7); border:none; color:white; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">&times;</button>
+                    </div>
+                  </div>
+
+                  <!-- Option: External URL block -->
+                  <div id="polUrlBlock" style="margin-top: 1rem; display: none;">
+                    <label class="form-label" for="polImgUrl">URL ของรูปภาพภายนอก</label>
+                    <input type="url" id="polImgUrl" class="form-control" placeholder="เช่น https://imgur.com/...jpg">
+                  </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 2rem;">
+                  <button type="button" class="btn-admin btn-cancel" id="btnCancelPolEdit" onclick="resetPolForm()"
+                    style="display: none; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.6rem 1.2rem; border-radius: 10px; cursor: pointer; font-weight: 600; margin-right: 0.5rem;">
+                    ยกเลิก
+                  </button>
+                  <button type="submit" class="btn-admin btn-submit" id="btnSubmitPolForm" style="flex:1;">
+                    💾 บันทึกข้อมูลนโยบาย
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Column Right: Policy List & Controls -->
+          <div>
+            <div class="admin-card">
+              <h2 class="admin-card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="9" y1="3" x2="9" y2="21"></line>
+                </svg>
+                รายการนโยบายทั้งหมด (<span id="policyCount">0</span>)
+              </h2>
+
+              <div class="admin-list-container" id="policiesList">
+                <!-- Dynamic policy list items will go here -->
+              </div>
+            </div>
+
+            <!-- Policy Control Panel Section -->
+            <div class="admin-card control-panel" style="margin-top: 2rem;">
+              <h2 class="admin-card-title" style="color: #c084fc; border-color: rgba(139,92,246,0.15);">
+                ⚙️ ระบบส่งออกและกู้คืนนโยบาย (Policy DB Control)
+              </h2>
+
+              <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.5;">
+                เมื่อแก้ไขนโยบายจนเป็นที่พอใจแล้ว
+                คุณสามารถดาวน์โหลดไฟล์ข้อมูลนโยบายเพื่อเผยแพร่ให้หน้าเว็บหลักอัปเดตข้อมูลได้ทันที
+              </p>
+
+              <div class="control-buttons">
+                <button class="btn-control btn-download" onclick="downloadPolJSON()">
+                  📥 ดาวน์โหลด JSON นโยบาย
+                </button>
+                <button class="btn-control btn-reset" onclick="resetPolToDefaults()">
+                  🔄 รีเซ็ตนโยบายเริ่มต้น
+                </button>
+              </div>
+
+              <div class="instruction-box">
+                <strong>วิธีทำให้หน้าเว็บแสดงผลสำหรับทุกคน:</strong>
+                <ol
+                  style="margin-top: 0.4rem; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.3rem;">
+                  <li>กดปุ่ม <strong>"ดาวน์โหลด JSON นโยบาย"</strong> จะได้ไฟล์ชื่อ <code>policies_data.json</code></li>
+                  <li>คัดลอกไฟล์ดังกล่าวไปวางไว้ในโฟลเดอร์โครงการ (โฟลเดอร์เดียวกันกับ <code>policy.html</code>)</li>
+                  <li>อัปโหลดขึ้นโฮสติ้งหลักของคุณ เมื่อผู้ใช้งานทั่วไปเข้ามาที่หน้าเว็บ
+                    ระบบจะดึงนโยบายชุดใหม่ไปแสดงทันที!</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="footer"
+      style="background: rgba(15, 15, 26, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 5rem; padding: 2rem 0;">
+      <div>
+        <p class="footer-copyright" style="color: rgba(255, 255, 255, 0.4); margin-bottom: 0;">
+          &copy; 2569 พรรคพิง | โรงเรียนอ่าวลึกประชาสรรค์
+        </p>
+        <p class="footer-copyright" style="margin-top: 0.3rem; color: rgba(255, 255, 255, 0.3); font-size: 0.75rem;">
+          ระบบหลังบ้านเพื่อความสะดวกและรวดเร็ว
+        </p>
+      </div>
+    </footer>
+
+    <!-- Web-based Supabase SDK CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+      // ==========================================
+      // 1. Password Verification (Client-side)
+      // ==========================================
+      const DEFAULT_PASS = 'adminpakping'; // คุณสามารถแก้ไขรหัสผ่านได้ตรงนี้ครับ
+
+      function checkLoginStatus() {
+        const isLoggedIn = sessionStorage.getItem('pakping_admin_logged');
+        const loginOverlay = document.getElementById('loginOverlay');
+        const adminDashboard = document.getElementById('adminDashboard');
+
+        if (isLoggedIn === 'true') {
+          loginOverlay.classList.add('hidden');
+          adminDashboard.classList.add('visible');
+          initDashboard();
+        } else {
+          loginOverlay.classList.remove('hidden');
+          adminDashboard.classList.remove('visible');
+        }
+      }
+
+      function handleLogin(e) {
+        e.preventDefault();
+        const enteredPass = document.getElementById('adminPassword').value;
+        const alertBox = document.getElementById('loginAlert');
+
+        if (enteredPass === DEFAULT_PASS) {
+          sessionStorage.setItem('pakping_admin_logged', 'true');
+          alertBox.style.display = 'none';
+          document.getElementById('adminPassword').value = '';
+          checkLoginStatus();
+        } else {
+          alertBox.style.display = 'block';
+          document.getElementById('adminPassword').value = '';
+        }
+      }
+
+      function handleLogout() {
+        if (confirm('คุณต้องการออกจากระบบใช่หรือไม่?')) {
+          sessionStorage.removeItem('pakping_admin_logged');
+          checkLoginStatus();
+        }
+      }
+
+      // ==========================================
+      // 2. Data management (LocalStorage / Supabase)
+      // ==========================================
+      const DEFAULT_ANNOUNCEMENTS = [
+        {
+          id: "announce-1",
+          title: "ภาพบรรยากาศกิจกรรมปัจฉิมนิเทศ วันที่ 24 กุมภาพันธ์",
+          excerpt: "ประมวลภาพบรรยากาศกิจกรรมปัจฉิมนิเทศ วันที่ 24 กุมภาพันธ์ ปีการศึกษา 2568 สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้ทาง Google Drive",
+          date: "วันนี้",
+          tagMini: "announcement",
+          tags: ["#graduation", "#download"],
+          linkUrl: "https://drive.google.com/drive/mobile/folders/1daJXwyEwtnOcuj6Ty_wH-lGnrRpqvpUS",
+          linkText: "คลิกเพื่อดาวน์โหลดภาพ",
+          imageType: "svg",
+          imageValue: "1",
+          svgBadgeText: "CLOUD PHOTO DRIVE"
+        },
+        {
+          id: "announce-2",
+          title: "ภาพกิจกรรมหาเสียงวันที่ 14 มกราคม",
+          excerpt: "ประมวลภาพบรรยากาศกิจกรรมหาเสียงวันที่ 14 มกราคม สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้ทาง Google Drive ได้เลยครับ",
+          date: "14 มกราคม 2569",
+          tagMini: "download",
+          tags: ["#campaign", "#photos"],
+          linkUrl: "https://drive.google.com/drive/folders/10on-4lhNZFyAk3EBNPsv6IFSEzoMLBDX",
+          linkText: "คลิกเพื่อดาวน์โหลดภาพ",
+          imageType: "svg",
+          imageValue: "2",
+          svgBadgeText: "CLOUD PHOTO DRIVE"
+        },
+        {
+          id: "announce-3",
+          title: "ดาวน์โหลดไฟล์วันที่ 12 มกราคม",
+          excerpt: "ประมวลภาพบรรยากาศกิจกรรมหาเสียงวันที่ 12 มกราคม สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้ทาง Google Drive ได้เลยครับ",
+          date: "12 มกราคม 2569",
+          tagMini: "download",
+          tags: ["#campaign", "#files"],
+          linkUrl: "https://drive.google.com/drive/folders/1HdMJxeaDTLznRF8QQcJoZiiqmxFOn4Jy",
+          linkText: "คลิกเพื่อดาวน์โหลดภาพ",
+          imageType: "svg",
+          imageValue: "3",
+          svgBadgeText: "CLOUD PHOTO DRIVE"
+        },
+        {
+          id: "announce-4",
+          title: "ดาวน์โหลดไฟล์วันที่ 9 มกราคม",
+          excerpt: "ประมวลภาพบรรยากาศกิจกรรมหาเสียงวันที่ 9 มกราคม สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้ทาง Google Drive ได้เลยครับ",
+          date: "9 มกราคม 2569",
+          tagMini: "download",
+          tags: ["#campaign", "#files"],
+          linkUrl: "https://drive.google.com/drive/folders/1Yge_FFSdeKRMIri31aoqzs2nazByXgWc",
+          linkText: "คลิกเพื่อดาวน์โหลดภาพ",
+          imageType: "svg",
+          imageValue: "4",
+          svgBadgeText: "CLOUD PHOTO DRIVE"
+        },
+        {
+          id: "announce-5",
+          title: "ดาวน์โหลดไฟล์วันที่ 8 มกราคม",
+          excerpt: "ประมวลภาพบรรยากาศกิจกรรมหาเสียงวันที่ 8 มกราคม สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้ทาง Google Drive ได้เลยครับ",
+          date: "8 มกราคม 2569",
+          tagMini: "download",
+          tags: ["#campaign", "#files"],
+          linkUrl: "https://drive.google.com/drive/folders/10Yy-TqPJeDQ8y2hK44cnmm70w_DQV1ce",
+          linkText: "คลิกเพื่อดาวน์โหลดภาพ",
+          imageType: "svg",
+          imageValue: "5",
+          svgBadgeText: "CLOUD PHOTO DRIVE"
+        },
+        {
+          id: "announce-6",
+          title: "ดาวน์โหลดไฟล์วันที่ 7 มกราคม",
+          excerpt: "ประมวลภาพบรรยากาศกิจกรรมหาเสียงวันที่ 7 มกราคม สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้ทาง Google Drive ได้เลยครับ",
+          date: "7 มกราคม 2569",
+          tagMini: "download",
+          tags: ["#campaign", "#files"],
+          linkUrl: "https://drive.google.com/drive/folders/1LX9aIrTq4ROEPPPY-bU16iRW9RSSa_B9",
+          linkText: "คลิกเพื่อดาวน์โหลดภาพ",
+          imageType: "svg",
+          imageValue: "6",
+          svgBadgeText: "CLOUD PHOTO DRIVE"
+        },
+        {
+          id: "announce-7",
+          title: "ดาวน์โหลดไฟล์วันที่ 6 มกราคม",
+          excerpt: "ประมวลภาพบรรยากาศกิจกรรมหาเสียงวันที่ 6 มกราคม สามารถรับชมและดาวน์โหลดรูปภาพทั้งหมดได้ทาง Google Drive ได้เลยครับ",
+          date: "6 มกราคม 2569",
+          tagMini: "download",
+          tags: ["#campaign", "#files"],
+          linkUrl: "https://drive.google.com/drive/folders/1ULTkRjduz-qWJGvhs96pFa1TRQN73Qv6",
+          linkText: "คลิกเพื่อดาวน์โหลดภาพ",
+          imageType: "svg",
+          imageValue: "7",
+          svgBadgeText: "CLOUD PHOTO DRIVE"
+        }
+      ];
+
+      let announcementsList = [];
+      let imageBase64Data = "";
+      let supabaseClient = null;
+
+      // Load Supabase Configurations
+      function getSbConfig() {
+        return {
+          url: localStorage.getItem('pakping_sb_url') || '',
+          key: localStorage.getItem('pakping_sb_key') || ''
+        };
+      }
+
+      function saveSbConfig() {
+        const url = document.getElementById('sbUrl').value.trim();
+        const key = document.getElementById('sbKey').value.trim();
+        localStorage.setItem('pakping_sb_url', url);
+        localStorage.setItem('pakping_sb_key', key);
+
+        if (url && key) {
+          initSupabase(url, key);
+        } else {
+          supabaseClient = null;
+          loadLocalData();
+          loadLocalPoliciesData();
+        }
+      }
+
+      async function initSupabase(url, key) {
+        try {
+          if (typeof supabase !== 'undefined') {
+            supabaseClient = supabase.createClient(url, key);
+            await loadSupabaseData();
+            await loadSupabasePoliciesData();
+          }
+        } catch (err) {
+          console.error('Supabase init error:', err);
+          supabaseClient = null;
+          loadLocalData();
+          loadLocalPoliciesData();
+        }
+      }
+
+      // Load Local Data
+      function loadLocalData() {
+        const saved = localStorage.getItem('pakping_announcements');
+        if (saved) {
+          try {
+            announcementsList = JSON.parse(saved);
+          } catch (e) {
+            announcementsList = [...DEFAULT_ANNOUNCEMENTS];
+          }
+        } else {
+          announcementsList = [...DEFAULT_ANNOUNCEMENTS];
+          localStorage.setItem('pakping_announcements', JSON.stringify(announcementsList));
+        }
+        renderAnnouncementsList();
+      }
+
+      // Load Supabase Data
+      async function loadSupabaseData() {
+        if (!supabaseClient) return;
+        try {
+          const { data, error } = await supabaseClient
+            .from('announcements')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (error) throw error;
+
+          if (data && data.length > 0) {
+            announcementsList = data;
+          } else {
+            // If Supabase table is empty, insert default data
+            await syncLocalToSupabase();
+          }
+          renderAnnouncementsList();
+        } catch (err) {
+          console.error('Fetch Supabase error:', err);
+          showFormAlert('formAlertError', 'เกิดข้อผิดพลาดในการดึงข้อมูลจาก Supabase: ' + err.message);
+          loadLocalData(); // fallback to local storage
+        }
+      }
+
+      // Sync Local Data to Supabase
+      async function syncLocalToSupabase() {
+        if (!supabaseClient) return;
+        try {
+          // First delete everything to avoid duplicates, then insert
+          await supabaseClient.from('announcements').delete().neq('id', '0');
+
+          // Prepare data (ensure format matches supabase columns)
+          const toInsert = announcementsList.map((item, idx) => ({
+            title: item.title,
+            excerpt: item.excerpt,
+            date: item.date,
+            tagMini: item.tagMini || 'announcement',
+            tags: item.tags || [],
+            linkUrl: item.linkUrl || '',
+            linkText: item.linkText || '',
+            imageType: item.imageType || 'svg',
+            imageValue: item.imageValue || '1',
+            svgBadgeText: item.svgBadgeText || 'CLOUD PHOTO DRIVE',
+            created_at: new Date(Date.now() - idx * 60000).toISOString() // stagger dates slightly
+          }));
+
+          const { error } = await supabaseClient
+            .from('announcements')
+            .insert(toInsert);
+
+          if (error) throw error;
+          console.log('Synced local announcements to Supabase.');
+        } catch (err) {
+          console.error('Sync to Supabase error:', err);
+        }
+      }
+
+      // Initialize Dashboard Data
+      async function initDashboard() {
+        // Set configuration values in fields
+        const config = getSbConfig();
+        document.getElementById('sbUrl').value = config.url;
+        document.getElementById('sbKey').value = config.key;
+
+        if (config.url && config.key) {
+          document.getElementById('supabaseFields').classList.add('visible');
+          document.getElementById('supabaseChevron').style.transform = 'rotate(180deg)';
+          await initSupabase(config.url, config.key);
+        } else {
+          loadLocalData();
+          await loadLocalPoliciesData();
+        }
+      }
+
+      // ==========================================
+      // 3. UI Helpers & Selectors
+      // ==========================================
+      function handleImageTypeChange(type) {
+        const svgSelector = document.getElementById('svgSelectorBlock');
+        const fileUpload = document.getElementById('fileUploadBlock');
+        const urlBlock = document.getElementById('urlBlock');
+
+        svgSelector.style.display = 'none';
+        fileUpload.style.display = 'none';
+        urlBlock.style.display = 'none';
+
+        if (type === 'svg') svgSelector.style.display = 'block';
+        if (type === 'upload') fileUpload.style.display = 'block';
+        if (type === 'url') urlBlock.style.display = 'block';
+      }
+
+      function toggleDateToday(cb) {
+        const dateField = document.getElementById('annDate');
+        if (cb.checked) {
+          const thaiMonths = [
+            "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+          ];
+          const d = new Date();
+          const dateString = `${d.getDate()} ${thaiMonths[d.getMonth()]} ${d.getFullYear() + 543}`;
+          dateField.value = dateString;
+          dateField.disabled = true;
+        } else {
+          dateField.value = "";
+          dateField.disabled = false;
+        }
+      }
+
+      function handleFileSelect(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            // Compress Image using HTML Canvas
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const max_size = 600; // Limit image dimensions to 600px max
+
+            if (width > height) {
+              if (width > max_size) {
+                height *= max_size / width;
+                width = max_size;
+              }
+            } else {
+              if (height > max_size) {
+                width *= max_size / height;
+                height = max_size;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            // Get compressed data url (quality 0.7)
+            imageBase64Data = canvas.toDataURL('image/jpeg', 0.7);
+
+            // Show preview
+            document.getElementById('uploadPreview').src = imageBase64Data;
+            document.getElementById('uploadPreviewContainer').style.display = 'block';
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function removeImagePreview() {
+        imageBase64Data = "";
+        document.getElementById('annFile').value = "";
+        document.getElementById('uploadPreview').src = "";
+        document.getElementById('uploadPreviewContainer').style.display = 'none';
+      }
+
+      function toggleSupabaseSettings() {
+        const fields = document.getElementById('supabaseFields');
+        const chevron = document.getElementById('supabaseChevron');
+        const isVisible = fields.classList.toggle('visible');
+        chevron.style.transform = isVisible ? 'rotate(180deg)' : 'rotate(0deg)';
+      }
+
+      // ==========================================
+      // 4. Form Actions (Save / Delete / Edit)
+      // ==========================================
+      async function handleFormSubmit(e) {
+        e.preventDefault();
+
+        const title = document.getElementById('annTitle').value.trim();
+        const excerpt = document.getElementById('annExcerpt').value.trim();
+        const date = document.getElementById('annDate').value.trim() || 'วันนี้';
+        const linkUrl = document.getElementById('annLinkUrl').value.trim();
+        const linkText = document.getElementById('annLinkText').value.trim() || 'คลิกเพื่อดาวน์โหลดภาพ';
+        const tagMini = document.getElementById('annTagMini').value.trim() || 'announcement';
+        const tagsInput = document.getElementById('annTags').value.trim();
+        const imageType = document.querySelector('input[name="annImgType"]:checked').value;
+        const svgGradientVal = document.querySelector('input[name="svgGradient"]:checked').value;
+        const svgBadgeText = document.getElementById('annSvgBadgeText').value.trim() || 'CLOUD PHOTO DRIVE';
+        const externalImgUrl = document.getElementById('annImgUrl').value.trim();
+        const editIndexVal = document.getElementById('editIndex').value;
+
+        // Process tags
+        const tags = tagsInput ? tagsInput.split(',').map(t => {
+          let tag = t.trim();
+          if (tag && !tag.startsWith('#')) tag = '#' + tag;
+          return tag;
+        }).filter(t => t !== "") : [];
+
+        // Determine imageValue based on type selected
+        let imageValue = "";
+        if (imageType === 'svg') imageValue = svgGradientVal;
+        else if (imageType === 'upload') {
+          if (!imageBase64Data && editIndexVal === "") {
+            alert('กรุณาอัปโหลดรูปภาพ หรือเปลี่ยนรูปแบบปกการ์ดประกาศ');
+            return;
+          }
+          imageValue = imageBase64Data || (editIndexVal !== "" ? announcementsList[editIndexVal].imageValue : "");
+        } else if (imageType === 'url') {
+          if (!externalImgUrl) {
+            alert('กรุณาระบุ URL ของรูปภาพ');
+            return;
+          }
+          imageValue = externalImgUrl;
+        }
+
+        const announcementData = {
+          title,
+          excerpt,
+          date,
+          linkUrl,
+          linkText,
+          tagMini,
+          tags,
+          imageType,
+          imageValue,
+          svgBadgeText
+        };
+
+        try {
+          if (supabaseClient) {
+            // SUPABASE WRITE MODE
+            if (editIndexVal !== "") {
+              // Update in Supabase
+              const targetId = announcementsList[editIndexVal].id;
+              const { error } = await supabaseClient
+                .from('announcements')
+                .update(announcementData)
+                .eq('id', targetId);
+
+              if (error) throw error;
+            } else {
+              // Insert into Supabase
+              const { error } = await supabaseClient
+                .from('announcements')
+                .insert([announcementData]);
+
+              if (error) throw error;
+            }
+            await loadSupabaseData();
+          } else {
+            // LOCAL STORAGE WRITE MODE
+            if (editIndexVal !== "") {
+              // Edit existing
+              announcementData.id = announcementsList[editIndexVal].id;
+              announcementsList[editIndexVal] = announcementData;
+            } else {
+              // Add new
+              announcementData.id = `announce-${Date.now()}`;
+              announcementsList.unshift(announcementData); // Put at top
+            }
+            localStorage.setItem('pakping_announcements', JSON.stringify(announcementsList));
+            renderAnnouncementsList();
+          }
+
+          showFormAlert('formAlertSuccess');
+          resetForm();
+        } catch (err) {
+          console.error('Save error:', err);
+          showFormAlert('formAlertError', 'เกิดข้อผิดพลาดในการบันทึก: ' + err.message);
+        }
+      }
+
+      function editAnnouncement(index) {
+        const item = announcementsList[index];
+        if (!item) return;
+
+        document.getElementById('editIndex').value = index;
+        document.getElementById('formTitle').innerHTML = `✏️ แก้ไขข่าวสาร: ${item.title.substring(0, 15)}...`;
+
+        document.getElementById('annTitle').value = item.title;
+        document.getElementById('annExcerpt').value = item.excerpt;
+        document.getElementById('annDate').value = item.date === 'วันนี้' ? '' : item.date;
+        document.getElementById('annDate').disabled = item.date === 'วันนี้';
+        document.getElementById('annDateToday').checked = item.date === 'วันนี้';
+        document.getElementById('annLinkUrl').value = item.linkUrl || '';
+        document.getElementById('annLinkText').value = item.linkText || '';
+        document.getElementById('annTagMini').value = item.tagMini || '';
+        document.getElementById('annTags').value = (item.tags || []).join(', ');
+
+        // Radio boxes image type
+        document.getElementById('imgTypeSvg').checked = item.imageType === 'svg';
+        document.getElementById('imgTypeUpload').checked = item.imageType === 'upload';
+        document.getElementById('imgTypeUrl').checked = item.imageType === 'url';
+        handleImageTypeChange(item.imageType);
+
+        if (item.imageType === 'svg') {
+          const rad = document.querySelector(`input[name="svgGradient"][value="${item.imageValue}"]`);
+          if (rad) rad.checked = true;
+          document.getElementById('annSvgBadgeText').value = item.svgBadgeText || 'CLOUD PHOTO DRIVE';
+        } else if (item.imageType === 'upload') {
+          imageBase64Data = item.imageValue;
+          document.getElementById('uploadPreview').src = item.imageValue;
+          document.getElementById('uploadPreviewContainer').style.display = 'block';
+        } else if (item.imageType === 'url') {
+          document.getElementById('annImgUrl').value = item.imageValue;
+        }
+
+        document.getElementById('btnCancelEdit').style.display = 'block';
+        document.getElementById('btnSubmitForm').innerHTML = '💾 บันทึกการแก้ไข';
+        document.getElementById('annTitle').focus();
+      }
+
+      async function deleteAnnouncement(index) {
+        const item = announcementsList[index];
+        if (!item) return;
+
+        if (confirm(`คุณแน่ใจหรือไม่ที่จะลบประกาศ "${item.title}"?`)) {
+          try {
+            if (supabaseClient) {
+              const { error } = await supabaseClient
+                .from('announcements')
+                .delete()
+                .eq('id', item.id);
+              if (error) throw error;
+              await loadSupabaseData();
+            } else {
+              announcementsList.splice(index, 1);
+              localStorage.setItem('pakping_announcements', JSON.stringify(announcementsList));
+              renderAnnouncementsList();
+            }
+            alert('ลบประกาศสำเร็จ');
+            resetForm();
+          } catch (err) {
+            alert('เกิดข้อผิดพลาดในการลบข้อมูล: ' + err.message);
+          }
+        }
+      }
+
+      function resetForm() {
+        document.getElementById('announcementForm').reset();
+        document.getElementById('editIndex').value = "";
+        document.getElementById('formTitle').innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        เพิ่มข่าวสาร / ประกาศใหม่
+      `;
+        document.getElementById('annDate').disabled = false;
+        document.getElementById('annDateToday').checked = false;
+        document.getElementById('btnCancelEdit').style.display = 'none';
+        document.getElementById('btnSubmitForm').innerHTML = '💾 บันทึกข้อมูล';
+        removeImagePreview();
+        handleImageTypeChange('svg');
+      }
+
+      function showFormAlert(id, customText = "") {
+        const alert = document.getElementById(id);
+        if (customText) alert.innerText = customText;
+        alert.style.display = 'block';
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 4000);
+      }
+
+      // ==========================================
+      // 5. Control Panel actions
+      // ==========================================
+      function downloadJSON() {
+        // Export current data as JSON
+        const jsonStr = JSON.stringify(announcementsList, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonStr);
+
+        const exportFileDefaultName = 'announcements_data.json';
+
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+      }
+
+      async function resetToDefaults() {
+        if (confirm('คุณต้องการลบประกาศทั้งหมดและแทนที่ด้วยประกาศเริ่มต้น 7 รายการเดิมใช่หรือไม่? (การกระทำนี้กู้คืนไม่ได้)')) {
+          try {
+            if (supabaseClient) {
+              announcementsList = [...DEFAULT_ANNOUNCEMENTS];
+              await syncLocalToSupabase();
+              await loadSupabaseData();
+            } else {
+              announcementsList = [...DEFAULT_ANNOUNCEMENTS];
+              localStorage.setItem('pakping_announcements', JSON.stringify(announcementsList));
+              renderAnnouncementsList();
+            }
+            alert('รีเซ็ตข้อมูลเริ่มต้นเรียบร้อยแล้ว');
+            resetForm();
+          } catch (err) {
+            alert('เกิดข้อผิดพลาดในการรีเซ็ตข้อมูล: ' + err.message);
+          }
+        }
+      }
+
+      // ==========================================
+      // 6. Rendering List
+      // ==========================================
+      function getGradientStyle(val) {
+        const grads = {
+          "1": "linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)",
+          "2": "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)",
+          "3": "linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)",
+          "4": "linear-gradient(135deg, #a855f7 0%, #cbd5e1 100%)",
+          "5": "linear-gradient(135deg, #ec4899 0%, #ffd700 100%)",
+          "6": "linear-gradient(135deg, #06b6d4 0%, #d946ef 100%)",
+          "7": "linear-gradient(135deg, #f59e0b 0%, #ec4899 100%)"
+        };
+        return grads[val] || grads["1"];
+      }
+
+      function renderAnnouncementsList() {
+        const container = document.getElementById('announcementsList');
+        const countLabel = document.getElementById('announcementCount');
+
+        countLabel.innerText = announcementsList.length;
+
+        if (announcementsList.length === 0) {
+          container.innerHTML = `
+          <div style="text-align:center; padding: 3rem 1rem; color: rgba(255,255,255,0.3);">
+            📭 ไม่พบข่าวสารหรือประกาศ กรุณากดปุ่มรีเซ็ตค่าเริ่มต้นด้านล่าง หรือกรอกประกาศใหม่ด้านซ้าย
+          </div>
+        `;
+          return;
+        }
+
+        let html = "";
+        announcementsList.forEach((item, index) => {
+          let imgHtml = "";
+          if (item.imageType === 'svg') {
+            imgHtml = `<div style="width:100%; height:100%; background: ${getGradientStyle(item.imageValue)}; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:800; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.5);">${item.svgBadgeText || 'CLOUD'}</div>`;
+          } else {
+            imgHtml = `<img src="${item.imageValue}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover;">`;
+          }
+
+          html += `
+          <div class="item-card">
+            <div class="item-preview-img">
+              ${imgHtml}
+            </div>
+            <div class="item-info">
+              <h4 class="item-title">${item.title}</h4>
+              <div class="item-meta">
+                <span>📅 ${item.date}</span>
+                <span class="item-badge">${item.tagMini || 'download'}</span>
+              </div>
+            </div>
+            <div class="item-actions">
+              <button class="btn-action btn-edit" onclick="editAnnouncement(${index})" title="แก้ไข">
+                ✏️
+              </button>
+              <button class="btn-action btn-delete" onclick="deleteAnnouncement(${index})" title="ลบ">
+                🗑️
+              </button>
+            </div>
+          </div>
+        `;
+        });
+        container.innerHTML = html;
+      }
+
+      // ==========================================
+      // 6. Tab Swapping Logic
+      // ==========================================
+      function switchTab(tab) {
+        const tabAnn = document.getElementById('tabAnnouncements');
+        const tabPol = document.getElementById('tabPolicies');
+        const annContainer = document.getElementById('annGridContainer');
+        const polContainer = document.getElementById('polGridContainer');
+
+        if (tab === 'announcements') {
+          tabAnn.classList.add('active');
+          tabPol.classList.remove('active');
+          annContainer.style.display = 'block';
+          polContainer.style.display = 'none';
+        } else {
+          tabAnn.classList.remove('active');
+          tabPol.classList.add('active');
+          annContainer.style.display = 'none';
+          polContainer.style.display = 'block';
+        }
+      }
+
+      // ==========================================
+      // 7. Policy Management Logic
+      // ==========================================
+      const DEFAULT_POLICIES = [
+        {
+          "id": "policy-1",
+          "number": "01",
+          "tag": "สุขภาพจิต",
+          "title": "Ngl",
+          "subtitle": "พื้นที่ในการแลกเปลี่ยนความคิดเห็น",
+          "description": "พื้นที่ในการแลกเปลี่ยนความคิดเห็น เปลี่ยนทุกเสียงสะท้อนให้กลายเป็นการพัฒนาเราพร้อมรับฟังทุกเรื่องราว เป็นเซฟโซนที่น่าอยู่ยิ่งกว่า",
+          "icon": "📵",
+          "imageType": "emoji",
+          "imageValue": "📵",
+          "gradientStyle": "1"
+        },
+        {
+          "id": "policy-2",
+          "number": "02",
+          "tag": "กิจกรรม",
+          "title": "\"What's Next? Center\"",
+          "subtitle": "ศูนย์รวมกิจจกรรมสร้างสรรค์ตามเทศกาล",
+          "description": "ศูนย์รวมกิจจกรรมสร้างสรรค์ตามเทศกาล พวกเราจะจัดหากิจกรรมที่เหมาะสมเเละอินเทรนด์มาให้ได้ร่วมสนุก เพื่อให้น้องๆ และเพื่อนๆ ได้ผ่อนคลายและสนุกร่วมกัน",
+          "icon": "🎬",
+          "imageType": "emoji",
+          "imageValue": "🎬",
+          "gradientStyle": "2"
+        },
+        {
+          "id": "policy-3",
+          "number": "03",
+          "tag": "ทักษะอาชีพ",
+          "title": "สภา เพิ่มช่องทางสร้างรายได้",
+          "subtitle": "เปิดพื้นที่สื่อช่วยประชาสัมพันธ์โปรโมทร้าน",
+          "description": "เปิดพื้นที่สื่อช่วยประชาสัมพันธ์โปรโมทร้านเเละธุรกิจเล็กๆ ของเพื่อนๆ พี่ๆ น้องๆ ทุกคนเพื่อเพิ่มช่องทางสร้างรายได้และโปรโมททักษะความสามารถ",
+          "icon": "🛍️",
+          "imageType": "emoji",
+          "imageValue": "🛍️",
+          "gradientStyle": "3"
+        },
+        {
+          "id": "policy-4",
+          "number": "04",
+          "tag": "กิจกรรม",
+          "title": "THE CANVAS",
+          "subtitle": "ส่งเสริมการจัดกิจกรรมและการแข่งขัน",
+          "description": "การส่งเสริมการจัดกิจกรรมหรือการแข่งขัน ที่ให้ทุกคนได้มาแสดงศักยภาพของตัวเอง ในทุกด้าน ไม่ว่าจะเป็นศิลปะ ดนตรี กีฬา หรือทักษะอื่นๆ",
+          "icon": "🎮",
+          "imageType": "emoji",
+          "imageValue": "🎮",
+          "gradientStyle": "4"
+        },
+        {
+          "id": "policy-5",
+          "number": "05",
+          "tag": "การช่วยเหลือ",
+          "title": "มีร่มให้ยืม และ ผ้าอนามัยฉุกเฉิน",
+          "subtitle": "บริการยืมร่มและผ้าอนามัยฉุกเฉิน",
+          "description": "• สามารถยืมได้ในวันที่ฝนตกช่วงเย็น\n• ยืมได้ตั้งแต่เวลา15:50 และนำมาคืนในวันถัดไป\n• การยืมต้องลงชื่อ และถ่ายภาพเป็นหลักฐานก่อน",
+          "icon": "✨",
+          "imageType": "emoji",
+          "imageValue": "✨",
+          "gradientStyle": "5"
+        },
+        {
+          "id": "policy-6",
+          "number": "06",
+          "tag": "การสื่อสาร",
+          "title": "ข้อมูลรู้ทันฉับไว",
+          "subtitle": "ข้อมูลข่าวสารต่างๆในโรงเรียน ไม่ว่าจะเป็นเล็กหรือใหญ่ จะประชาสัมพันธ์ข้อมูลในทุกช่องทางทั้งผ่านหูและผ่านตา",
+          "description": "สำหรับข้อมูลข่าวสารต่างๆในโรงเรียน ไม่ว่าจะเป็นเล็กหรือใหญ่ พวกเราจะประชาสัมพันธ์ข้อมูลในทุกช่องทางทั้งผ่านหูและผ่านตา อย่างถูกต้องรวดเร็วและเข้าใจกันโดยทั่วถึงทั้งคุณครูและนักเรียนในทุกๆกิจกรรมและข่าวสารของโรงเรียน",
+          "icon": "📢",
+          "imageType": "emoji",
+          "imageValue": "📢",
+          "gradientStyle": "6"
+        },
+        {
+          "id": "policy-7",
+          "number": "07",
+          "tag": "วินัย",
+          "title": "ตารางเวรธงชาติ",
+          "subtitle": "มีการแจ้งตารางเวรล่วงหน้า",
+          "description": "พวกเราจะมีการแจ้งตารางเวรเชิญธงชาติเพื่อให้ห้องที่เป็นเวรได้จัดเตรียมตัวแทนไว้ล่วงหน้า",
+          "icon": "⏰",
+          "imageType": "emoji",
+          "imageValue": "⏰",
+          "gradientStyle": "7"
+        },
+        {
+          "id": "policy-8",
+          "number": "08",
+          "tag": "การทำงานร่วมกัน",
+          "title": "Pass The Torch",
+          "subtitle": "สานต่อกิจกรรมและผลงานที่พี่ๆ สภานักเรียนปีการศึกษา 2568",
+          "description": "เพราะประสบการณ์จากรุ่นพี่ คือแสงนำทางของรุ่นน้อง พวกเราพร้อมสานต่อกิจกรรมและผลงานที่พี่ๆ สภานักเรียนปีการศึกษา 2568 ที่ได้ขับเคลื่อนไว้ เพื่อสร้างความเหนียวแน่นและรักษาความต่อเนื่องในการทำงาน ซึ่งจะส่งผลให้รั้วม่วงขาวของเราเกิดการพัฒนาอย่างยั่งยืนและก้าวไปได้ไกลกว่าเดิม",
+          "icon": "🔥",
+          "imageType": "emoji",
+          "imageValue": "🔥",
+          "gradientStyle": "8"
+        },
+        {
+          "id": "policy-9",
+          "number": "09",
+          "tag": "สวัสดิการ",
+          "title": "ปั่นใจให้น้ำ",
+          "subtitle": "ช่วยซัพพอร์ตน้ำดื่มให้ในวันแข่งขันกรีฑา",
+          "description": "ในช่วงแข่งขันกีฬาสีภายในเมื่อแข่งขันกีฬาชนะเลิศ 1 รายการพวกเราจะช่วยซัพพอร์ตน้ำดื่มให้ ในวันแข่งขันกรีฑา 1 แพ็ค เพื่อเป็นกำลังใจให้นักกีฬาทุกคน 1 รายการ ต่อ 1 แพ็ค เฉพาะกีฬาฟุตซอล เปตอง วอลเลย์บอล บาสเกตบอล",
+          "icon": "🥤",
+          "imageType": "emoji",
+          "imageValue": "🥤",
+          "gradientStyle": "9"
+        },
+        {
+          "id": "policy-10",
+          "number": "10",
+          "tag": "จิตอาสา",
+          "title": "สภาพาทำจิตอาสา",
+          "subtitle": "จัดกิจกรรมจิตอาสาภายในโรงเรียน เพื่อเปิดโอกาสให้นักเรียนทุกคนได้เข้าร่วมกิจกรรมที่สร้างประโยชน์ต่อส่วนรวม",
+          "description": "นโยบายนี้จะมุ่งเน้นไปที่กลุ่มนักเรียนชั้นมัธยมศึกษาตอนปลายเพราะกิจกรรมจิตอาสาเป็นหนึ่งในองค์ประกอบสำคัญของ PORTFOLIO เราจึงมีแนวคิดจัดกิจกรรมจิตอาสาภายในโรงเรียน เพื่อเปิดโอกาสให้นักเรียนทุกคนได้เข้าร่วมกิจกรรมที่สร้างประโยชน์ต่อส่วนรวมพร้อมทั้งได้เก็บเกี่ยวประสบการณ์และผลงาน ที่สามารถนำไปต่อยอดในการศึกษา",
+          "icon": "🤝",
+          "imageType": "emoji",
+          "imageValue": "🤝",
+          "gradientStyle": "10"
+        },
+        {
+          "id": "policy-11",
+          "number": "11",
+          "tag": "สุขภาพ",
+          "title": "เตรียมห้องพร้อมผู้ป่วย",
+          "subtitle": "มีการผลัดเปลี่ยนเวรไปช่วยคุณครูดูแลที่ห้องพยาบาล",
+          "description": "ใน 1 สัปดาห์พวกเราจะมีการผลัดเปลี่ยนเวรไป ช่วยคุณครูดูแลและเตรียมพร้อมของห้องพยาบาลไว้รองรับนักเรียน คุณครูและบุคลากรในโรงเรียน ที่มีอาการเจ็บป่วยต่างๆ เพื่อให้ห้องสะอาดและสะดวกต่อการเข้ามาใช้บริการ",
+          "icon": "🩹",
+          "imageType": "emoji",
+          "imageValue": "🩹",
+          "gradientStyle": "11"
+        },
+        {
+          "id": "policy-12",
+          "number": "12",
+          "tag": "สวัสดิการ",
+          "title": "She safe & Softly Clean",
+          "subtitle": "จัดหากระดาษReuse ไว้สำหรับเพื่อนๆผู้หญิงได้ใช้ห่อผ้าอนามัย และ จัดวางเจลล้างมือไว้บริเวณอ่างล้างมือภายในห้องน้ำ",
+          "description": "นโยบายสวัสดิการที่ใส่ใจสุขอนามัยและสิ่งแวดล้อมควบคู่กันเราจะจัดหากระดาษReuse ไว้สำหรับเพื่อนๆผู้หญิงได้ใช้ห่อผ้าอนามัยก่อนทิ้งลงถังขยะ และ เราจะจัดวางเจลล้างมือไว้บริเวณอ่างล้างมือภายในห้องน้ำ ให้ทุกคนได้ดูแลตัวเองง่ายๆและเพื่อสุขอนามัยที่ดี",
+          "icon": "✨",
+          "imageType": "emoji",
+          "imageValue": "✨",
+          "gradientStyle": "12"
+        },
+        {
+          "id": "policy-13",
+          "number": "13",
+          "tag": "กิจกรรม",
+          "title": "เสียงตามสาย",
+          "subtitle": "สามารถขอเพลงได้โดยตรงจากพวกเราหรือส่งข้อความมาบอกพวกเราได้ทุกแพลตฟอร์ม",
+          "description": "เช้าวันใหม่ที่ดี เริ่มต้นด้วยพลังงานบวกพวกเราพร้อมเสิร์ฟทำนองที่โดนใจ ปลุกความสดชื่นไล่ความง่วงเหงาหาวนอน ให้เสียงเพลงยามเช้าเป็นแรงผลักดันให้ทุกคนพร้อมสตาร์ทวันใหม่อย่างมีความสุขและมีพลังเต็มร้อย",
+          "icon": "🎙️",
+          "imageType": "emoji",
+          "imageValue": "🎙️",
+          "gradientStyle": "1"
+        },
+        {
+          "id": "policy-14",
+          "number": "14",
+          "tag": "สิ่งแวดล้อม",
+          "title": "ByeBye กลิ่นใหญ่บ๊อง!",
+          "subtitle": "นำเอาสมุนไพรธรรมชาติไปช่วยดับกลิ่นให้ปลอดภัย ไม่มีสารเคมี",
+          "description": "ปัญหาเดินเข้าห้องน้ำแล้วต้องกลั้นหายใจพวกเราจะนำเอาสมุนไพรธรรมชาติไปช่วยดับกลิ่นให้ปลอดภัย ไม่มีสารเคมี และที่สำคัญพวกเราจะไม่เอาไปวางทิ้งไว้เฉยๆ แน่นอนแต่จะจัดทีมมาดูแลและเปลี่ยนใหม่ให้ทุกๆสัปดาห์ เพื่อพวกเราชาวม่วงขาวทุกคน",
+          "icon": "🌿",
+          "imageType": "emoji",
+          "imageValue": "🌿",
+          "gradientStyle": "2"
+        },
+        {
+          "id": "policy-15",
+          "number": "15",
+          "tag": "สุขภาพจิต",
+          "title": "Hug Space",
+          "subtitle": "พื้นที่ฮีลใจสำหรับทุกคน",
+          "description": "เราพร้อมรับฟังและให้คำปรึกษาแก่พี่น้องชาวม่วงขาว โดยเรื่องราวของทุกคนจะถูกเก็บไว้เป็นความลับอย่างดีที่สุด ให้เราได้กอดใจและผ่านวันยากๆ ไปด้วยกัน",
+          "icon": "❤️",
+          "imageType": "emoji",
+          "imageValue": "❤️",
+          "gradientStyle": "3"
+        },
+        {
+          "id": "policy-16",
+          "number": "16",
+          "tag": "การสื่อสาร",
+          "title": "สภาเปิดการมองเห็น",
+          "subtitle": "ใช้พื้นที่สื่อของสภาในการแชร์ความรู้แนะนำแนวทางและส่งต่อโอกาสดีๆ",
+          "description": "เหล่าทีมงานสภาของเราจะใช้พื้นที่สื่อของสภาในการแชร์ความรู้แนะนำแนวทางและส่งต่อโอกาสดีๆ ที่เป็นประโยชน์แก่พี่น้องชาวม่วงขาว เพื่อผลักดันให้ชาวม่วงขาวมุ่งสู่โอกาสที่มากขึ้นกว่าเดิม",
+          "icon": "💡",
+          "imageType": "emoji",
+          "imageValue": "💡",
+          "gradientStyle": "4"
+        }
+      ];
+
+      let policiesList = [];
+      let polBase64Data = "";
+
+      async function initPolicyDashboard() {
+        if (supabaseClient) {
+          await loadSupabasePoliciesData();
+        } else {
+          await loadLocalPoliciesData();
+        }
+      }
+
+      async function loadLocalPoliciesData() {
+        // 1. Try LocalStorage
+        const saved = localStorage.getItem('pakping_policies');
+        if (saved) {
+          try {
+            policiesList = JSON.parse(saved);
+          } catch (e) {
+            policiesList = [];
+          }
+        }
+
+        // 2. Try static JSON fetch if localStorage is empty
+        if (policiesList.length === 0) {
+          try {
+            const res = await fetch('policies_data.json');
+            if (res.ok) {
+              const data = await res.json();
+              if (Array.isArray(data) && data.length > 0) {
+                policiesList = data;
+                localStorage.setItem('pakping_policies', JSON.stringify(policiesList));
+              }
+            }
+          } catch (e) {
+            console.warn("Could not load policies_data.json natively", e);
+          }
+        }
+
+        // 3. Fallback to hardcoded defaults
+        if (policiesList.length === 0) {
+          policiesList = [...DEFAULT_POLICIES];
+          localStorage.setItem('pakping_policies', JSON.stringify(policiesList));
+        }
+
+        renderPoliciesList();
+      }
+
+      async function loadSupabasePoliciesData() {
+        if (!supabaseClient) return;
+        try {
+          const { data, error } = await supabaseClient
+            .from('policies')
+            .select('*')
+            .order('number', { ascending: true });
+
+          if (error) throw error;
+
+          if (data && data.length > 0) {
+            policiesList = data;
+          } else {
+            // If empty, sync current local defaults to Supabase
+            if (policiesList.length === 0) {
+              const saved = localStorage.getItem('pakping_policies');
+              if (saved) {
+                try { policiesList = JSON.parse(saved); } catch (e) { }
+              }
+              if (policiesList.length === 0) {
+                policiesList = [...DEFAULT_POLICIES];
+              }
+            }
+            await syncLocalPoliciesToSupabase();
+          }
+          renderPoliciesList();
+        } catch (err) {
+          console.error('Fetch Supabase policies error:', err);
+          showFormAlert('polFormAlertError', 'เกิดข้อผิดพลาดจาก Supabase: ' + err.message);
+          await loadLocalPoliciesData();
+        }
+      }
+
+      async function syncLocalPoliciesToSupabase() {
+        if (!supabaseClient) return;
+        try {
+          // Delete all then insert
+          await supabaseClient.from('policies').delete().neq('id', '0');
+          const toInsert = policiesList.map(item => ({
+            number: item.number,
+            tag: item.tag,
+            title: item.title,
+            subtitle: item.subtitle || '',
+            description: item.description,
+            icon: item.icon || '💡',
+            imageType: item.imageType || 'emoji',
+            imageValue: item.imageValue || '💡',
+            gradientStyle: item.gradientStyle || '1'
+          }));
+          const { error } = await supabaseClient.from('policies').insert(toInsert);
+          if (error) throw error;
+          console.log('Synced policies to Supabase');
+        } catch (err) {
+          console.error('Sync policies to Supabase error:', err);
+        }
+      }
+
+      function handlePolImageTypeChange(type) {
+        const fileUpload = document.getElementById('polFileUploadBlock');
+        const urlBlock = document.getElementById('polUrlBlock');
+
+        fileUpload.style.display = 'none';
+        urlBlock.style.display = 'none';
+
+        if (type === 'upload') fileUpload.style.display = 'block';
+        if (type === 'url') urlBlock.style.display = 'block';
+      }
+
+      function handlePolFileSelect(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const max_size = 600;
+
+            if (width > height) {
+              if (width > max_size) {
+                height *= max_size / width;
+                width = max_size;
+              }
+            } else {
+              if (height > max_size) {
+                width *= max_size / height;
+                height = max_size;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            polBase64Data = canvas.toDataURL('image/jpeg', 0.7);
+
+            document.getElementById('polUploadPreview').src = polBase64Data;
+            document.getElementById('polUploadPreviewContainer').style.display = 'block';
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function removePolImagePreview() {
+        polBase64Data = "";
+        document.getElementById('polFile').value = "";
+        document.getElementById('polUploadPreview').src = "";
+        document.getElementById('polUploadPreviewContainer').style.display = 'none';
+      }
+
+      function resetPolForm() {
+        document.getElementById('policyForm').reset();
+        document.getElementById('polEditIndex').value = "";
+        document.getElementById('polFormTitle').innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        เพิ่มนโยบายใหม่
+      `;
+        document.getElementById('btnCancelPolEdit').style.display = 'none';
+        document.getElementById('btnSubmitPolForm').innerHTML = '💾 บันทึกข้อมูลนโยบาย';
+        removePolImagePreview();
+        handlePolImageTypeChange('emoji');
+      }
+
+      async function handlePolicyFormSubmit(e) {
+        e.preventDefault();
+
+        const number = document.getElementById('polNumber').value.trim();
+        const tag = document.getElementById('polTag').value.trim();
+        const title = document.getElementById('polTitle').value.trim();
+        const subtitle = document.getElementById('polSubtitle').value.trim();
+        const description = document.getElementById('polDescription').value.trim();
+        const icon = document.getElementById('polIcon').value.trim() || '💡';
+        const gradientStyle = document.getElementById('polGradientStyle').value;
+        const imageType = document.querySelector('input[name="polImgType"]:checked').value;
+        const externalImgUrl = document.getElementById('polImgUrl').value.trim();
+        const editIndexVal = document.getElementById('polEditIndex').value;
+
+        let imageValue = "";
+        if (imageType === 'emoji') {
+          imageValue = icon;
+        } else if (imageType === 'upload') {
+          if (!polBase64Data && editIndexVal === "") {
+            alert('กรุณาอัปโหลดรูปภาพ หรือเปลี่ยนตัวเลือกภาพประกอบ');
+            return;
+          }
+          imageValue = polBase64Data || (editIndexVal !== "" ? policiesList[editIndexVal].imageValue : "");
+        } else if (imageType === 'url') {
+          if (!externalImgUrl) {
+            alert('กรุณาระบุ URL ของรูปภาพ');
+            return;
+          }
+          imageValue = externalImgUrl;
+        }
+
+        const policyData = {
+          number,
+          tag,
+          title,
+          subtitle,
+          description,
+          icon,
+          imageType,
+          imageValue,
+          gradientStyle
+        };
+
+        try {
+          if (supabaseClient) {
+            if (editIndexVal !== "") {
+              const targetId = policiesList[editIndexVal].id;
+              const { error } = await supabaseClient
+                .from('policies')
+                .update(policyData)
+                .eq('id', targetId);
+              if (error) throw error;
+            } else {
+              const { error } = await supabaseClient
+                .from('policies')
+                .insert([policyData]);
+              if (error) throw error;
+            }
+            await loadSupabasePoliciesData();
+          } else {
+            if (editIndexVal !== "") {
+              policyData.id = policiesList[editIndexVal].id;
+              policiesList[editIndexVal] = policyData;
+            } else {
+              policyData.id = `policy-${Date.now()}`;
+              policiesList.push(policyData);
+            }
+            localStorage.setItem('pakping_policies', JSON.stringify(policiesList));
+            renderPoliciesList();
+          }
+
+          showFormAlert('polFormAlertSuccess');
+          resetPolForm();
+        } catch (err) {
+          console.error('Save policy error:', err);
+          showFormAlert('polFormAlertError', 'เกิดข้อผิดพลาด: ' + err.message);
+        }
+      }
+
+      function editPolicy(index) {
+        const item = policiesList[index];
+        if (!item) return;
+
+        document.getElementById('polEditIndex').value = index;
+        document.getElementById('polFormTitle').innerHTML = `✏️ แก้ไขนโยบาย: ${item.title.substring(0, 15)}...`;
+
+        document.getElementById('polNumber').value = item.number;
+        document.getElementById('polTag').value = item.tag;
+        document.getElementById('polTitle').value = item.title;
+        document.getElementById('polSubtitle').value = item.subtitle || '';
+        document.getElementById('polDescription').value = item.description;
+        document.getElementById('polIcon').value = item.icon || '💡';
+        document.getElementById('polGradientStyle').value = item.gradientStyle || '1';
+
+        // Radio boxes image type
+        document.getElementById('polImgTypeEmoji').checked = item.imageType === 'emoji';
+        document.getElementById('polImgTypeUpload').checked = item.imageType === 'upload';
+        document.getElementById('polImgTypeUrl').checked = item.imageType === 'url';
+        handlePolImageTypeChange(item.imageType);
+
+        if (item.imageType === 'upload') {
+          polBase64Data = item.imageValue;
+          document.getElementById('polUploadPreview').src = item.imageValue;
+          document.getElementById('polUploadPreviewContainer').style.display = 'block';
+        } else if (item.imageType === 'url') {
+          document.getElementById('polImgUrl').value = item.imageValue;
+        }
+
+        document.getElementById('btnCancelPolEdit').style.display = 'block';
+        document.getElementById('btnSubmitPolForm').innerHTML = '💾 บันทึกการแก้ไข';
+        document.getElementById('polNumber').focus();
+      }
+
+      async function deletePolicy(index) {
+        const item = policiesList[index];
+        if (!item) return;
+
+        if (confirm(`คุณแน่ใจหรือไม่ที่จะลบนโยบาย "${item.title}"?`)) {
+          try {
+            if (supabaseClient) {
+              const { error } = await supabaseClient
+                .from('policies')
+                .delete()
+                .eq('id', item.id);
+              if (error) throw error;
+              await loadSupabasePoliciesData();
+            } else {
+              policiesList.splice(index, 1);
+              localStorage.setItem('pakping_policies', JSON.stringify(policiesList));
+              renderPoliciesList();
+            }
+            alert('ลบนโยบายสำเร็จ');
+            resetPolForm();
+          } catch (err) {
+            alert('เกิดข้อผิดพลาดในการลบ: ' + err.message);
+          }
+        }
+      }
+
+      function downloadPolJSON() {
+        const jsonStr = JSON.stringify(policiesList, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonStr);
+        const link = document.createElement('a');
+        link.setAttribute('href', dataUri);
+        link.setAttribute('download', 'policies_data.json');
+        link.click();
+      }
+
+      async function resetPolToDefaults() {
+        if (confirm('คุณต้องการลบนโยบายทั้งหมดและแทนที่ด้วยนโยบายเริ่มต้น 16 รายการเดิมใช่หรือไม่? (การกระทำนี้กู้คืนไม่ได้)')) {
+          try {
+            if (supabaseClient) {
+              policiesList = [...DEFAULT_POLICIES];
+              await syncLocalPoliciesToSupabase();
+              await loadSupabasePoliciesData();
+            } else {
+              policiesList = [...DEFAULT_POLICIES];
+              localStorage.setItem('pakping_policies', JSON.stringify(policiesList));
+              renderPoliciesList();
+            }
+            alert('รีเซ็ตนโยบายเริ่มต้นเรียบร้อยแล้ว');
+            resetPolForm();
+          } catch (err) {
+            alert('เกิดข้อผิดพลาดในการรีเซ็ต: ' + err.message);
+          }
+        }
+      }
+
+      function getPolGradientValue(val) {
+        const gradients = {
+          "1": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          "2": "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+          "3": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+          "4": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+          "5": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+          "6": "linear-gradient(135deg, #5ee7df 0%, #b490ca 100%)",
+          "7": "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+          "8": "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+          "9": "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)",
+          "10": "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)",
+          "11": "linear-gradient(135deg, #c94b4b 0%, #4b134f 100%)",
+          "12": "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)"
+        };
+        return gradients[val] || gradients["1"];
+      }
+
+      function renderPoliciesList() {
+        const container = document.getElementById('policiesList');
+        const countLabel = document.getElementById('policyCount');
+
+        countLabel.innerText = policiesList.length;
+
+        if (policiesList.length === 0) {
+          container.innerHTML = `
+          <div style="text-align:center; padding: 3rem 1rem; color: rgba(255,255,255,0.3);">
+            📭 ไม่พบนโยบาย กรุณากดปุ่มรีเซ็ตนโยบายเริ่มต้นด้านล่าง หรือกรอกนโยบายใหม่ด้านซ้าย
+          </div>
+        `;
+          return;
+        }
+
+        let html = "";
+        policiesList.forEach((item, index) => {
+          let imgHtml = "";
+          if (item.imageType === 'emoji') {
+            imgHtml = `<div style="width:100%; height:100%; background: ${getPolGradientValue(item.gradientStyle)}; display:flex; align-items:center; justify-content:center; font-size:1.5rem;">${item.icon || '💡'}</div>`;
+          } else {
+            imgHtml = `<img src="${item.imageValue}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover;">`;
+          }
+
+          html += `
+          <div class="item-card">
+            <div class="item-preview-img">
+              ${imgHtml}
+            </div>
+            <div class="item-info">
+              <h4 class="item-title">${item.number}. ${item.title}</h4>
+              <div class="item-meta">
+                <span>🏷️ ${item.tag}</span>
+                <span class="item-badge" style="background:rgba(255,255,255,0.05); color:#c084fc;">ไอคอน: ${item.icon || '💡'}</span>
+              </div>
+            </div>
+            <div class="item-actions">
+              <button class="btn-action btn-edit" onclick="editPolicy(${index})" title="แก้ไข">
+                ✏️
+              </button>
+              <button class="btn-action btn-delete" onclick="deletePolicy(${index})" title="ลบ">
+                🗑️
+              </button>
+            </div>
+          </div>
+        `;
+        });
+        container.innerHTML = html;
+      }
+
+      // Run login check
+      window.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+      // ==========================================
+      // 7. Particle Background Animation (from app.js)
+      // ==========================================
+      (function initParticles() {
+        const canvas = document.getElementById('particlesCanvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        function resizeCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+
+        class Particle {
+          constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2.0 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.25;
+            this.speedY = (Math.random() - 0.5) * 0.25;
+            this.color = Math.random() > 0.5
+              ? 'rgba(139,92,246,0.15)'
+              : 'rgba(217,70,239,0.15)';
+          }
+          update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+          }
+          draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        function connect() {
+          for (let a = 0; a < particlesArray.length; a++) {
+            for (let b = a; b < particlesArray.length; b++) {
+              const dx = particlesArray[a].x - particlesArray[b].x;
+              const dy = particlesArray[a].y - particlesArray[b].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 120) {
+                ctx.strokeStyle = `rgba(139,92,246,${(1 - dist / 120) * 0.08})`;
+                ctx.lineWidth = 0.6;
+                ctx.beginPath();
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                ctx.stroke();
+              }
+            }
+          }
+        }
+
+        function init() {
+          particlesArray = [];
+          const count = Math.min(60, Math.floor((canvas.width * canvas.height) / 25000));
+          for (let i = 0; i < count; i++) particlesArray.push(new Particle());
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particlesArray.forEach(p => { p.update(); p.draw(); });
+          connect();
+          requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+      })();
+    </script>
+</body>
+
+</html>

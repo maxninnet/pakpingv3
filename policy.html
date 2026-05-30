@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>นโยบายหลัก | พรรคพิง (PAKPING)</title>
+  <meta name="description"
+    content="พรรคพิง (PAKPING) ผู้สมัครเลือกตั้งสภานักเรียนโรงเรียนศรีเมืองวิทยาคาร เบอร์ 2 พร้อมผลักดันทุกนโยบายเพื่อนักเรียนทุกคน ภายใต้แนวคิด 'จากไอเดียสู่การลงมือทำ'">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+
+<body class="dark-theme">
+
+  <div class="noise-overlay" aria-hidden="true" style="left: -21px; top: 24px;"></div>
+  <div class="scroll-progress-bar" id="scrollBar" style="transform: scaleX(0);"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__container">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon" style="overflow: hidden;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+        </div>
+        <span class="navbar__logo-text">พรรคพิง PAKPING</span>
+      </a>
+      <ul class="navbar__menu">
+        <li class="navbar__item"><a href="index.html" class="navbar__link">หน้าแรก</a></li>
+        <li class="navbar__item"><a href="policy.html" class="navbar__link navbar__link--active">นโยบาย</a></li>
+        <li class="navbar__item"><a href="team.html" class="navbar__link">สมาชิก</a></li>
+        <li class="navbar__item"><a href="announcements.html" class="navbar__link">ข่าวสารและประกาศ</a></li>
+        <li class="navbar__item"><a href="report.html" class="navbar__link">แจ้งปัญหา</a></li>
+      </ul>
+      <button class="navbar__toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-nav" id="mobileMenu">
+    <div class="mobile-nav__content">
+      <div class="mobile-nav__header">
+        <a href="index.html" class="mobile-nav__logo" style="display: flex; align-items: center;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover; margin-right: 0.5rem;">
+          <span>พรรคพิง PAKPING</span>
+        </a>
+        <button class="mobile-nav__close" id="menuClose">&times;</button>
+      </div>
+      <ul class="mobile-nav__menu">
+        <li><a href="index.html" class="mobile-nav__link">หน้าแรก</a></li>
+        <li><a href="policy.html" class="mobile-nav__link mobile-nav__link--active">นโยบาย</a></li>
+        <li><a href="team.html" class="mobile-nav__link">สมาชิก</a></li>
+        <li><a href="announcements.html" class="mobile-nav__link">ข่าวสารและประกาศ</a></li>
+        <li><a href="report.html" class="mobile-nav__link">แจ้งปัญหา</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main style="flex: 1;">
+    <div class="particle-background">
+      <canvas id="particlesCanvas"></canvas>
+    </div>
+
+    <div style="height: 80px;"></div>
+
+    <section class="policy-section" id="policy">
+      <div class="policy-section-container">
+
+        <div class="policy-section-header" style="opacity: 0; transform: translateY(50px);">
+          <span class="policy-section-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span id="policyCountLabel">16</span> นโยบายหลัก
+          </span>
+          <h2 class="policy-section-title">เราจะทำอะไรให้คุณ</h2>
+          <p class="policy-section-description">
+            นโยบายที่เราตั้งใจจะผลักดันให้เกิดขึ้นจริงในทันทีเพื่อพัฒนาโรงเรียนให้ก้าวไปข้างหน้าเพื่อพวกเราทุกคน</p>
+        </div>
+
+        <div class="policy-slides" id="policiesGrid">
+          <!-- นโยบาย 01 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);">
+                <span>01</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#a78bfa;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">📵</span>สุขภาพจิต</span>
+              <h3 class="policy-slide-title">Ngl</h3>
+              <p class="policy-slide-subtitle">พื้นที่ในการแลกเปลี่ยนความคิดเห็น</p>
+              <p class="policy-slide-description">พื้นที่ในการแลกเปลี่ยนความคิดเห็น
+                เปลี่ยนทุกเสียงสะท้อนให้กลายเป็นการพัฒนาเราพร้อมรับฟังทุกเรื่องราว เป็นเซฟโซนที่น่าอยู่ยิ่งกว่า</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">📵</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(139,92,246,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                📵</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 02 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);">
+                <span>02</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#34d399;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🎬</span>กิจกรรม</span>
+              <h3 class="policy-slide-title">"What's Next? Center"</h3>
+              <p class="policy-slide-subtitle">ศูนย์รวมกิจจกรรมสร้างสรรค์ตามเทศกาล</p>
+              <p class="policy-slide-description">ศูนย์รวมกิจจกรรมสร้างสรรค์ตามเทศกาล
+                พวกเราจะจัดหากิจกรรมที่เหมาะสมเเละอินเทรนด์มาให้ได้ร่วมสนุก เพื่อให้น้องๆ และเพื่อนๆ
+                ได้ผ่อนคลายและสนุกร่วมกัน</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🎬</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(16,185,129,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🎬</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 03 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+                <span>03</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#38bdf8;background:rgba(14,165,233,0.1);border-color:rgba(14,165,233,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🛍️</span>ทักษะอาชีพ</span>
+              <h3 class="policy-slide-title">สภา เพิ่มช่องทางสร้างรายได้</h3>
+              <p class="policy-slide-subtitle">เปิดพื้นที่สื่อช่วยประชาสัมพันธ์โปรโมทร้าน</p>
+              <p class="policy-slide-description">เปิดพื้นที่สื่อช่วยประชาสัมพันธ์โปรโมทร้านเเละธุรกิจเล็กๆ ของเพื่อนๆ
+                พี่ๆ น้องๆ ทุกคนเพื่อเพิ่มช่องทางสร้างรายได้และโปรโมททักษะความสามารถ</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🛍️</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(14,165,233,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🛍️</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 04 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);">
+                <span>04</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#fb7185;background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🎮</span>กิจกรรม</span>
+              <h3 class="policy-slide-title">THE CANVAS</h3>
+              <p class="policy-slide-subtitle">ส่งเสริมการจัดกิจกรรมและการแข่งขัน</p>
+              <p class="policy-slide-description">การส่งเสริมการจัดกิจกรรมหรือการแข่งขัน
+                ที่ให้ทุกคนได้มาแสดงศักยภาพของตัวเอง ในทุกด้าน ไม่ว่าจะเป็นศิลปะ ดนตรี กีฬา หรือทักษะอื่นๆ</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🎮</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(244,63,94,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🎮</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 05 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+                <span>05</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#f472b6;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">✨</span>การช่วยเหลือ</span>
+              <h3 class="policy-slide-title">มีร่มให้ยืม และ ผ้าอนามัยฉุกเฉิน</h3>
+              <p class="policy-slide-subtitle">บริการยืมร่มและผ้าอนามัยฉุกเฉิน</p>
+              <p class="policy-slide-description">• สามารถยืมได้ในวันที่ฝนตกช่วงเย็น<br>• ยืมได้ตั้งแต่เวลา15:50
+                และนำมาคืนในวันถัดไป<br>• การยืมต้องลงชื่อ และถ่ายภาพเป็นหลักฐานก่อน</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">✨</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(236,72,153,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                ✨</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 06 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#5ee7df 0%,#b490ca 100%);">
+                <span>06</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#22d3ee;background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">📢</span>การสื่อสาร</span>
+              <h3 class="policy-slide-title">สภาเปิดการมองเห็น</h3>
+              <p class="policy-slide-subtitle">เป็นพื้นที่เเชร์ความรู้เเนะนำเเนวทางเเเละการส่งต่อโอกาสดีดี/p>
+              <p class="policy-slide-description">
+                เหล่าทีมงานสภาของเราจะใช้พื้นที่สื่อของสภาในการแชร์ความรู้แนะนำแนวทางและส่งต่อโอกาสดีๆ
+                ที่เป็นประโยชน์แก่พี่น้องชาวม่วงขาว
+                เพื่อผลักดันให้ชาวม่วงขาวมุ่งสู่โอกาสที่มากขึ้นกว่าเดิม</p>
+
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#5ee7df 0%,#b490ca 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#5ee7df 0%,#b490ca 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">📢</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(6,182,212,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#5ee7df 0%,#b490ca 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                📢</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 07 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 100%);">
+                <span>07</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#fca5a5;background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">⏰</span>วินัย</span>
+              <h3 class="policy-slide-title">วินัยไม่ยาก แค่ทำทุกวัน</h3>
+              <p class="policy-slide-subtitle">จัดระเบียบแถวเคารพธงชาติและเข้าเรียนตรงเวลา</p>
+              <p class="policy-slide-description">ส่งเสริมและสนับสนุนวินัยเชิงบวก
+                ปรับปรุงวิธีการจัดแถวช่วงเช้าให้คล่องตัว รวดเร็ว พร้อมรณรงค์เชิญชวนให้นักเรียนขึ้นชั้นเรียนก่อนเวลา
+                08.15 น. เพื่อพร้อมสำหรับการเรียนอย่างสงบ</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">⏰</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(239,68,68,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                ⏰</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 08 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#a8edea 0%,#fed6e3 100%);">
+                <span>08</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#94a3b8;background:rgba(148,163,184,0.1);border-color:rgba(148,163,184,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">✨</span>สิ่งแวดล้อม</span>
+              <h3 class="policy-slide-title">ใช้สะอาด ใช้สบาย</h3>
+              <p class="policy-slide-subtitle">ตรวจสอบความสะอาดห้องน้ำอย่างต่อเนื่อง</p>
+              <p class="policy-slide-description">มุ่งเน้นรักษาสุขอนามัยที่ดีของทุกคน
+                โดยจับมือกับสภานักเรียนและฝ่ายบริการ ร่วมเดินตรวจสภาพความสะอาดของห้องน้ำสม่ำเสมออย่างน้อยสัปดาห์ละ 2
+                ครั้งเพื่อรักษาสุขอนามัยที่ดี</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#a8edea 0%,#fed6e3 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#a8edea 0%,#fed6e3 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">✨</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(148,163,184,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#a8edea 0%,#fed6e3 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                ✨</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 09 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#f7971e 0%,#ffd200 100%);">
+                <span>09</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#fbbf24;background:rgba(251,191,36,0.1);border-color:rgba(251,191,36,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">📖</span>วิชาการ</span>
+              <h3 class="policy-slide-title">พี่สอนน้อง ติวอุ่นใจ</h3>
+              <p class="policy-slide-subtitle">โครงการเพื่อนติวเพื่อนและพี่ติวน้อง</p>
+              <p class="policy-slide-description">โครงการพี่รหัสติวเตอร์
+                ช่วยสรุปบทเรียนและเตรียมตัวสอบก่อนสอบกลางภาคและปลายภาค
+                แบ่งปันเทคนิคการเรียนอย่างเป็นกันเองในบรรยากาศที่ผ่อนคลาย</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#f7971e 0%,#ffd200 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#f7971e 0%,#ffd200 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">📖</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(251,191,36,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#f7971e 0%,#ffd200 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                📖</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 10 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#56ab2f 0%,#a8e063 100%);">
+                <span>10</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#86efac;background:rgba(134,239,172,0.1);border-color:rgba(134,239,172,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">⚽</span>จิตอาสา</span>
+              <h3 class="policy-slide-title">สภาพาทำจิตอาสา</h3>
+              <p class="policy-slide-subtitle">ส่งเสริมกิจกรรมและการออกกำลังกาย</p>
+              <p class="policy-slide-description">บริการยืมลูกบาสเกตบอล ฟุตบอล หรืออุปกรณ์กีฬาอื่นๆ
+                ในช่วงพักเที่ยงและหลังเลิกเรียนได้ง่ายๆ เพียงใช้บัตรนักเรียน
+                เพื่อส่งเสริมสุขภาพและลดเวลาว่างให้เป็นประโยชน์</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#56ab2f 0%,#a8e063 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#56ab2f 0%,#a8e063 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">⚽</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(134,239,172,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#56ab2f 0%,#a8e063 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                ⚽</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 11 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#c94b4b 0%,#4b134f 100%);">
+                <span>11</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#f87171;background:rgba(248,113,113,0.1);border-color:rgba(248,113,113,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">♻️</span>สิ่งแวดล้อม</span>
+              <h3 class="policy-slide-title">ขยะแลกแต้มสะสม</h3>
+              <p class="policy-slide-subtitle">รณรงค์คัดแยกขยะเพื่อโลกสีเขียว</p>
+              <p class="policy-slide-description">รณรงค์คัดแยกขยะพลาสติกและขวดน้ำ
+                เพื่อนำมาแลกแต้มรางวัลหรือของที่ระลึกของพรรค เพื่อลดปริมาณขยะและรักษาสิ่งแวดล้อมที่สะอาดตาในโรงเรียน</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#c94b4b 0%,#4b134f 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#c94b4b 0%,#4b134f 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">♻️</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(248,113,113,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#c94b4b 0%,#4b134f 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                ♻️</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 12 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 100%);">
+                <span>12</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#7dd3fc;background:rgba(125,211,252,0.1);border-color:rgba(125,211,252,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🗳️</span>ความคิดสร้างสรรค์</span>
+              <h3 class="policy-slide-title">บอร์ดเสียงนักเรียน</h3>
+              <p class="policy-slide-subtitle">กล่องรับความคิดเห็นแบบดิจิทัลผ่าน QR</p>
+              <p class="policy-slide-description">เปิดช่องทาง QR Code รับข้อเสนอแนะและไอเดียพัฒนาโรงเรียนจากเพื่อนๆ
+                ได้ทุกที่ทุกเวลา โปร่งใสและอัปเดตผลการดำเนินงานแบบเรียลไทม์ผ่านบอร์ดประชาสัมพันธ์</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🗳️</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(125,211,252,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🗳️</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 13 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);">
+                <span>13</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#a78bfa;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🛡️</span>ความปลอดภัย</span>
+              <h3 class="policy-slide-title">อุ่นใจเดินกลับบ้าน</h3>
+              <p class="policy-slide-subtitle">ประสานงานดูแลความปลอดภัยหน้าโรงเรียน</p>
+              <p class="policy-slide-description">ประสานงานและจัดตั้งอาสาสมัครร่วมกับสารวัตรนักเรียนและครูเวร
+                ช่วยอำนวยความสะดวกและดูแลความปลอดภัยบริเวณหน้าโรงเรียนและจุดรอรถสาธารณะหลังเลิกเรียน</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🛡️</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(139,92,246,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🛡️</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 14 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);">
+                <span>14</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#34d399;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🩹</span>สุขภาพ</span>
+              <h3 class="policy-slide-title">ตู้ยาสามัญประจำชั้น</h3>
+              <p class="policy-slide-subtitle">ดูแลปฐมพยาบาลเบื้องต้นอย่างรวดเร็ว</p>
+              <p class="policy-slide-description">จัดตั้งตู้ยาสามัญและอุปกรณ์ปฐมพยาบาลขนาดเล็กในแต่ละชั้นเรียน
+                เพื่อความสะดวกรวดเร็วในการรักษาเบื้องต้นโดยไม่ต้องเดินไปห้องพยาบาลในกรณีไม่รุนแรง</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🩹</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(16,185,129,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🩹</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 15 -->
+          <div class="policy-slide" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(-50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+                <span>15</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#38bdf8;background:rgba(14,165,233,0.1);border-color:rgba(14,165,233,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🎸</span>ศิลปวัฒนธรรม</span>
+              <h3 class="policy-slide-title">ลานดนตรีสร้างสรรค์</h3>
+              <p class="policy-slide-subtitle">พื้นที่แสดงความสามารถทางดนตรีช่วงพัก</p>
+              <p class="policy-slide-description">
+                เปิดโอกาสให้วงดนตรีและศิลปินรุ่นใหม่ของโรงเรียนได้แสดงความสามารถในช่วงพักกลางวันของวันศุกร์
+                สร้างบรรยากาศผ่อนคลายและลดความเครียดจากการเรียน</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🎸</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(270deg,rgba(14,165,233,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🎸</div>
+            </div>
+          </div>
+
+          <!-- นโยบาย 16 -->
+          <div class="policy-slide policy-slide-reversed" style="opacity:0;transform:translateY(80px);">
+            <div class="policy-slide-content" style="opacity:0;transform:translateX(50px);">
+              <div class="policy-number-badge" style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);">
+                <span>16</span>
+              </div>
+              <span class="policy-slide-tag"
+                style="color:#fb7185;background:rgba(244,63,94,0.1);border-color:rgba(244,63,94,0.2);"><span
+                  style="font-size:.85rem;margin-right:4px;">🥤</span>สวัสดิการ</span>
+              <h3 class="policy-slide-title">สภาเปิดการมองเห็น</h3>
+              <p class="policy-slide-subtitle">ตรวจสอบและปรับปรุงคุณภาพน้ำดื่มสม่ำเสมอ</p>
+              <p class="policy-slide-description">
+                ร่วมมือกับฝ่ายอาคารสถานที่ในการตรวจสอบและเปลี่ยนไส้กรองตู้น้ำดื่มสม่ำเสมอ
+                เพื่อให้นักเรียนทุกคนมีน้ำดื่มที่สะอาด ปลอดภัย และเย็นชื่นใจบริการตลอดทั้งวัน</p>
+              <div class="policy-slide-line" style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);"></div>
+            </div>
+            <div class="policy-slide-image-wrapper" style="opacity:0;transform:translateX(-50px) scale(0.9);">
+              <div class="policy-slide-image-glow" style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);">
+              </div>
+              <div class="policy-slide-image-container">
+                <div class="image-placeholder">
+                  <div style="font-size:4rem;">🥤</div>
+                </div>
+                <div class="policy-slide-image-overlay"
+                  style="background:linear-gradient(90deg,rgba(244,63,94,0.25) 0%,transparent 50%);"></div>
+              </div>
+              <div class="policy-slide-floating-icon"
+                style="background:linear-gradient(135deg,#fa709a 0%,#fee140 100%);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:white;">
+                🥤</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div style="opacity: 0; transform: translateY(30px);">
+      <h2 class="footer-slogan">พร้อมเคียงข้างทุกความฝัน พร้อมสร้างสรรค์ทุกรอยยิ้ม </h2>
+      <p class="footer-tagline">จากไอเดียสู่การลงมือทำ</p>
+      <div class="footer-divider"></div>
+
+      <a href="https://www.instagram.com/pakpingg_/" target="_blank" rel="noopener noreferrer"
+        class="footer-social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          style="display: inline-block; vertical-align: middle;">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>@pakpingg_</span>
+      </a>
+
+      <p class="footer-disclaimer">
+        เว็บไซต์นี้จัดทำขึ้นเพื่อการแนะนำพรรคสภานักเรียน &quot;พรรคพิง&quot; ผู้สมัครหมายเลข 2
+        สำหรับการเลือกตั้งสภานักเรียน ประจำปีการศึกษา 2569
+      </p>
+      <p class="footer-copyright">
+        &copy; 2569 พรรคพิง | โรงเรียนอ่าวลึกประชาสรรค์
+      </p>
+      <p class="footer-copyright" style="margin-top: 0.5rem;">
+        Develop By Max &amp; Bonus
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

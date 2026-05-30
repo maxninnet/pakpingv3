@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สมาชิกของเรา | พรรคพิง (PAKPING)</title>
+  <meta name="description"
+    content="พรรคพิง (PAKPING) ผู้สมัครเลือกตั้งสภานักเรียนโรงเรียนศรีเมืองวิทยาคาร เบอร์ 3 พร้อมผลักดันทุกนโยบายเพื่อนักเรียนทุกคน ภายใต้แนวคิด 'จากไอเดียสู่การลงมือทำ'">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+
+<body class="dark-theme">
+
+  <div class="noise-overlay" aria-hidden="true" style="left: 432px; top: 25px;"></div>
+  <div class="scroll-progress-bar" id="scrollBar" style="transform: scaleX(0);"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__container">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon" style="overflow: hidden;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+        </div>
+        <span class="navbar__logo-text">พรรคพิง PAKPING</span>
+      </a>
+      <ul class="navbar__menu">
+        <li class="navbar__item"><a href="index.html" class="navbar__link">หน้าแรก</a></li>
+        <li class="navbar__item"><a href="policy.html" class="navbar__link">นโยบาย</a></li>
+        <li class="navbar__item"><a href="team.html" class="navbar__link navbar__link--active">สมาชิก</a></li>
+        <li class="navbar__item"><a href="announcements.html" class="navbar__link">ข่าวสารและประกาศ</a></li>
+        <li class="navbar__item"><a href="report.html" class="navbar__link">แจ้งปัญหา</a></li>
+      </ul>
+      <button class="navbar__toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-nav" id="mobileMenu">
+    <div class="mobile-nav__content">
+      <div class="mobile-nav__header">
+        <a href="index.html" class="mobile-nav__logo" style="display: flex; align-items: center;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover; margin-right: 0.5rem;">
+          <span>พรรคพิง PAKPING</span>
+        </a>
+        <button class="mobile-nav__close" id="menuClose">&times;</button>
+      </div>
+      <ul class="mobile-nav__menu">
+        <li><a href="index.html" class="mobile-nav__link">หน้าแรก</a></li>
+        <li><a href="policy.html" class="mobile-nav__link">นโยบาย</a></li>
+        <li><a href="team.html" class="mobile-nav__link mobile-nav__link--active">สมาชิก</a></li>
+        <li><a href="announcements.html" class="mobile-nav__link">ข่าวสารและประกาศ</a></li>
+        <li><a href="report.html" class="mobile-nav__link">แจ้งปัญหา</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main style="flex: 1;">
+    <div class="particle-background">
+      <div class="hero-gradient-orb orb-1" style="position: absolute; top: -10%; right: -10%;"></div>
+      <div class="hero-gradient-orb orb-2" style="position: absolute; bottom: -10%; left: -10%;"></div>
+      <div class="hero-gradient-orb orb-3" style="position: absolute; top: 40%; left: 30%;"></div>
+      <canvas id="particlesCanvas"></canvas>
+    </div>
+
+    <div style="height: 80px;"></div>
+
+    <!-- Leadership Section -->
+    <section class="leadership-section-v2" style="position: relative; overflow: hidden;">
+      <div class="leadership-bg-pattern"></div>
+
+      <!-- Animated Background Layer -->
+      <div class="team-bg-anim" aria-hidden="true">
+        <div class="team-orb team-orb-1"></div>
+        <div class="team-orb team-orb-2"></div>
+        <div class="team-orb team-orb-3"></div>
+        <div class="team-grid-overlay"></div>
+        <div class="team-particle" style="--x:8%;--y:12%;--d:4s;--size:5px;--delay:0s;"></div>
+        <div class="team-particle" style="--x:20%;--y:65%;--d:5s;--size:4px;--delay:0.7s;"></div>
+        <div class="team-particle" style="--x:45%;--y:25%;--d:6s;--size:6px;--delay:1.2s;"></div>
+        <div class="team-particle" style="--x:70%;--y:75%;--d:3.5s;--size:4px;--delay:0.3s;"></div>
+        <div class="team-particle" style="--x:88%;--y:18%;--d:4.5s;--size:5px;--delay:1.8s;"></div>
+        <div class="team-particle" style="--x:35%;--y:85%;--d:5.5s;--size:3px;--delay:0.5s;"></div>
+        <div class="team-pulse-ring team-pulse-ring-1"></div>
+        <div class="team-pulse-ring team-pulse-ring-2"></div>
+      </div>
+
+      <div class="leadership-main-container" style="position: relative; z-index: 1;">
+
+        <div class="org-header-centered" style="opacity: 0; transform: translateY(20px);">
+          <div class="org-header-icon-wrapper"
+            style="background: rgba(250, 204, 21, 0.08); border-color: rgba(250, 204, 21, 0.2); color: #fac800;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <h2 class="section-title">คณะกรรมการบริหาร</h2>
+          <p class="section-description">ทีมผู้นำวิสัยทัศน์ที่พร้อมทุ่มเทขับเคลื่อนทุกนโยบายให้เป็นรูปธรรม</p>
+        </div>
+
+        <div class="leadership-cards-grid">
+
+          <div class="leader-card-v2 glow-card"
+            style="--accent-color: #ffd700; opacity: 0; transform: translateY(50px) rotateX(-10deg);">
+            <div class="leader-card-image-area">
+              <img src="images/BEEE1.jpg" alt="หัวหน้าพรรค PAKPING" class="leader-card-photo">
+              <div class="leader-card-image-gradient"></div>
+              <div class="leader-icon-badge" style="background: #ffd700; color: #1a1a2e;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                  <path d="M4 22h16"></path>
+                  <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path>
+                  <path d="M12 2a4 4 0 0 1 4 4v5a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="leader-card-content">
+              <div class="leader-card-position" style="color: #d4af37;">นายวีรภัทร แถวทัศ</div>
+              <h3 class="leader-card-role">หัวหน้าพรรค PAKPING</h3>
+              <p class="leader-card-desc">ทำหน้าที่กำหนดวิสัยทัศน์ วางกรอบเป้าหมาย
+                และเป็นผู้นำทัพในการผลักดันนโยบายสำคัญทุกด้าน</p>
+              <div class="leader-card-accent-bar" style="background: #ffd700;"></div>
+            </div>
+          </div>
+
+          <div class="leader-card-v2 glow-card"
+            style="--accent-color: #c0c0c0; opacity: 0; transform: translateY(50px) rotateX(-10deg);">
+            <div class="leader-card-image-area">
+              <img src="images/BEEE2.jpg" alt="หัวหน้าพรรค PAKPING" class="leader-card-photo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 330" width="100%" height="100%"
+                style="display: block;">
+                <defs>
+                  <linearGradient id="silver-crest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#141824" />
+                    <stop offset="100%" stop-color="#07090f" />
+                  </linearGradient>
+                  <linearGradient id="silver-neon" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#cbd5e1" />
+                    <stop offset="100%" stop-color="#94a3b8" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#silver-crest-grad)" />
+                <path
+                  d="M 0 33 L 300 33 M 0 66 L 300 66 M 0 99 L 300 99 M 0 132 L 300 132 M 0 165 L 300 165 M 0 198 L 300 198 M 0 231 L 300 231 M 0 264 L 300 264 M 0 297 L 300 297"
+                  stroke="rgba(203,213,225,0.02)" stroke-width="1" />
+                <circle cx="150" cy="165" r="90" fill="none" stroke="url(#silver-neon)" stroke-width="1.5"
+                  stroke-dasharray="8 6" opacity="0.3" filter="drop-shadow(0 0 5px rgba(203, 213, 225, 0.2))" />
+                <g transform="translate(115, 120) scale(1.6)">
+                  <polygon points="25 2, 32 17, 48 19, 36 30, 40 46, 25 38, 10 46, 14 30, 2 19, 18 17" fill="none"
+                    stroke="url(#silver-neon)" stroke-width="2" />
+                </g>
+                <text x="150" y="270" text-anchor="middle" fill="#cbd5e1" font-family="'Outfit', sans-serif"
+                  font-size="11" font-weight="900" letter-spacing="3">PAKPING VICE PRESIDENT</text>
+              </svg>
+              <div class="leader-card-image-gradient"></div>
+              <div class="leader-icon-badge" style="background: #c0c0c0; color: #1a1a2e;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                  </polygon>
+                </svg>
+              </div>
+            </div>
+            <div class="leader-card-content">
+              <div class="leader-card-position" style="color: #8a8a8a;">น.ส.นภัสกร สุดดวง</div>
+              <h3 class="leader-card-role">รองหัวหน้าพรรค คนที่1</h3>
+              <p class="leader-card-desc">ทำหน้าที่บริหารแผนงาน ประสานงานกับฝ่ายปฏิบัติต่างๆ
+                และสนับสนุนงานของหัวหน้าพรรคในทุกภารกิจ</p>
+              <div class="leader-card-accent-bar" style="background: #c0c0c0;"></div>
+            </div>
+          </div>
+
+          <div class="leader-card-v2 glow-card"
+            style="--accent-color: #c0c0c0; opacity: 0; transform: translateY(50px) rotateX(-10deg);">
+            <div class="leader-card-image-area">
+              <img src="images/BEEE3.jpg" alt="หัวหน้าพรรค PAKPING" class="leader-card-photo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 330" width="100%" height="100%"
+                style="display: block;">
+                <defs>
+                  <linearGradient id="silver-crest-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#141824" />
+                    <stop offset="100%" stop-color="#07090f" />
+                  </linearGradient>
+                  <linearGradient id="silver-neon-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#cbd5e1" />
+                    <stop offset="100%" stop-color="#94a3b8" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#silver-crest-grad-2)" />
+                <path
+                  d="M 0 33 L 300 33 M 0 66 L 300 66 M 0 99 L 300 99 M 0 132 L 300 132 M 0 165 L 300 165 M 0 198 L 300 198 M 0 231 L 300 231 M 0 264 L 300 264 M 0 297 L 300 297"
+                  stroke="rgba(203,213,225,0.02)" stroke-width="1" />
+                <circle cx="150" cy="165" r="90" fill="none" stroke="url(#silver-neon-2)" stroke-width="1.5"
+                  stroke-dasharray="8 6" opacity="0.3" filter="drop-shadow(0 0 5px rgba(203, 213, 225, 0.2))" />
+                <g transform="translate(115, 120) scale(1.6)">
+                  <polygon points="25 2, 32 17, 48 19, 36 30, 40 46, 25 38, 10 46, 14 30, 2 19, 18 17" fill="none"
+                    stroke="url(#silver-neon-2)" stroke-width="2" />
+                </g>
+                <text x="150" y="270" text-anchor="middle" fill="#cbd5e1" font-family="'Outfit', sans-serif"
+                  font-size="11" font-weight="900" letter-spacing="3">PAKPING VICE PRESIDENT</text>
+              </svg>
+              <div class="leader-card-image-gradient"></div>
+              <div class="leader-icon-badge" style="background: #c0c0c0; color: #1a1a2e;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                  </polygon>
+                </svg>
+              </div>
+            </div>
+            <div class="leader-card-content">
+              <div class="leader-card-position" style="color: #8a8a8a;">น.ส.ดวงกมล บุญยัษเฐียร</div>
+              <h3 class="leader-card-role">รองหัวหน้าพรรค คนที่2</h3>
+              <p class="leader-card-desc">ทำหน้าที่บริหารแผนงาน ประสานงานกับฝ่ายปฏิบัติต่างๆ
+                และสนับสนุนงานของหัวหน้าพรรคในทุกภารกิจ</p>
+              <div class="leader-card-accent-bar" style="background: #c0c0c0;"></div>
+            </div>
+          </div>
+
+          <div class="leader-card-v2 glow-card"
+            style="--accent-color: #cd7f32; opacity: 0; transform: translateY(50px) rotateX(-10deg);">
+            <div class="leader-card-image-area">
+              <img src="images/BEEE4.jpg" alt="หัวหน้าพรรค PAKPING" class="leader-card-photo">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 330" width="100%" height="100%"
+                style="display: block;">
+                <defs>
+                  <linearGradient id="bronze-crest-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1f140f" />
+                    <stop offset="100%" stop-color="#0a0705" />
+                  </linearGradient>
+                  <linearGradient id="bronze-neon" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#cd7f32" />
+                    <stop offset="100%" stop-color="#b87333" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#bronze-crest-grad)" />
+                <path
+                  d="M 0 33 L 300 33 M 0 66 L 300 66 M 0 99 L 300 99 M 0 132 L 300 132 M 0 165 L 300 165 M 0 198 L 300 198 M 0 231 L 300 231 M 0 264 L 300 264 M 0 297 L 300 297"
+                  stroke="rgba(205,127,50,0.02)" stroke-width="1" />
+                <circle cx="150" cy="165" r="90" fill="none" stroke="url(#bronze-neon)" stroke-width="1.5"
+                  stroke-dasharray="8 6" opacity="0.3" filter="drop-shadow(0 0 5px rgba(205, 127, 50, 0.2))" />
+                <g transform="translate(115, 120) scale(1.6)">
+                  <path d="M 10 5 L 40 5 L 40 25 C 40 38 25 45 25 45 C 25 45 10 38 10 25 Z" fill="none"
+                    stroke="url(#bronze-neon)" stroke-width="2" />
+                  <line x1="25" y1="5" x2="25" y2="44" stroke="url(#bronze-neon)" stroke-width="1"
+                    stroke-dasharray="2 2" />
+                </g>
+                <text x="150" y="270" text-anchor="middle" fill="#cd7f32" font-family="'Outfit', sans-serif"
+                  font-size="11" font-weight="900" letter-spacing="3">PAKPING SECRETARY</text>
+              </svg>
+              <div class="leader-card-image-gradient"></div>
+              <div class="leader-icon-badge" style="background: #cd7f32; color: #1a1a2e;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="leader-card-content">
+              <div class="leader-card-position" style="color: #b87333;">น.ส.กมลวรรณ หนูเอียด</div>
+              <h3 class="leader-card-role">เลขาธิการ</h3>
+              <p class="leader-card-desc">ทำหน้าที่ควบคุมการจัดทำข้อมูล วาระการประชุม ดูแลระบบเอกสาร
+                และประเมินประสิทธิผลงานโดยภาพรวม</p>
+              <div class="leader-card-accent-bar" style="background: #cd7f32;"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Flow Chart Section -->
+    <section class="organization-section" id="organization" style="position: relative; overflow: hidden;">
+
+      <!-- Animated Background Layer -->
+      <div class="team-org-bg-anim" aria-hidden="true">
+        <div class="team-org-orb team-org-orb-1"></div>
+        <div class="team-org-orb team-org-orb-2"></div>
+        <div class="team-org-mesh"></div>
+        <div class="team-particle" style="--x:15%;--y:20%;--d:5s;--size:4px;--delay:0.2s;"></div>
+        <div class="team-particle" style="--x:55%;--y:10%;--d:4s;--size:6px;--delay:1s;"></div>
+        <div class="team-particle" style="--x:80%;--y:60%;--d:6s;--size:3px;--delay:0.6s;"></div>
+        <div class="team-particle" style="--x:30%;--y:80%;--d:3.5s;--size:5px;--delay:1.4s;"></div>
+        <div class="team-particle" style="--x:65%;--y:40%;--d:5.5s;--size:4px;--delay:0.9s;"></div>
+        <div class="team-aurora-wave"></div>
+      </div>
+
+      <div class="section-container" style="position: relative; z-index: 1;">
+
+        <div class="org-header-centered" style="opacity: 0; transform: scale(0.9);">
+          <div class="org-header-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h2 class="section-title">บทบาทและหน้าที่</h2>
+          <p class="section-description">โครงสร้างทีมงานและการแบ่งภารกิจเพื่อประสิทธิภาพในการทำงานจริง</p>
+        </div>
+
+        <div class="org-flow-wrapper">
+          <div class="org-flow-line-desktop"></div>
+
+          <div class="org-flow-list">
+
+            <!-- Flow Item 1: PR (Left) -->
+            <div class="org-flow-item left" style="opacity: 0; transform: translateX(-50px);">
+              <div class="org-connector-node">
+                <div class="org-dot" style="background: #8b5cf6;"></div>
+                <div class="org-line-to-card"></div>
+              </div>
+              <div class="org-flow-card glow-card" style="--accent-color: #8b5cf6;">
+                <div class="org-icon-floating" style="color: #8b5cf6; background: rgba(139, 92, 246, 0.08);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z">
+                    </path>
+                    <path d="M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14"></path>
+                    <line x1="8" y1="6" x2="8" y2="14"></line>
+                  </svg>
+                </div>
+                <div class="org-content-body">
+                  <h3 class="org-flow-title">ฝ่ายประชาสัมพันธ์</h3>
+                  <p class="org-flow-desc">กระบอกเสียงสำคัญ รับผิดชอบเผยแพร่ข้อมูลและสื่อสารสู่เพื่อนๆ ทุกคนอย่างรวดเร็ว
+                  </p>
+                  <div class="org-flow-badge">5 สมาชิกแกนนำ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow Item 2: Design (Right) -->
+            <div class="org-flow-item right" style="opacity: 0; transform: translateX(50px);">
+              <div class="org-connector-node">
+                <div class="org-dot" style="background: #d946ef;"></div>
+                <div class="org-line-to-card"></div>
+              </div>
+              <div class="org-flow-card glow-card" style="--accent-color: #d946ef;">
+                <div class="org-icon-floating" style="color: #d946ef; background: rgba(217, 70, 239, 0.08);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                    </path>
+                    <path d="M2 12h20"></path>
+                  </svg>
+                </div>
+                <div class="org-content-body">
+                  <h3 class="org-flow-title">ฝ่ายบริหาร</h3>
+                  <p class="org-flow-desc">บริหารและจัดการงานของสภาฯในด้านต่างๆ</p>
+                  <div class="org-flow-badge">4 สมาชิกแกนนำ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow Item 3: Activity (Left) -->
+            <div class="org-flow-item left" style="opacity: 0; transform: translateX(-50px);">
+              <div class="org-connector-node">
+                <div class="org-dot" style="background: #6366f1;"></div>
+                <div class="org-line-to-card"></div>
+              </div>
+              <div class="org-flow-card glow-card" style="--accent-color: #6366f1;">
+                <div class="org-icon-floating" style="color: #6366f1; background: rgba(99, 102, 241, 0.08);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </div>
+                <div class="org-content-body">
+                  <h3 class="org-flow-title">ฝ่ายวิชาการ</h3>
+                  <p class="org-flow-desc">ดูแลด้านวิชาการ วิจัยข้อมูล จัดทำคู่มือและข้อมูลสนับสนุนการทำงานของพรรค</p>
+                  <div class="org-flow-badge">5 สมาชิกแกนนำ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow Item 4: Academic (Right) -->
+            <div class="org-flow-item right" style="opacity: 0; transform: translateX(50px);">
+              <div class="org-connector-node">
+                <div class="org-dot" style="background: #10b981;"></div>
+                <div class="org-line-to-card"></div>
+              </div>
+              <div class="org-flow-card glow-card" style="--accent-color: #10b981;">
+                <div class="org-icon-floating" style="color: #10b981; background: rgba(16, 185, 129, 0.08);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </svg>
+                </div>
+                <div class="org-content-body">
+                  <h3 class="org-flow-title">ฝ่ายอำนวยการ</h3>
+                  <p class="org-flow-desc">ดูแลความเรียบร้อยและสนับสนุนการทำงานของสภาฯ
+                  </p>
+                  <div class="org-flow-badge">6 สมาชิกแกนนำ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow Item 5: Welfare (Left) -->
+            <div class="org-flow-item left" style="opacity: 0; transform: translateX(-50px);">
+              <div class="org-connector-node">
+                <div class="org-dot" style="background: #f59e0b;"></div>
+                <div class="org-line-to-card"></div>
+              </div>
+              <div class="org-flow-card glow-card" style="--accent-color: #f59e0b;">
+                <div class="org-icon-floating" style="color: #f59e0b; background: rgba(245, 158, 11, 0.08);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"></path>
+                    <path d="M12 7v10"></path>
+                    <path d="M8 11h8"></path>
+                  </svg>
+                </div>
+                <div class="org-content-body">
+                  <h3 class="org-flow-title">ฝ่ายกิจการนักเรียน</h3>
+                  <p class="org-flow-desc">ดูแลสวัสดิภาพ ขวัญกำลังใจ และกิจกรรมสันทนาการเพื่อความสุขของเพื่อนๆ
+                  </p>
+                  <div class="org-flow-badge">5 สมาชิกแกนนำ</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow Item 6: Foreign Affairs (Right) -->
+            <div class="org-flow-item right" style="opacity: 0; transform: translateX(50px);">
+              <div class="org-connector-node">
+                <div class="org-dot" style="background: #ef4444;"></div>
+                <div class="org-line-to-card"></div>
+              </div>
+              <div class="org-flow-card glow-card" style="--accent-color: #ef4444;">
+                <div class="org-icon-floating" style="color: #ef4444; background: rgba(239, 68, 68, 0.08);">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                    </path>
+                  </svg>
+                </div>
+                <div class="org-content-body">
+                  <h3 class="org-flow-title">ฝ่ายประสานงาน&สื่อโสตทัศน์</h3>
+                  <p class="org-flow-desc">เชื่อมสัมพันธ์ระหว่างนักเรียน สื่อสารผลงาน
+                    และดูแลงานประชาสัมพันธ์ให้ฝ่ายต่างๆ
+                  </p>
+                  <div class="org-flow-badge">5 สมาชิกแกนนำ</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Flow Footer Stat Box -->
+          <div class="org-footer-stat" style="opacity: 0; transform: translateY(20px);">
+            <div class="stat-container">
+              <div class="stat-connector-top"></div>
+              <div class="stat-box-glass glow-card">
+                <div class="stat-glow-effect"></div>
+                <div class="stat-content-inner">
+                  <div class="stat-icon-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </div>
+                  <div class="stat-text-group">
+                    <div class="stat-big-number">30<span class="stat-suffix">+</span></div>
+                    <div class="stat-desc">สมาชิกทีมทั้งหมดทั่วโรงเรียน</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Team Slider Section -->
+    <section class="section section-team overflow-hidden" id="team"
+      style="background: var(--bg-dark-secondary); padding: 6rem 0;">
+      <div class="section-container mb-12">
+        <div class="section-header" style="opacity: 0; transform: translateY(50px);">
+          <span class="section-label">สมาชิกพรรคพิง</span>
+          <h2 class="section-title">สมาชิกที่หลากหลาย</h2>
+          <p class="section-description">รวมพลังคนรุ่นใหม่จากทุกห้อง ทุกสายชั้น มุ่งมั่นตั้งใจพัฒนาเพื่อพวกเราทุกคน</p>
+        </div>
+      </div>
+
+      <div class="relative w-full py-10 flex flex-col gap-8">
+        <div class="team-carousel-track no-scrollbar" id="fullTeamCarousel"
+          style="opacity: 0; transform: translateY(30px);">
+          <!-- Dynamically populated 61 team members -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div style="opacity: 0; transform: translateY(30px);">
+      <h2 class="footer-slogan">พร้อมเคียงข้างทุกความฝัน พร้อมสร้างสรรค์ทุกรอยยิ้ม </h2>
+      <p class="footer-tagline">จากไอเดียสู่การลงมือทำ</p>
+      <div class="footer-divider"></div>
+
+      <a href="https://www.instagram.com/pakpingg_/" target="_blank" rel="noopener noreferrer"
+        class="footer-social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          style="display: inline-block; vertical-align: middle;">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>@pakpingg_</span>
+      </a>
+
+      <p class="footer-disclaimer">
+        เว็บไซต์นี้จัดทำขึ้นเพื่อการแนะนำพรรคสภานักเรียน &quot;พรรคพิง&quot; ผู้สมัครหมายเลข 2
+        สำหรับการเลือกตั้งสภานักเรียนโรงเรียนอ่าวลึกประชาสรรค์ ประจำปีการศึกษา 2569
+      </p>
+      <p class="footer-copyright">
+        &copy; 2569 พรรคพิง | โรงเรียนอ่าวลึกประชาสรรค์
+      </p>
+      <p class="footer-copyright" style="margin-top: 0.5rem;">
+        Develop By Max &amp; Bonus
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

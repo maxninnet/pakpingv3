@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>พรรคพิง (PAKPING) | เบอร์ 2 - พร้อมเคียงข้างทุกความฝัน พร้อมสร้างสรรรค์ทุกรอยยิ้ม</title>
+  <meta name="description"
+    content="พรรคพิง (PAKPING) ผู้สมัครเลือกตั้งสภานักเรียนโรงเรียนอ่าวลึกประชาสรรค์ เบอร์ 2 พร้อมผลักดันทุกนโยบายเพื่อนักเรียนทุกคน ภายใต้แนวคิด 'จากไอเดียสู่การลงมือทำ'">
+  <meta name="author" content="พรรคพิง Tech Team">
+  <meta name="keywords"
+    content="พรรคพิง,พรรค PAKPING,เบอร์ 2,สภานักเรียน,เลือกตั้งสภานักเรียน,โรงเรียนอ่าวลึกประชาสรรค์,Student Council,AoLuekPrachasan School">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+</head>
+
+<body class="dark-theme">
+
+  <div class="noise-overlay" aria-hidden="true" style="left: -117px; top: 88px;"></div>
+  <div class="scroll-progress-bar" id="scrollBar" style="transform: scaleX(0);"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__container">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon" style="overflow: hidden;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+        </div>
+        <span class="navbar__logo-text">พรรคพิง PAKPING</span>
+      </a>
+      <ul class="navbar__menu">
+        <li class="navbar__item"><a href="index.html" class="navbar__link navbar__link--active">หน้าแรก</a></li>
+        <li class="navbar__item"><a href="policy.html" class="navbar__link">นโยบาย</a></li>
+        <li class="navbar__item"><a href="team.html" class="navbar__link">สมาชิก</a></li>
+        <li class="navbar__item"><a href="announcements.html" class="navbar__link">ข่าวสารและประกาศ</a></li>
+        <li class="navbar__item"><a href="report.html" class="navbar__link">แจ้งปัญหา</a></li>
+      </ul>
+      <button class="navbar__toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-nav" id="mobileMenu">
+    <div class="mobile-nav__content">
+      <div class="mobile-nav__header">
+        <a href="index.html" class="mobile-nav__logo" style="display: flex; align-items: center;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover; margin-right: 0.5rem;">
+          <span>พรรคพิง PAKPING</span>
+        </a>
+        <button class="mobile-nav__close" id="menuClose">&times;</button>
+      </div>
+      <ul class="mobile-nav__menu">
+        <li><a href="index.html" class="mobile-nav__link mobile-nav__link--active">หน้าแรก</a></li>
+        <li><a href="policy.html" class="mobile-nav__link">นโยบาย</a></li>
+        <li><a href="team.html" class="mobile-nav__link">สมาชิก</a></li>
+        <li><a href="announcements.html" class="mobile-nav__link">ข่าวสารและประกาศ</a></li>
+        <li><a href="report.html" class="mobile-nav__link">แจ้งปัญหา</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main style="flex: 1;">
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="hero-background">
+        <div class="hero-gradient-orb orb-1"></div>
+        <div class="hero-gradient-orb orb-2"></div>
+        <div class="hero-gradient-orb orb-3"></div>
+      </div>
+
+      <div class="hero-decorations">
+        <div class="hero-deco hero-deco-1"></div>
+        <div class="hero-deco hero-deco-2"></div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-number-badge" style="opacity: 0; transform: scale(0.5);">
+            <span class="hero-number">2</span>
+            <span class="hero-number-label">ผู้สมัคร</span>
+          </div>
+
+          <div class="hero-tagline" style="opacity: 0; transform: translateY(30px);">
+            <img src="images/logo.jpg" alt="พรรคพิง Logo"
+              style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255, 255, 255, 0.8);">
+            <span>ผู้ลงสมัครเลือกตั้งสภานักเรียน</span>
+          </div>
+
+          <h1 class="hero-title" style="opacity: 0; transform: translateY(50px) scale(0.95);">
+            พรรค <span>PAKPING</span>
+          </h1>
+
+          <div class="hero-slogan-wrapper" style="opacity: 0; transform: translateY(30px);">
+            <span class="hero-tagline-accent">พรรคพิง</span>
+            <span class="hero-slogan-sub">จากไอเดียสู่การลงมือทำ</span>
+          </div>
+
+          <p class="hero-subtitle" style="opacity: 0; transform: translateY(20px);">
+            <span>DEVELOP • UNITE • NEXT</span>
+          </p>
+
+          <div class="btn-group" style="opacity: 0; transform: translateY(20px);">
+            <a href="policy.html" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+              ดูนโยบาย
+            </a>
+            <a href="team.html" class="btn btn-secondary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              รู้จักทีมงาน
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-image-wrapper" style="opacity: 0; transform: translateX(50px) scale(0.8);">
+          <div class="hero-image-glow"></div>
+          <div style="position: relative; width: 100%; max-width: 430px; padding-bottom: 125%; margin: 0 auto;">
+            <div class="hero-image-container" id="heroCard"
+              style="position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(139, 92, 246, 0.25), 0 10px 30px rgba(0,0,0,0.1);">
+              <img src="images/nin.jpg" alt="พรรคพิง PAKPING" class="hero-image"
+                style="width: 100%; height: 100%; object-fit: cover; display: block;">
+              <!-- Gradient overlay on bottom -->
+              <div
+                style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(124,58,237,0.55) 0%, transparent 60%); border-radius: 20px;">
+              </div>
+              <!-- Number badge overlay -->
+              <div
+                style="position: absolute; top: 16px; left: 16px; background: linear-gradient(135deg, #8b5cf6, #d946ef); color: white; border-radius: 12px; padding: 6px 14px; font-family: 'Kanit', sans-serif; font-size: 1.1rem; font-weight: 900; box-shadow: 0 4px 16px rgba(139,92,246,0.4);">
+                เบอร์ 2
+              </div>
+              <!-- Bottom label -->
+              <div style="position: absolute; bottom: 16px; left: 16px; right: 16px;">
+                <div
+                  style="font-family: 'Kanit', sans-serif; font-size: 1.2rem; font-weight: 800; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.4);">
+                  พรรคพิง (PAKPING)</div>
+                <div style="font-family: 'Kanit', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.85);">
+                  พร้อมเคียงข้างทุกความฝัน พร้อมสร้างสรรค์ทุกรอยยิ้ม</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" style="opacity: 0;">
+        <span class="scroll-text">เลื่อนลง</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="section-container">
+        <div class="stats-grid" style="opacity: 0; transform: translateY(50px);">
+
+          <div style="opacity: 0; transform: translateY(30px) scale(0.9);">
+            <div class="stat-card glow-card" data-tilt>
+              <div class="stat-icon float"
+                style="background-color: rgba(139, 92, 246, 0.08); color: var(--primary-500);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div class="stat-value" style="color: var(--primary-500);" data-count="30">0</div>
+              <div class="stat-label">สมาชิกพรรค</div>
+            </div>
+          </div>
+
+          <div style="opacity: 0; transform: translateY(30px) scale(0.9);">
+            <div class="stat-card glow-card" data-tilt>
+              <div class="stat-icon float"
+                style="background-color: rgba(217, 70, 239, 0.08); color: var(--accent-500);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div class="stat-value" style="color: var(--accent-500);" data-count="16">0</div>
+              <div class="stat-label">นโยบายหลัก</div>
+            </div>
+          </div>
+
+          <div style="opacity: 0; transform: translateY(30px) scale(0.9);">
+            <div class="stat-card glow-card" data-tilt>
+              <div class="stat-icon float"
+                style="background-color: rgba(99, 102, 241, 0.08); color: var(--secondary-500);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div class="stat-value" style="color: var(--secondary-500);" data-count="15">0</div>
+              <div class="stat-label">กิจกรรมที่วางแผน</div>
+            </div>
+          </div>
+
+          <div style="opacity: 0; transform: translateY(30px) scale(0.9);">
+            <div class="stat-card glow-card" data-tilt>
+              <div class="stat-icon float" style="background-color: rgba(16, 185, 129, 0.08); color: #10b981;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="7"></circle>
+                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+              </div>
+              <div class="stat-value" style="color: #10b981;" data-count="100">0%</div>
+              <div class="stat-label">ความมุ่งมั่น</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+      <div class="about-background"></div>
+      <div class="section-container" style="position: relative; z-index: 1;">
+
+        <div class="section-header" style="opacity: 0; transform: translateY(50px);">
+          <span class="section-label">เกี่ยวกับเรา</span>
+          <h2 class="section-title">ทำไมต้องพรรค PAKPING?</h2>
+        </div>
+
+        <div class="about-main-grid">
+          <div class="about-team-image-wrapper" style="opacity: 0; transform: translateX(-50px) rotateY(15deg);">
+            <div class="about-team-glow"></div>
+            <div class="about-team-image-container">
+              <img alt="ทีมพรรคพิง PAKPING" width="500" height="350" loading="lazy" class="about-team-image"
+                style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;" src="images/main.jpg">
+              <div class="about-team-logo" style="position: absolute; top: -15px; left: -15px; z-index: 10;">
+                <img src="images/logo.jpg" alt="พรรคพิง Logo"
+                  style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid white; box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3); object-fit: cover;">
+              </div>
+              <div class="about-team-badge">
+                <span class="about-team-badge-number">เบอร์ 2</span>
+                <span class="about-team-badge-text">พรรค PAKPING</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-content-side">
+            <div class="about-intro-card" style="opacity: 0; transform: translateX(30px);">
+              <div
+                style="position: absolute; top: -60px; right: -40px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 60%); border-radius: 50%; filter: blur(30px); z-index: 0; pointer-events: none;">
+              </div>
+              <div
+                style="position: absolute; bottom: -50px; left: -30px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 60%); border-radius: 50%; filter: blur(30px); z-index: 0; pointer-events: none;">
+              </div>
+
+              <div class="about-intro-text">
+                <p
+                  style="color: var(--text-primary); line-height: 1.8; font-size: 1.25rem; font-weight: 500; text-shadow: 0 2px 4px rgba(255,255,255,0.5)">
+                  เพราะชีวิตไม่ได้ต้องการแค่ที่ยืนที่โดดเด่น... แต่ต้องการ <strong
+                    style="color: var(--primary-600); font-weight: 800; font-size: 1.3rem;">&quot;ที่พักพิง&quot;</strong>
+                  ที่อบอุ่นและปลอดภัย
+                </p>
+                <p
+                  style="color: var(--text-primary); line-height: 1.8; font-size: 1.25rem; font-weight: 500; text-shadow: 0 2px 4px rgba(255,255,255,0.5); margin-top: 1.2rem;">
+                  การเลือก <strong style="color: var(--primary-600); font-weight: 800; font-size: 1.3rem;">พรรคพิง เบอร์
+                    2</strong> คือการเลือกความสบายใจในระยะยาว เพราะเราใส่ใจทุกรายละเอียด
+                  พร้อมสร้างสิ่งแวดล้อมที่ดีเพื่อให้ทุกคนเติบโตไปด้วยกันอย่างมั่นคง
+                </p>
+                <p
+                  style="color: var(--text-primary); line-height: 1.8; font-size: 1.25rem; font-weight: 500; text-shadow: 0 2px 4px rgba(255,255,255,0.5); margin-top: 1.2rem;">
+                  เหนื่อยล้าจากไหน... ให้ <strong
+                    style="color: var(--primary-600); font-weight: 800; font-size: 1.3rem;">พรรคพิง เบอร์ 2</strong>
+                  เป็นบ้านและเป็นพลังใจเคียงข้างคุณในทุกวัน
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Bento Grid Spotlight Section (Featured Policies) -->
+    <section class="section section-dark" id="policy" style="position: relative; overflow: hidden;">
+      <!-- Animated Background Layer -->
+      <div class="policy-bg-anim" aria-hidden="true">
+        <div class="policy-orb policy-orb-1"></div>
+        <div class="policy-orb policy-orb-2"></div>
+        <div class="policy-orb policy-orb-3"></div>
+        <div class="policy-grid-overlay"></div>
+        <div class="policy-particle" style="--x:10%;--y:15%;--d:3s;--size:6px;--delay:0s;"></div>
+        <div class="policy-particle" style="--x:25%;--y:70%;--d:4s;--size:4px;--delay:0.5s;"></div>
+        <div class="policy-particle" style="--x:50%;--y:30%;--d:5s;--size:5px;--delay:1s;"></div>
+        <div class="policy-particle" style="--x:75%;--y:80%;--d:3.5s;--size:7px;--delay:1.5s;"></div>
+        <div class="policy-particle" style="--x:85%;--y:20%;--d:4.5s;--size:4px;--delay:0.3s;"></div>
+        <div class="policy-particle" style="--x:40%;--y:55%;--d:6s;--size:5px;--delay:2s;"></div>
+        <div class="policy-particle" style="--x:90%;--y:60%;--d:3s;--size:6px;--delay:0.8s;"></div>
+        <div class="policy-particle" style="--x:60%;--y:10%;--d:5s;--size:4px;--delay:1.2s;"></div>
+        <div class="policy-wave"></div>
+      </div>
+      <div class="section-container" style="position: relative; z-index: 1;">
+
+        <div class="section-header" style="opacity: 0; transform: translateY(50px);">
+          <span class="section-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            นโยบายเด่น
+          </span>
+          <h2 class="section-title">เราจะทำอะไรให้คุณ</h2>
+          <p class="section-description">4 นโยบายไฮไลท์ที่เราพร้อมจะผลักดันให้เกิดขึ้นจริงในทันทีเพื่อทุกคน</p>
+        </div>
+
+        <div class="bento-grid" id="bentoPoliciesGrid">
+          <!-- ข้อมูลจะถูกโหลดแบบ Dynamic ตรงนี้ -->
+          <div class="loading-placeholder"
+            style="grid-column: 1/-1; text-align: center; padding: 6rem 1rem; color: rgba(255, 255, 255, 0.4);">
+            <div
+              style="width: 40px; height: 40px; border: 3px solid rgba(139, 92, 246, 0.1); border-top-color: #8b5cf6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem auto;">
+            </div>
+            <p style="font-size: 1.1rem; font-weight: 500; letter-spacing: 0.05em;">กำลังโหลดข้อมูลนโยบายเด่น...</p>
+          </div>
+        </div>
+
+        <div class="view-all-wrapper" style="opacity: 0; transform: translateY(20px);">
+          <a href="policy.html" class="view-all-btn">
+            <span>ดูนโยบายทั้งหมด</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Team Slider Section -->
+    <section class="section section-team overflow-hidden" id="team">
+      <div class="section-container mb-12">
+        <div class="section-header" style="opacity: 0; transform: translateY(50px);">
+          <span class="section-label">รู้จักทีมงาน</span>
+          <h2 class="section-title">ทีมงานที่หลากหลาย</h2>
+          <p class="section-description">รวมพลังคนรุ่นใหม่จากทุกห้อง ทุกสายชั้น มุ่งมั่นตั้งใจพัฒนาเพื่อพวกเราทุกคน</p>
+        </div>
+      </div>
+
+      <style>
+        @keyframes marquee-scroll {
+          0% {
+            transform: translateX(0);
+          }
+
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        .team-marquee-wrapper {
+          overflow: hidden;
+          width: 100%;
+          position: relative;
+        }
+
+        .team-marquee-inner {
+          display: flex;
+          width: max-content;
+          animation: marquee-scroll 28s linear infinite;
+          will-change: transform;
+        }
+
+        .team-marquee-inner:hover {
+          animation-play-state: paused;
+        }
+      </style>
+
+      <div style="position: relative; width: 100%; padding: 2.5rem 0;">
+        <!-- Fade edges -->
+        <div
+          style="position: absolute; left: 0; top: 0; bottom: 0; width: 80px; background: linear-gradient(to right, var(--bg-dark-secondary), transparent); z-index: 10; pointer-events: none;">
+        </div>
+        <div
+          style="position: absolute; right: 0; top: 0; bottom: 0; width: 80px; background: linear-gradient(to left, var(--bg-dark-secondary), transparent); z-index: 10; pointer-events: none;">
+        </div>
+
+        <div class="team-marquee-wrapper">
+          <div class="team-marquee-inner" id="teamCarousel">
+            <!-- Set 1 (original) -->
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/a.jpg" alt="ฝ่ายบริการ" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายบริการ</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/b.jpg" alt="ฝ่ายวิชาการ" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายวิชาการ</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/c.jpg" alt="ฝ่ายอำนวยการ" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายอำนวยการ</h4>
+                <p class="team-carousel-role">6 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/d.jpg" alt="ฝ่ายกิจการนักเรียน" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายกิจการนักเรียน</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/e.jpg" alt="ฝ่ายประชาสัมพันธ์" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายประชาสัมพันธ์</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/f.jpg" alt="ฝ่ายประสานงาน&สื่อโสตทัศน์" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายประสานงาน&สื่อโสตทัศน์</h4>
+                <p class="team-carousel-role">6 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <!-- Set 2 (duplicate for seamless loop) -->
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/a.jpg" alt="ฝ่ายบริการ" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายบริการ</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/b.jpg" alt="ฝ่ายวิชาการ" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายวิชาการ</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/c.jpg" alt="ฝ่ายอำนวยการ" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายอำนวยการ</h4>
+                <p class="team-carousel-role">6 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/d.jpg" alt="ฝ่ายกิจการนักเรียน" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายกิจการนักเรียน</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/e.jpg" alt="ฝ่ายประชาสัมพันธ์" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายประชาสัมพันธ์</h4>
+                <p class="team-carousel-role">5 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+            <div class="team-carousel-item">
+              <div class="team-carousel-photo">
+                <img src="images/f.jpg" alt="ฝ่ายประสานงาน&สื่อโสตทัศน์" loading="lazy"
+                  style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="team-carousel-content">
+                <h4 class="team-carousel-name">ฝ่ายประสานงาน&สื่อโสตทัศน์</h4>
+                <p class="team-carousel-role">6 สมาชิกแกนนำ</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view-all-wrapper" style="opacity: 0; transform: translateY(20px);">
+        <a href="team.html" class="view-all-btn">
+          <span>รู้จักทีมงานทั้งหมด</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div style="opacity: 0; transform: translateY(30px);">
+      <h2 class="footer-slogan">พร้อมเคียงข้างทุกความฝัน พร้อมสร้างสรรรค์ทุกรอยยิ้ม
+      </h2>
+      <p class="footer-tagline">จากไอเดียสู่การลงมือทำ</p>
+      <div class="footer-divider"></div>
+
+      <a href="https://www.instagram.com/pakpingg_/" target="_blank" rel="noopener noreferrer"
+        class="footer-social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          style="display: inline-block; vertical-align: middle;">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>@pakpingg_</span>
+      </a>
+
+      <p class="footer-disclaimer">
+        เว็บไซต์นี้จัดทำขึ้นเพื่อการแนะนำพรรคสภานักเรียน &quot;พรรคพิง&quot; ผู้สมัครหมายเลข 2
+        สำหรับการเลือกตั้งสภานักเรียนโรงเรียนอ่าวลึกประชาสรรค์ ประจำปีการศึกษา 2569
+      </p>
+      <p class="footer-copyright">
+        &copy; 2569 พรรคพิง | โรงเรียนอ่าวลึกประชาสรรค์
+      </p>
+      <p class="footer-copyright" style="margin-top: 0.5rem;">
+        Develop By Max &amp; Bonus
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

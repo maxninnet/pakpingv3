@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แจ้งปัญหา - พรรคพิง PAKPING</title>
+  <meta name="description"
+    content="ร่วมรายงานปัญหาในโรงเรียนที่คุณพบเจอ เพื่อสะท้อนความคิดเห็นและร่วมผลักดันแนวทางแก้ไขปัญหากับพรรคพิง">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark-theme">
+  <!-- Global Noise Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__container">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon" style="overflow: hidden;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+        </div>
+        <span class="navbar__logo-text">พรรคพิง PAKPING</span>
+      </a>
+      <ul class="navbar__menu">
+        <li class="navbar__item"><a href="index.html" class="navbar__link">หน้าแรก</a></li>
+        <li class="navbar__item"><a href="policy.html" class="navbar__link">นโยบาย</a></li>
+        <li class="navbar__item"><a href="team.html" class="navbar__link">สมาชิก</a></li>
+        <li class="navbar__item"><a href="announcements.html" class="navbar__link">ข่าวสารและประกาศ</a></li>
+        <li class="navbar__item"><a href="report.html" class="navbar__link navbar__link--active">แจ้งปัญหา</a></li>
+      </ul>
+      <button class="navbar__toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-nav" id="mobileMenu">
+    <div class="mobile-nav__content">
+      <div class="mobile-nav__header">
+        <a href="index.html" class="mobile-nav__logo" style="display: flex; align-items: center;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover; margin-right: 0.5rem;">
+          <span>พรรคพิง PAKPING</span>
+        </a>
+        <button class="mobile-nav__close" id="menuClose">&times;</button>
+      </div>
+      <ul class="mobile-nav__menu">
+        <li><a href="index.html" class="mobile-nav__link">หน้าแรก</a></li>
+        <li><a href="policy.html" class="mobile-nav__link">นโยบาย</a></li>
+        <li><a href="team.html" class="mobile-nav__link">สมาชิก</a></li>
+        <li><a href="announcements.html" class="mobile-nav__link">ข่าวสารและประกาศ</a></li>
+        <li><a href="report.html" class="mobile-nav__link mobile-nav__link--active">แจ้งปัญหา</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main style="flex: 1;">
+    <!-- Particle Background Canvas & Glowing Orbs -->
+    <div class="particle-background">
+      <div class="hero-gradient-orb orb-1" style="position: absolute; top: -10%; right: -10%;"></div>
+      <div class="hero-gradient-orb orb-2" style="position: absolute; bottom: -10%; left: -10%;"></div>
+      <div class="hero-gradient-orb orb-3" style="position: absolute; top: 40%; left: 30%;"></div>
+      <canvas id="particlesCanvas"></canvas>
+    </div>
+
+    <div style="height: 80px;"></div>
+
+    <!-- Report Section -->
+    <section class="report-section" id="report">
+      <div class="report-container">
+
+        <!-- Section Header -->
+        <div class="report-header" style="opacity: 0; transform: translateY(50px);">
+          <span class="report-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            กล่องรับความคิดเห็นและร้องเรียน
+          </span>
+          <h2 class="report-title">แจ้งปัญหากับพรรคพิง</h2>
+          <p class="report-description">ช่วยพวกเราชี้จุดบกพร่องในโรงเรียน
+            เพื่อที่พรรคของเราจะนำไปสรุปและผลักดันเป็นแผนโครงการพัฒนาแก้ไขปัญหาทันที</p>
+        </div>
+
+        <div class="report-grid">
+          <!-- Report Form Left -->
+          <div style="opacity: 0; transform: translateY(60px);">
+            <div class="report-card glow-card">
+              <form id="reportForm">
+                <div class="form-group">
+                  <label class="form-label" for="studentName">ชื่อ-นามสกุล (ผู้แจ้ง)</label>
+                  <input type="text" id="studentName" class="form-control" placeholder="ตัวอย่าง: เด็กชายส้ม สมมุติ">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="studentGrade">ระดับชั้น / ห้องเรียน</label>
+                  <input type="text" id="studentGrade" class="form-control" placeholder="ตัวอย่าง: ม.5/12" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="issueCategory">หมวดหมู่ของปัญหา</label>
+                  <select id="issueCategory" class="form-control" required>
+                    <option value="" disabled selected>เลือกหมวดหมู่ปัญหา</option>
+                    <option value="อาคารสถานที่และห้องน้ำ">🏢 อาคารสถานที่และห้องน้ำ</option>
+                    <option value="อาหารและโรงอาหาร">🍴 อาหารและโรงอาหาร</option>
+                    <option value="ความปลอดภัยและสิ่งแวดล้อม">🛡️ ความปลอดภัยและสิ่งแวดล้อม</option>
+                    <option value="กิจกรรมและการเรียนการสอน">📚 กิจกรรมและการเรียนการสอน</option>
+                    <option value="เทคโนโลยีและ Wi-Fi">💻 เทคโนโลยีและ Wi-Fi</option>
+                    <option value="อื่นๆ">✏️ อื่นๆ</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="issueTitle">หัวข้อเรื่องร้องเรียน</label>
+                  <input type="text" id="issueTitle" class="form-control"
+                    placeholder="ตัวอย่าง: ตู้กดน้ำอาคาร 3 ไม่มีน้ำเย็น" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="issueDescription">รายละเอียดเรื่องร้องเรียน</label>
+                  <textarea id="issueDescription" class="form-control" rows="5"
+                    placeholder="อธิบายรายละเอียดปัญหา หรือ จุดบกพร่องที่พบเพิ่มเติม..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="anonymousToggle" class="checkbox-input">
+                    <span>ส่งเรื่องแบบไม่เปิดเผยตัวตน (Anonymous)</span>
+                  </label>
+                </div>
+
+                <!-- Drag and Drop Image Upload Area -->
+                <div class="form-group">
+                  <label class="form-label">แนบภาพประกอบหลักฐาน (ถ้ามี)</label>
+                  <input type="file" id="reportFile" accept="image/*" style="display: none;">
+                  <div class="upload-area" id="uploadArea" style="cursor: pointer; position: relative;">
+                    <div id="uploadPlaceholder">
+                      <span class="upload-icon">📤</span>
+                      <p class="upload-text">ลากรูปภาพมาวางที่นี่ หรือ คลิกเพื่อเลือกภาพ</p>
+                      <p class="upload-hint">สูงสุด 1 ไฟล์ (ขนาดไม่เกิน 5MB)</p>
+                    </div>
+                    <div id="uploadPreviewContainer" style="display: none; position: relative; width: 100%; text-align: center;">
+                      <img id="uploadPreview" src="" alt="Preview" style="max-width: 100%; max-height: 250px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); object-fit: contain; display: block; margin: 0 auto;">
+                      <button type="button" id="btnRemovePreview" class="btn" style="position: absolute; top: 10px; right: 10px; padding: 0.5rem 1rem; font-size: 0.85rem; background: rgba(239, 68, 68, 0.9); border: 1px solid rgba(239, 68, 68, 0.4); color: white; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 0.25rem;">
+                        ✕ ลบรูปภาพ
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                  style="width: 100%; justify-content: center; margin-top: 1.5rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    style="margin-right: 0.5rem;">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                  ส่งเรื่องรายงานปัญหา
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Feed & Tracking Right -->
+          <div style="opacity: 0; transform: translateY(60px);">
+            <h3 class="report-feed-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              รายการติดตามปัญหาล่าสุด
+            </h3>
+
+            <div class="report-feed-container">
+
+              <!-- Feed Card 1 -->
+              <div class="issue-card glow-card">
+                <div class="issue-header">
+                  <span class="issue-tag tag-facility">🏢 อาคารสถานที่</span>
+                  <span class="issue-status-badge status-badge-progress">
+                    <span class="status-dot dot-progress"></span>
+                    กำลังดำเนินการ
+                  </span>
+                </div>
+                <h4 class="issue-card-title">ตู้กดน้ำดื่มฝั่งโดมไม่มีความเย็น</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">น้ำดื่มที่กดจากตู้วิ่งร้อน
+                  คล้ายระบบทำความเย็นชำรุด รบกวนช่วยเร่งประสานงานช่างมาตรวจสอบและทำการแก้ไข</p>
+                <div class="issue-card-meta">
+                  <div class="issue-card-author">
+                    <span>👤 ผู้ส่งเรื่อง:</span>
+                    <strong>ม.4/2 (ไม่เปิดเผยตัวตน)</strong>
+                  </div>
+                  <span>📅 30 พ.ค. 2569</span>
+                </div>
+              </div>
+
+              <!-- Feed Card 2 -->
+              <div class="issue-card glow-card">
+                <div class="issue-header">
+                  <span class="issue-tag tag-tech">💻 เทคโนโลยี</span>
+                  <span class="issue-status-badge status-badge-pending">
+                    <span class="status-dot dot-pending"></span>
+                    รวบรวมข้อมูลแล้ว
+                  </span>
+                </div>
+                <h4 class="issue-card-title">สัญญาณ Wi-Fi ค่อนข้างเสถียรน้อยที่ชั้น 5 ตึก 4</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">ช่วงคาบเรียนวิชาคอมพิวเตอร์ สัญญาณ Wi-Fi
+                  หลุดบ่อยมาก ทำให้นักเรียนค้นหาข้อมูลไม่ได้</p>
+                <div class="issue-card-meta">
+                  <div class="issue-card-author">
+                    <span>👤 ผู้ส่งเรื่อง:</span>
+                    <strong>สมชาย รักดี ม.6/1</strong>
+                  </div>
+                  <span>📅 29 พ.ค. 2569</span>
+                </div>
+              </div>
+
+              <!-- Feed Card 3 -->
+              <div class="issue-card glow-card">
+                <div class="issue-header">
+                  <span class="issue-tag tag-activity">🍴 อาหาร</span>
+                  <span class="issue-status-badge status-badge-done">
+                    <span class="status-dot dot-done"></span>
+                    แก้ไขเรียบร้อย
+                  </span>
+                </div>
+                <h4 class="issue-card-title">ช้อนส้อมในโรงอาหารมีบางร้านหักงอหรือบางเกินไป</h4>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">ได้รับการแก้ไขแล้ว
+                  โดยพรรคพิงได้เข้าประสานงานกับคุณครูแผนกสวัสดิการจัดสรรชุดช้อนส้อมใหม่ที่ได้มาตรฐานเรียบร้อย</p>
+                <div class="issue-card-meta">
+                  <div class="issue-card-author">
+                    <span>👤 ผู้ส่งเรื่อง:</span>
+                    <strong>ม.5/6 (ไม่เปิดเผยตัวตน)</strong>
+                  </div>
+                  <span>📅 27 พ.ค. 2569</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Success Popup Modal -->
+  <div class="report-modal" id="successModal">
+    <div class="report-modal-backdrop"></div>
+    <div class="report-modal-content">
+      <div class="report-modal-icon">✔</div>
+      <h3 class="report-modal-title">ส่งข้อมูลสำเร็จ!</h3>
+      <p class="report-modal-text" id="reportModalText">เราได้รับเรื่องร้องเรียนของคุณเรียบร้อยแล้ว
+        ทีมงานพรรคพิงจะเร่งนำข้อมูลนี้ไปเสนอเพื่อดำเนินการแก้ไขปัญหาต่อไป</p>
+      <button class="btn btn-primary" id="modalCloseBtn"
+        style="margin: 0 auto; min-width: 120px; justify-content: center;">ตกลง</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div style="opacity: 0; transform: translateY(30px);">
+      <h2 class="footer-slogan">พร้อมเคียงข้างทุกความฝัน พร้อมสร้างสรรค์ทุกรอยยิ้ม </h2>
+      <p class="footer-tagline">จากไอเดียสู่การลงมือทำ</p>
+      <div class="footer-divider"></div>
+
+      <a href="https://www.instagram.com/pakpingg_/" target="_blank" rel="noopener noreferrer"
+        class="footer-social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          style="display: inline-block; vertical-align: middle;">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>@pakpingg_</span>
+      </a>
+
+      <p class="report-disclaimer">
+        เว็บไซต์นี้จัดทำขึ้นเพื่อการแนะนำพรรคสภานักเรียน &quot;พรรคพิง&quot; ผู้สมัครหมายเลข 2
+        สำหรับการเลือกตั้งสภานักเรียนโรงเรียนอ่าวลึกประชาสรรค์ ประจำปีการศึกษา 2569
+      </p>
+      <p class="footer-copyright">
+        &copy; 2569 พรรคพิง | โรงเรียนอ่าวลึกประชาสรรค์
+      </p>
+      <p class="footer-copyright" style="margin-top: 0.5rem;">
+        Develop By Max &amp; Bonus
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

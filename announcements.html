@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ข่าวสารและประกาศ | พรรคพิง (PAKPING)</title>
+  <meta name="description" content="ติดตามข่าวสาร กิจกรรมหาเสียง และดาวน์โหลดภาพกิจกรรมทั้งหมดจากพรรคพิง เบอร์ 3">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <style>
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body class="announcements-section dark-theme">
+
+  <div class="noise-overlay" aria-hidden="true" style="left: -347px; top: -123px;"></div>
+  <div class="scroll-progress-bar" id="scrollBar" style="transform: scaleX(0);"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar__container">
+      <a href="index.html" class="navbar__logo">
+        <div class="navbar__logo-icon" style="overflow: hidden;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">
+        </div>
+        <span class="navbar__logo-text">พรรคพิง PAKPING</span>
+      </a>
+      <ul class="navbar__menu">
+        <li class="navbar__item"><a href="index.html" class="navbar__link">หน้าแรก</a></li>
+        <li class="navbar__item"><a href="policy.html" class="navbar__link">นโยบาย</a></li>
+        <li class="navbar__item"><a href="team.html" class="navbar__link">สมาชิก</a></li>
+        <li class="navbar__item"><a href="announcements.html"
+            class="navbar__link navbar__link--active">ข่าวสารและประกาศ</a></li>
+        <li class="navbar__item"><a href="report.html" class="navbar__link">แจ้งปัญหา</a></li>
+      </ul>
+      <button class="navbar__toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+        <span class="navbar__toggle-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-nav" id="mobileMenu">
+    <div class="mobile-nav__content">
+      <div class="mobile-nav__header">
+        <a href="index.html" class="mobile-nav__logo" style="display: flex; align-items: center;">
+          <img src="images/logo.jpg" alt="Logo"
+            style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover; margin-right: 0.5rem;">
+          <span>พรรคพิง PAKPING</span>
+        </a>
+        <button class="mobile-nav__close" id="menuClose">&times;</button>
+      </div>
+      <ul class="mobile-nav__menu">
+        <li><a href="index.html" class="mobile-nav__link">หน้าแรก</a></li>
+        <li><a href="policy.html" class="mobile-nav__link">นโยบาย</a></li>
+        <li><a href="team.html" class="mobile-nav__link">สมาชิก</a></li>
+        <li><a href="announcements.html" class="mobile-nav__link mobile-nav__link--active">ข่าวสารและประกาศ</a></li>
+        <li><a href="report.html" class="mobile-nav__link">แจ้งปัญหา</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main style="flex: 1; position: relative;">
+    <div class="particle-background">
+      <div class="hero-gradient-orb orb-1" style="position: absolute; top: -10%; right: -10%;"></div>
+      <div class="hero-gradient-orb orb-2" style="position: absolute; bottom: -10%; left: -10%;"></div>
+      <div class="hero-gradient-orb orb-3" style="position: absolute; top: 40%; left: 30%;"></div>
+      <canvas id="particlesCanvas"></canvas>
+    </div>
+
+    <div class="announcements-container">
+
+      <div class="announcements-hero" style="opacity: 0; transform: translateY(-30px);">
+        <div class="announcements-hero-content">
+          <h1 class="announcements-hero-title">ข่าวสารและประกาศ</h1>
+          <p class="announcements-hero-subtitle">ติดตามความเคลื่อนไหว กิจกรรมหาเสียง
+            และดาวน์โหลดคลังรูปภาพทั้งหมดของพวกเรา</p>
+          <div class="announcements-hero-divider" style="width: 120px; height: 4px;"></div>
+        </div>
+      </div>
+
+      <div class="announcements-grid-wrapper">
+        <div class="announcements-grid" id="announcementsGrid">
+          <!-- ข้อมูลจะถูกโหลดแบบ Dynamic ตรงนี้ -->
+          <div class="loading-placeholder"
+            style="grid-column: 1/-1; text-align: center; padding: 6rem 1rem; color: rgba(255, 255, 255, 0.4);">
+            <div
+              style="width: 40px; height: 40px; border: 3px solid rgba(139, 92, 246, 0.1); border-top-color: #8b5cf6; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem auto;">
+            </div>
+            <p style="font-size: 1.1rem; font-weight: 500; letter-spacing: 0.05em;">กำลังโหลดข่าวสารและประกาศ...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer"
+    style="background: rgba(15, 15, 26, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 5rem;">
+    <div style="opacity: 0; transform: translateY(30px);">
+      <h2 class="footer-slogan"
+        style="background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%); -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text;">
+        พร้อมเคียงข้างทุกความฝัน พร้อมสร้างสรรค์ทุกรอยยิ้ม </h2>
+      <p class="footer-tagline" style="color: rgba(255, 255, 255, 0.6);">จากไอเดียสู่การลงมือทำ</p>
+      <div class="footer-divider"
+        style="background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);"></div>
+
+      <a href="https://www.instagram.com/pakpingg_/" target="_blank" rel="noopener noreferrer"
+        class="footer-social-link"
+        style="background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.05); color: rgba(255, 255, 255, 0.8);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          style="display: inline-block; vertical-align: middle;">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>@pakpingg_</span>
+      </a>
+
+      <p class="footer-disclaimer" style="color: rgba(255, 255, 255, 0.4);">
+        เว็บไซต์นี้จัดทำขึ้นเพื่อการแนะนำพรรคสภานักเรียน &quot;พรรคพิง&quot; ผู้สมัครหมายเลข 2
+        สำหรับการเลือกตั้งสภานักเรียนโรงเรียนอ่าวลึกประชาสรรค์ ประจำปีการศึกษา 2569
+      </p>
+      <p class="footer-copyright" style="color: rgba(255, 255, 255, 0.4);">
+        &copy; 2569 พรรคพิง | โรงเรียนอ่าวลึกประชาสรรค์
+      </p>
+      <p class="footer-copyright" style="margin-top: 0.5rem; color: rgba(255, 255, 255, 0.4);">
+        Develop By Max &amp; Bonus
+      </p>
+    </div>
+  </footer>
+
+  <!-- Web-based Supabase SDK CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
