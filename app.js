@@ -471,7 +471,7 @@ function initInfiniteMarquee() {
       isTouchActive = true;
       isDragging = true;
     }, { passive: true });
-    
+
     const handleTouchEnd = () => {
       isDragging = false;
       isHovered = false;
@@ -662,11 +662,11 @@ function initReportForm() {
   // Convert Base64 dataURL to Blob for multipart/form-data Webhook post
   function dataURLtoBlob(dataurl) {
     let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
     }
-    return new Blob([u8arr], {type:mime});
+    return new Blob([u8arr], { type: mime });
   }
 
   if (reportForm) {
@@ -696,7 +696,7 @@ function initReportForm() {
           { name: '🏫 ระดับชั้น / ห้องเรียน', value: grade || 'ไม่ระบุ', inline: true },
           { name: '📝 รายละเอียดปัญหา', value: desc }
         ],
-        footer: { text: 'ระบบแจ้งเรื่องร้องเรียน พรรคพิง PAKPING หมายเลข 3' },
+        footer: { text: 'ระบบแจ้งเรื่องร้องเรียน พรรคพิง PAKPING หมายเลข 2' },
         timestamp: new Date().toISOString()
       };
 
