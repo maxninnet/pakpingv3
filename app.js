@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPageTransitions();
   initAnnouncementsLoader();
   initPoliciesLoader();
+  initDeptModal();
 });
 
 // Dynamic admin sync disabled (Static mode enabled)
@@ -303,53 +304,53 @@ function startCounting() {
 /* ─────────────────────────────────────────────
    8. Dynamic 61-member team carousel (team.html)
 ───────────────────────────────────────────── */
+// ==========================================
+// รายชื่อทีมงาน (สามารถเปลี่ยนรูป ชื่อ และฝ่ายตรงนี้ได้เลยครับ)
+// หากมีรูปจริง ให้ใส่พาธรูปในช่อง image เช่น 'images/staff/staff1.jpg'
+// หากใส่ image: '' หรือไม่มี คีย์นี้ ระบบจะแสดงเป็นกล่อง Emoji พรีเมียมแทนโดยอัตโนมัติ
+// ==========================================
+const PAKPING_STAFF_LIST = [
+  { name: 'นายวีรภัทร แถวทัศ', role: 'ฝ่ายบริหาร #1', image: 'images/BEEE1.jpg' },
+  { name: 'น.ส.นภัสกร สุดดวง', role: 'ฝ่ายบริหาร #2', image: 'images/BEEE2.jpg' },
+  { name: 'น.ส.ดวงกมล บุญยัษเฐียร', role: 'ฝ่ายบริหาร #3', image: 'images/BEEE3.jpg' },
+  { name: 'น.ส.กมลวรรณ หนูเอียด', role: 'ฝ่ายบริหาร #4', image: 'images/BEEE4.jpg' },
+  { name: 'น.ส.ณิชนันทน์ ดำสง', role: 'ฝ่ายวิชาการ #1', image: 'images/be1.jpg' },
+  { name: 'น.ส.พัชราภรณ์ เผือกแดง', role: 'ฝ่ายวิชาการ #2', image: 'images/be2.jpg' },
+  { name: 'น.ส.ริณลดา จิตรชำนาญ', role: 'ฝ่ายวิชาการ #3', image: 'images/be3.jpg' },
+  { name: 'น.ส.ปาณิสรา เนตรไสว', role: 'ฝ่ายวิชาการ #4', image: 'images/be4.jpg' },
+  { name: 'นายกำพล พันธุ์วงศ์', role: 'ฝ่ายวิชาการ #5', image: 'images/be5.jpg' },
+  { name: 'น.ส.กชพร ชูน้อย', role: 'ฝ่ายอำนวยการ #1', image: 'images/BEE1.jpg' },
+  { name: 'นายอติกันต์ สุวรรณ', role: 'ฝ่ายอำนวยการ #2', image: 'images/BEE2.jpg' },
+  { name: 'นายธันวา มาลัย', role: 'ฝ่ายอำนวยการ #3', image: 'images/BEE3.jpg' },
+  { name: 'นายพันธสิน คงปลอด', role: 'ฝ่ายอำนวยการ #4', image: 'images/BEE4.jpg' },
+  { name: 'นายทรงพล เล็กขำ', role: 'ฝ่ายอำนวยการ #5', image: 'images/BEE5.jpg' },
+  { name: 'นายปิยวัฒน์ ปัจฉิมเพ็ชร', role: 'ฝ่ายอำนวยการ #6', image: 'images/BEE6.jpg' },
+  { name: 'น.ส.สุภัควี จันทร์เกิด', role: 'ฝ่ายกิจการนักเรียน #1', image: 'images/b1.jpg' },
+  { name: 'น.ส.มลธวรรณ สุขเสน', role: 'ฝ่ายกิจการนักเรียน #2', image: 'images/b2.jpg' },
+  { name: 'นายรังสิมันต์ จิตเกิด', role: 'ฝ่ายกิจการนักเรียน #3', image: 'images/b3.jpg' },
+  { name: 'นายวราศิลป์ นิลเขต', role: 'ฝ่ายกิจการนักเรียน #4', image: 'images/b4.jpg' },
+  { name: 'นายกิตติพงศ์ พิชคุณ', role: 'ฝ่ายกิจการนักเรียน #5', image: 'images/b5.jpg' },
+  { name: 'นายก้องเกียรติ มากนวล', role: 'ฝ่ายประชาสัมพันธ์ #1', image: 'images/e1.jpg' },
+  { name: 'น.ส.สโรชา นายาว', role: 'ฝ่ายประชาสัมพันธ์ #2', image: 'images/e2.jpg' },
+  { name: 'น.ส.ณัฐกฤตา มาฆะโว', role: 'ฝ่ายประชาสัมพันธ์ #3', image: 'images/e3.jpg' },
+  { name: 'น.ส.นฤมล อินทแย้ม', role: 'ฝ่ายประชาสัมพันธ์ #4', image: 'images/e4.jpg' },
+  { name: 'น.ส.สุริย์วิภา มวลวงศ์', role: 'ฝ่ายประชาสัมพันธ์ #5', image: 'images/e5.jpg' },
+  { name: 'น.ส.ชนกนันท์ เพ่งกิจ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #1', image: 'images/a1.jpg' },
+  { name: 'น.ส.อาทิตยา วัฒนธรรม', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #2', image: 'images/a2.jpg' },
+  { name: 'น.ส.ปนิดา อ้วนผุย', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #3', image: 'images/a3.jpg' },
+  { name: 'นายศรัณยพงศ์ คงชนะ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #4', image: 'images/a4.jpg' },
+  { name: 'นายรณกร เรื่องไกร', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #5', image: 'images/a5.jpg' },
+];
+
 function initFullTeamCarousel() {
   const container = document.getElementById('fullTeamCarousel');
   if (!container) return;
-
-  // ==========================================
-  // รายชื่อทีมงาน (สามารถเปลี่ยนรูป ชื่อ และฝ่ายตรงนี้ได้เลยครับ)
-  // หากมีรูปจริง ให้ใส่พาธรูปในช่อง image เช่น 'images/staff/staff1.jpg'
-  // หากใส่ image: '' หรือไม่มี คีย์นี้ ระบบจะแสดงเป็นกล่อง Emoji พรีเมียมแทนโดยอัตโนมัติ
-  // ==========================================
-  const staffList = [
-    { name: 'นายวีรภัทร แถวทัศ', role: 'ฝ่ายบริหาร #1', image: 'images/BEEE1.jpg' },
-    { name: 'น.ส.นภัสกร สุดดวง', role: 'ฝ่ายบริหาร #2', image: 'images/BEEE2.jpg' },
-    { name: 'น.ส.ดวงกมล บุญยัษเฐียร', role: 'ฝ่ายบริหาร #3', image: 'images/BEEE3.jpg' },
-    { name: 'น.ส.กมลวรรณ หนูเอียด', role: 'ฝ่ายบริหาร #4', image: 'images/BEEE4.jpg' },
-    { name: 'น.ส.ณิชนันทน์ ดำสง', role: 'ฝ่ายวิชาการ #1', image: 'images/be1.jpg' },
-    { name: 'น.ส.พัชราภรณ์ เผือกแดง', role: 'ฝ่ายวิชาการ #2', image: 'images/be2.jpg' },
-    { name: 'น.ส.ริณลดา จิตรชำนาญ', role: 'ฝ่ายวิชาการ #3', image: 'images/be3.jpg' },
-    { name: 'น.ส.ปาณิสรา เนตรไสว', role: 'ฝ่ายวิชาการ #4', image: 'images/be4.jpg' },
-    { name: 'นายกำพล พันธุ์วงศ์', role: 'ฝ่ายวิชาการ #5', image: 'images/be5.jpg' },
-    { name: 'น.ส.กชพร ชูน้อย', role: 'ฝ่ายอำนวยการ #1', image: 'images/BEE1.jpg' },
-    { name: 'นายอติกันต์ สุวรรณ', role: 'ฝ่ายอำนวยการ #2', image: 'images/BEE2.jpg' },
-    { name: 'นายธันวา มาลัย', role: 'ฝ่ายอำนวยการ #3', image: 'images/BEE3.jpg' },
-    { name: 'นายพันธสิน คงปลอด', role: 'ฝ่ายอำนวยการ #4', image: 'images/BEE4.jpg' },
-    { name: 'นายทรงพล เล็กขำ', role: 'ฝ่ายอำนวยการ #5', image: 'images/BEE5.jpg' },
-    { name: 'นายปิยวัฒน์ ปัจฉิมเพ็ชร', role: 'ฝ่ายอำนวยการ #6', image: 'images/BEE6.jpg' },
-    { name: 'น.ส.สุภัควี จันทร์เกิด', role: 'ฝ่ายกิจการนักเรียน #1', image: 'images/b1.jpg' },
-    { name: 'น.ส.มลธวรรณ สุขเสน', role: 'ฝ่ายกิจการนักเรียน #2', image: 'images/b2.jpg' },
-    { name: 'นายรังสิมันต์ จิตเกิด', role: 'ฝ่ายกิจการนักเรียน #3', image: 'images/b3.jpg' },
-    { name: 'นายวราศิลป์ นิลเขต', role: 'ฝ่ายกิจการนักเรียน #4', image: 'images/b4.jpg' },
-    { name: 'นายกิตติพงศ์ พิชคุณ', role: 'ฝ่ายกิจการนักเรียน #5', image: 'images/b5.jpg' },
-    { name: 'นายก้องเกียรติ มากนวล', role: 'ฝ่ายประชาสัมพันธ์ #1', image: 'images/e1.jpg' },
-    { name: 'น.ส.สโรชา นายาว', role: 'ฝ่ายประชาสัมพันธ์ #2', image: 'images/e2.jpg' },
-    { name: 'น.ส.ณัฐกฤตา มาฆะโว', role: 'ฝ่ายประชาสัมพันธ์ #3', image: 'images/e3.jpg' },
-    { name: 'น.ส.นฤมล อินทแย้ม', role: 'ฝ่ายประชาสัมพันธ์ #4', image: 'images/e4.jpg' },
-    { name: 'น.ส.สุริย์วิภา มวลวงศ์', role: 'ฝ่ายประชาสัมพันธ์ #5', image: 'images/e5.jpg' },
-    { name: 'น.ส.ชนกนันท์ เพ่งกิจ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #1', image: 'images/a1.jpg' },
-    { name: 'น.ส.อาทิตยา วัฒนธรรม', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #2', image: 'images/a2.jpg' },
-    { name: 'น.ส.ปนิดา อ้วนผุย', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #3', image: 'images/a3.jpg' },
-    { name: 'นายศรัณยพงศ์ คงชนะ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #4', image: 'images/a4.jpg' },
-    { name: 'นายรณกร เรื่องไกร', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #5', image: 'images/a5.jpg' },
-  ];
 
   const emojis = ['⚡', '🌟', '🛡️', '📢', '🎨', '📚', '💪', '🤝', '🔥', '✨', '🎓', '🎯', '🚀', '🔮', '❤️', '💡', '🌈'];
   const depts = ['ฝ่ายประชาสัมพันธ์', 'ฝ่ายออกแบบ', 'ฝ่ายกิจกรรม', 'ฝ่ายวิชาการ', 'ฝ่ายสวัสดิการ', 'ฝ่ายต่างประเทศ', 'ทีมงานเบื้องหลัง', 'ทีมสนับสนุน'];
 
   // รวมข้อมูลหลักกับข้อมูลจำลองให้เต็มจำนวน 61 คน
-  const finalStaff = [...staffList];
+  const finalStaff = [...PAKPING_STAFF_LIST];
   for (let i = finalStaff.length + 1; i <= 30; i++) {
     finalStaff.push({
       name: `ฝ่ายดำเนินงาน #${i}`,
@@ -435,6 +436,15 @@ function initInfiniteMarquee() {
     track.addEventListener('mouseleave', () => isHovered = false);
     track.addEventListener('mousedown', () => isDragging = true);
     window.addEventListener('mouseup', () => isDragging = false);
+
+    // Touch events for mobile devices to prevent marquee from getting stuck on touch/hover
+    track.addEventListener('touchstart', () => {
+      isDragging = true;
+    }, { passive: true });
+    track.addEventListener('touchend', () => {
+      isDragging = false;
+      isHovered = false;
+    }, { passive: true });
 
     // Seamless wrap
     track.addEventListener('scroll', () => {
@@ -719,7 +729,7 @@ function initCursorTrail() {
   });
 
   // Expand ring over interactive elements
-  document.querySelectorAll('a, button, [data-tilt], .bento-card, .stat-card, .team-carousel-item, .gallery-day-tab, .policy-slide').forEach(el => {
+  document.querySelectorAll('a, button, [data-tilt], .bento-card, .stat-card, .team-carousel-item, .gallery-day-tab, .policy-slide, .org-flow-card').forEach(el => {
     el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
     el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
   });
@@ -1399,4 +1409,112 @@ async function initPoliciesLoader() {
   // Re-run observer to reveal loaded items nicely
   initIntersectionObserver();
   initGlowCards();
+}
+
+/* ─────────────────────────────────────────────
+   18. Interactive Department Members Modal
+   ───────────────────────────────────────────── */
+function initDeptModal() {
+  const modal = document.getElementById('deptModal');
+  const closeBtn = document.getElementById('deptModalCloseBtn');
+  const modalTitle = document.getElementById('deptModalTitle');
+  const modalDesc = document.getElementById('deptModalDesc');
+  const modalIcon = document.getElementById('deptModalIcon');
+  const modalGrid = document.getElementById('deptModalGrid');
+  const backdrop = modal ? modal.querySelector('.dept-modal-backdrop') : null;
+
+  if (!modal || !modalGrid) return;
+
+  // Add click handlers for department cards
+  document.querySelectorAll('.org-flow-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const deptName = card.getAttribute('data-dept');
+      if (!deptName) return;
+
+      // Extract details from current card
+      const title = card.querySelector('.org-flow-title')?.textContent || deptName;
+      const desc = card.querySelector('.org-flow-desc')?.textContent || '';
+      const iconHTML = card.querySelector('.org-icon-floating')?.innerHTML || '';
+      const accentColor = card.style.getPropertyValue('--accent-color') || '#8b5cf6';
+
+      // Set modal header details
+      if (modalTitle) modalTitle.textContent = title;
+      if (modalDesc) modalDesc.textContent = desc;
+      if (modalIcon) {
+        modalIcon.innerHTML = iconHTML;
+        modalIcon.style.color = accentColor;
+        modalIcon.style.background = `${accentColor}14`; // 8% opacity background
+        modalIcon.style.borderColor = `${accentColor}33`; // 20% opacity border
+      }
+
+      // Filter members belonging to this department
+      const members = PAKPING_STAFF_LIST.filter(staff => {
+        return staff.role.startsWith(deptName);
+      });
+
+      // Build grid HTML
+      let gridHTML = '';
+      if (members.length > 0) {
+        members.forEach((member, idx) => {
+          const photoHTML = member.image
+            ? `<img src="${member.image}" alt="${member.name}" class="dept-member-photo">`
+            : `<div class="image-placeholder-glow" style="width:100%;height:100%;background:radial-gradient(circle, ${accentColor}4d 0%, transparent 70%);opacity:0.6;"></div>
+               <div style="position:absolute;font-size:2rem;z-index:2;">👤</div>`;
+
+          gridHTML += `
+            <div class="dept-member-card glow-card" style="--accent-color: ${accentColor}; opacity: 0; transform: translateY(20px);">
+              <div class="dept-member-img-area">
+                ${photoHTML}
+              </div>
+              <h4 class="dept-member-name">${member.name}</h4>
+              <p class="dept-member-role">${member.role}</p>
+            </div>
+          `;
+        });
+      } else {
+        gridHTML = `<p style="grid-column: span 3; color: var(--text-muted); margin: 2rem 0;">ไม่พบรายชื่อแกนนำของฝ่ายนี้</p>`;
+      }
+
+      modalGrid.innerHTML = gridHTML;
+
+      // Open Modal
+      modal.classList.add('modal-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      // Staggered animate members entrance inside modal
+      const cards = modalGrid.querySelectorAll('.dept-member-card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth)';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 80);
+      });
+
+      // Bind glow card hover effect on dynamically generated elements
+      initGlowCards();
+    });
+  });
+
+  // Close function
+  const closeModal = () => {
+    modal.classList.remove('modal-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Clear details after transit finishes
+    setTimeout(() => {
+      modalGrid.innerHTML = '';
+    }, 400);
+  };
+
+  // Close events
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (backdrop) backdrop.addEventListener('click', closeModal);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('modal-open')) {
+      closeModal();
+    }
+  });
 }
