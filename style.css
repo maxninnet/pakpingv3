@@ -1354,6 +1354,10 @@ body {
     max-width: 380px;
     margin: 0 auto;
   }
+
+  .scroll-indicator {
+    display: none !important;
+  }
 }
 
 /* 2. Stats Section */
