@@ -431,33 +431,59 @@ function initInfiniteMarquee() {
     let speed = 0.6;
     let isHovered = false;
     let isDragging = false;
+    let isTouchActive = false;
+    let currentScroll = track.scrollLeft;
 
-    track.addEventListener('mouseenter', () => isHovered = true);
-    track.addEventListener('mouseleave', () => isHovered = false);
+    track.addEventListener('mouseenter', () => {
+      if (isTouchActive) return;
+      isHovered = true;
+    });
+    track.addEventListener('mouseleave', () => {
+      isHovered = false;
+    });
     track.addEventListener('mousedown', () => isDragging = true);
     window.addEventListener('mouseup', () => isDragging = false);
 
     // Touch events for mobile devices to prevent marquee from getting stuck on touch/hover
     track.addEventListener('touchstart', () => {
+      isTouchActive = true;
       isDragging = true;
     }, { passive: true });
-    track.addEventListener('touchend', () => {
+    
+    const handleTouchEnd = () => {
       isDragging = false;
       isHovered = false;
-    }, { passive: true });
+      currentScroll = track.scrollLeft; // Sync scroll position
+      setTimeout(() => {
+        isTouchActive = false;
+      }, 500);
+    };
+
+    track.addEventListener('touchend', handleTouchEnd, { passive: true });
+    track.addEventListener('touchcancel', handleTouchEnd, { passive: true });
 
     // Seamless wrap
     track.addEventListener('scroll', () => {
       const half = track.scrollWidth / 2;
-      if (track.scrollLeft >= half) track.scrollLeft -= half;
-      else if (track.scrollLeft <= 0) track.scrollLeft = half;
+      if (track.scrollLeft >= half) {
+        track.scrollLeft -= half;
+        currentScroll = track.scrollLeft;
+      } else if (track.scrollLeft <= 0) {
+        track.scrollLeft = half;
+        currentScroll = track.scrollLeft;
+      }
     }, { passive: true });
 
     function step() {
       if (!isHovered && !isDragging && !track.classList.contains('active-drag')) {
-        track.scrollLeft += speed;
+        currentScroll += speed;
         const half = track.scrollWidth / 2;
-        if (track.scrollLeft >= half) track.scrollLeft -= half;
+        if (currentScroll >= half) {
+          currentScroll -= half;
+        }
+        track.scrollLeft = currentScroll;
+      } else {
+        currentScroll = track.scrollLeft;
       }
       requestAnimationFrame(step);
     }

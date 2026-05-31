@@ -2150,6 +2150,7 @@ body {
   overflow-x: auto;
   scroll-snap-type: none;
   user-select: none;
+  scroll-behavior: auto !important;
 }
 
 .team-carousel-track.active-drag {
