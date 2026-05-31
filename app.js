@@ -80,13 +80,35 @@ function initNavbar() {
     });
   });
 
-  // Highlight current page link
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  // Highlight current page link and clean URLs
+  const isLocal = window.location.protocol === 'file:';
+  if (!isLocal) {
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.endsWith('.html') && !href.startsWith('http') && !href.startsWith('#')) {
+        link.setAttribute('href', href.substring(0, href.length - 5));
+      }
+    });
+  }
+
+  let currentPath = window.location.pathname.split('/').pop() || 'index';
+  if (currentPath.endsWith('.html')) {
+    currentPath = currentPath.substring(0, currentPath.length - 5);
+  }
+  if (currentPath === '') currentPath = 'index';
+
+  const checkActive = (link) => {
+    let href = link.getAttribute('href') || '';
+    if (href.endsWith('.html')) href = href.substring(0, href.length - 5);
+    if (href === '' || href === '/' || href === './') href = 'index';
+    return href === currentPath;
+  };
+
   document.querySelectorAll('.navbar__link').forEach(link => {
-    link.classList.toggle('navbar__link--active', link.getAttribute('href') === currentPath);
+    link.classList.toggle('navbar__link--active', checkActive(link));
   });
   mobileLinks.forEach(link => {
-    link.classList.toggle('mobile-nav__link--active', link.getAttribute('href') === currentPath);
+    link.classList.toggle('mobile-nav__link--active', checkActive(link));
   });
 }
 
@@ -1403,7 +1425,7 @@ async function initPoliciesLoader() {
       const isLarge = index === 0 || index === 3;
 
       html += `
-        <div class="bento-card ${isLarge ? 'bento-large' : 'bento-medium'} glow-card" style="opacity: 0; transform: translateY(50px) scale(0.95);" onclick="location.href='policy.html'">
+        <div class="bento-card ${isLarge ? 'bento-large' : 'bento-medium'} glow-card" style="opacity: 0; transform: translateY(50px) scale(0.95);" onclick="location.href='${window.location.protocol === 'file:' ? 'policy.html' : 'policy'}'">
           <div class="bento-glow" style="background: ${grad};"></div>
           <div class="bento-corner" style="background: ${grad};"></div>
           <div class="bento-content">
