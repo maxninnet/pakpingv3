@@ -171,8 +171,17 @@ function init3DTilt() {
   document.querySelectorAll('[data-tilt], #heroCard').forEach(card => {
     if (card.dataset.tiltBound) return;
     card.dataset.tiltBound = "true";
+    let rect = null;
+
+    card.addEventListener('mouseenter', () => {
+      rect = card.getBoundingClientRect();
+      card.style.transition = 'transform 0.12s linear';
+    });
+
     card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
+      if (!rect) {
+        rect = card.getBoundingClientRect();
+      }
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const cx = rect.width / 2;
@@ -182,11 +191,8 @@ function init3DTilt() {
       card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-5px) scale(1.02)`;
     });
 
-    card.addEventListener('mouseenter', () => {
-      card.style.transition = 'transform 0.12s linear';
-    });
-
     card.addEventListener('mouseleave', () => {
+      rect = null;
       card.style.transition = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)';
       card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
     });
@@ -240,8 +246,9 @@ function initParticles() {
       for (let b = a; b < particlesArray.length; b++) {
         const dx = particlesArray[a].x - particlesArray[b].x;
         const dy = particlesArray[a].y - particlesArray[b].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
+        const distSq = dx * dx + dy * dy;
+        if (distSq < 10000) {
+          const dist = Math.sqrt(distSq);
           ctx.strokeStyle = `rgba(139,92,246,${(1 - dist / 100) * 0.12})`;
           ctx.lineWidth = 0.8;
           ctx.beginPath();
@@ -255,7 +262,7 @@ function initParticles() {
 
   function init() {
     particlesArray = [];
-    const count = Math.min(90, Math.floor((canvas.width * canvas.height) / 18000));
+    const count = Math.min(window.innerWidth < 768 ? 40 : 90, Math.floor((canvas.width * canvas.height) / 18000));
     for (let i = 0; i < count; i++) particlesArray.push(new Particle());
   }
 
@@ -273,14 +280,23 @@ function initParticles() {
 /* ─────────────────────────────────────────────
    5.1 Glow-card mouse position tracking
 ───────────────────────────────────────────── */
-function initGlowCards() {
-  document.querySelectorAll('.glow-card').forEach(card => {
+function initGlowCards(parent = document) {
+  parent.querySelectorAll('.glow-card').forEach(card => {
     if (card.dataset.glowBound) return;
     card.dataset.glowBound = "true";
+    let rect = null;
+    card.addEventListener('mouseenter', () => {
+      rect = card.getBoundingClientRect();
+    });
     card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
+      if (!rect) {
+        rect = card.getBoundingClientRect();
+      }
       card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
       card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+    card.addEventListener('mouseleave', () => {
+      rect = null;
     });
   });
 }
@@ -332,36 +348,36 @@ function startCounting() {
 // หากใส่ image: '' หรือไม่มี คีย์นี้ ระบบจะแสดงเป็นกล่อง Emoji พรีเมียมแทนโดยอัตโนมัติ
 // ==========================================
 const PAKPING_STAFF_LIST = [
-  { name: 'นายวีรภัทร แถวทัศ', role: 'ฝ่ายบริหาร #1', image: 'images/BEEE1.jpg' },
-  { name: 'น.ส.นภัสกร สุดดวง', role: 'ฝ่ายบริหาร #2', image: 'images/BEEE2.jpg' },
-  { name: 'น.ส.ดวงกมล บุญยัษเฐียร', role: 'ฝ่ายบริหาร #3', image: 'images/BEEE3.jpg' },
-  { name: 'น.ส.กมลวรรณ หนูเอียด', role: 'ฝ่ายบริหาร #4', image: 'images/BEEE4.jpg' },
-  { name: 'น.ส.ณิชนันทน์ ดำสง', role: 'ฝ่ายวิชาการ #1', image: 'images/be1.jpg' },
-  { name: 'น.ส.พัชราภรณ์ เผือกแดง', role: 'ฝ่ายวิชาการ #2', image: 'images/be2.jpg' },
-  { name: 'น.ส.ริณลดา จิตรชำนาญ', role: 'ฝ่ายวิชาการ #3', image: 'images/be3.jpg' },
-  { name: 'น.ส.ปาณิสรา เนตรไสว', role: 'ฝ่ายวิชาการ #4', image: 'images/be4.jpg' },
-  { name: 'นายกำพล พันธุ์วงศ์', role: 'ฝ่ายวิชาการ #5', image: 'images/be5.jpg' },
-  { name: 'น.ส.กชพร ชูน้อย', role: 'ฝ่ายอำนวยการ #1', image: 'images/BEE1.jpg' },
-  { name: 'นายอติกันต์ สุวรรณ', role: 'ฝ่ายอำนวยการ #2', image: 'images/BEE2.jpg' },
-  { name: 'นายธันวา มาลัย', role: 'ฝ่ายอำนวยการ #3', image: 'images/BEE3.jpg' },
-  { name: 'นายพันธสิน คงปลอด', role: 'ฝ่ายอำนวยการ #4', image: 'images/BEE4.jpg' },
-  { name: 'นายทรงพล เล็กขำ', role: 'ฝ่ายอำนวยการ #5', image: 'images/BEE5.jpg' },
-  { name: 'นายปิยวัฒน์ ปัจฉิมเพ็ชร', role: 'ฝ่ายอำนวยการ #6', image: 'images/BEE6.jpg' },
-  { name: 'น.ส.สุภัควี จันทร์เกิด', role: 'ฝ่ายกิจการนักเรียน #1', image: 'images/b1.jpg' },
-  { name: 'น.ส.มลธวรรณ สุขเสน', role: 'ฝ่ายกิจการนักเรียน #2', image: 'images/b2.jpg' },
-  { name: 'นายรังสิมันต์ จิตเกิด', role: 'ฝ่ายกิจการนักเรียน #3', image: 'images/b3.jpg' },
-  { name: 'นายวราศิลป์ นิลเขต', role: 'ฝ่ายกิจการนักเรียน #4', image: 'images/b4.jpg' },
-  { name: 'นายกิตติพงศ์ พิชคุณ', role: 'ฝ่ายกิจการนักเรียน #5', image: 'images/b5.jpg' },
-  { name: 'นายก้องเกียรติ มากนวล', role: 'ฝ่ายประชาสัมพันธ์ #1', image: 'images/e1.jpg' },
-  { name: 'น.ส.สโรชา นายาว', role: 'ฝ่ายประชาสัมพันธ์ #2', image: 'images/e2.jpg' },
-  { name: 'น.ส.ณัฐกฤตา มาฆะโว', role: 'ฝ่ายประชาสัมพันธ์ #3', image: 'images/e3.jpg' },
-  { name: 'น.ส.นฤมล อินทแย้ม', role: 'ฝ่ายประชาสัมพันธ์ #4', image: 'images/e4.jpg' },
-  { name: 'น.ส.สุริย์วิภา มวลวงศ์', role: 'ฝ่ายประชาสัมพันธ์ #5', image: 'images/e5.jpg' },
-  { name: 'น.ส.ชนกนันท์ เพ่งกิจ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #1', image: 'images/a1.jpg' },
-  { name: 'น.ส.อาทิตยา วัฒนธรรม', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #2', image: 'images/a2.jpg' },
-  { name: 'น.ส.ปนิดา อ้วนผุย', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #3', image: 'images/a3.jpg' },
-  { name: 'นายศรัณยพงศ์ คงชนะ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #4', image: 'images/a4.jpg' },
-  { name: 'นายรณกร เรื่องไกร', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #5', image: 'images/a5.jpg' },
+  { name: 'นายวีรภัทร แถวทัศ', role: 'ฝ่ายบริหาร #1', image: 'images/BEEE1.webp' },
+  { name: 'น.ส.นภัสกร สุดดวง', role: 'ฝ่ายบริหาร #2', image: 'images/BEEE2.webp' },
+  { name: 'น.ส.ดวงกมล บุญยัษเฐียร', role: 'ฝ่ายบริหาร #3', image: 'images/BEEE3.webp' },
+  { name: 'น.ส.กมลวรรณ หนูเอียด', role: 'ฝ่ายบริหาร #4', image: 'images/BEEE4.webp' },
+  { name: 'น.ส.ณิชนันทน์ ดำสง', role: 'ฝ่ายวิชาการ #1', image: 'images/be1.webp' },
+  { name: 'น.ส.พัชราภรณ์ เผือกแดง', role: 'ฝ่ายวิชาการ #2', image: 'images/be2.webp' },
+  { name: 'น.ส.ริณลดา จิตรชำนาญ', role: 'ฝ่ายวิชาการ #3', image: 'images/be3.webp' },
+  { name: 'น.ส.ปาณิสรา เนตรไสว', role: 'ฝ่ายวิชาการ #4', image: 'images/be4.webp' },
+  { name: 'นายกำพล พันธุ์วงศ์', role: 'ฝ่ายวิชาการ #5', image: 'images/be5.webp' },
+  { name: 'น.ส.กชพร ชูน้อย', role: 'ฝ่ายอำนวยการ #1', image: 'images/BEE1.webp' },
+  { name: 'นายอติกันต์ สุวรรณ', role: 'ฝ่ายอำนวยการ #2', image: 'images/BEE2.webp' },
+  { name: 'นายธันวา มาลัย', role: 'ฝ่ายอำนวยการ #3', image: 'images/BEE3.webp' },
+  { name: 'นายพันธสิน คงปลอด', role: 'ฝ่ายอำนวยการ #4', image: 'images/BEE4.webp' },
+  { name: 'นายทรงพล เล็กขำ', role: 'ฝ่ายอำนวยการ #5', image: 'images/BEE5.webp' },
+  { name: 'นายปิยวัฒน์ ปัจฉิมเพ็ชร', role: 'ฝ่ายอำนวยการ #6', image: 'images/BEE6.webp' },
+  { name: 'น.ส.สุภัควี จันทร์เกิด', role: 'ฝ่ายกิจการนักเรียน #1', image: 'images/b1.webp' },
+  { name: 'น.ส.มลธวรรณ สุขเสน', role: 'ฝ่ายกิจการนักเรียน #2', image: 'images/b2.webp' },
+  { name: 'นายรังสิมันต์ จิตเกิด', role: 'ฝ่ายกิจการนักเรียน #3', image: 'images/b3.webp' },
+  { name: 'นายวราศิลป์ นิลเขต', role: 'ฝ่ายกิจการนักเรียน #4', image: 'images/b4.webp' },
+  { name: 'นายกิตติพงศ์ พิชคุณ', role: 'ฝ่ายกิจการนักเรียน #5', image: 'images/b5.webp' },
+  { name: 'นายก้องเกียรติ มากนวล', role: 'ฝ่ายประชาสัมพันธ์ #1', image: 'images/e1.webp' },
+  { name: 'น.ส.สโรชา นายาว', role: 'ฝ่ายประชาสัมพันธ์ #2', image: 'images/e2.webp' },
+  { name: 'น.ส.ณัฐกฤตา มาฆะโว', role: 'ฝ่ายประชาสัมพันธ์ #3', image: 'images/e3.webp' },
+  { name: 'น.ส.นฤมล อินทแย้ม', role: 'ฝ่ายประชาสัมพันธ์ #4', image: 'images/e4.webp' },
+  { name: 'น.ส.สุริย์วิภา มวลวงศ์', role: 'ฝ่ายประชาสัมพันธ์ #5', image: 'images/e5.webp' },
+  { name: 'น.ส.ชนกนันท์ เพ่งกิจ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #1', image: 'images/a1.webp' },
+  { name: 'น.ส.อาทิตยา วัฒนธรรม', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #2', image: 'images/a2.webp' },
+  { name: 'น.ส.ปนิดา อ้วนผุย', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #3', image: 'images/a3.webp' },
+  { name: 'นายศรัณยพงศ์ คงชนะ', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #4', image: 'images/a4.webp' },
+  { name: 'นายรณกร เรื่องไกร', role: 'ฝ่ายประสานงาน&สื่อโสตทัศน์ #5', image: 'images/a5.webp' },
 ];
 
 function initFullTeamCarousel() {
@@ -455,6 +471,8 @@ function initInfiniteMarquee() {
     let isDragging = false;
     let isTouchActive = false;
     let currentScroll = track.scrollLeft;
+    let isVisible = false;
+    let animationFrameId = null;
 
     track.addEventListener('mouseenter', () => {
       if (isTouchActive) return;
@@ -497,6 +515,10 @@ function initInfiniteMarquee() {
     }, { passive: true });
 
     function step() {
+      if (!isVisible) {
+        animationFrameId = null;
+        return;
+      }
       if (!isHovered && !isDragging && !track.classList.contains('active-drag')) {
         currentScroll += speed;
         const half = track.scrollWidth / 2;
@@ -507,9 +529,25 @@ function initInfiniteMarquee() {
       } else {
         currentScroll = track.scrollLeft;
       }
-      requestAnimationFrame(step);
+      animationFrameId = requestAnimationFrame(step);
     }
-    requestAnimationFrame(step);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          if (!animationFrameId) {
+            animationFrameId = requestAnimationFrame(step);
+          }
+        } else {
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+        }
+      });
+    }, { threshold: 0.01 });
+    observer.observe(track);
   });
 }
 
@@ -620,7 +658,7 @@ function initReportForm() {
         const canvas = document.createElement('canvas');
         let width = img.width;
         let height = img.height;
-        const max_size = 1000; // maximum dimension
+        const max_size = 1200; // maximum dimension
 
         if (width > height) {
           if (width > max_size) {
@@ -638,7 +676,7 @@ function initReportForm() {
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
-        reportBase64Data = canvas.toDataURL('image/jpeg', 0.7);
+        reportBase64Data = canvas.toDataURL('image/jpeg', 0.85);
 
         if (uploadPreview && uploadPreviewContainer && uploadPlaceholder) {
           uploadPreview.src = reportBase64Data;
@@ -1113,7 +1151,6 @@ const DYN_DEFAULT_POLICIES = [
     "number": "01",
     "tag": "สุขภาพจิต",
     "title": "Ngl",
-    "subtitle": "พื้นที่ในการแลกเปลี่ยนความคิดเห็น",
     "description": "พื้นที่ในการแลกเปลี่ยนความคิดเห็น เปลี่ยนทุกเสียงสะท้อนให้กลายเป็นการพัฒนาเราพร้อมรับฟังทุกเรื่องราว เป็นเซฟโซนที่น่าอยู่ยิ่งกว่า",
     "icon": "📵",
     "imageType": "emoji",
@@ -1125,7 +1162,6 @@ const DYN_DEFAULT_POLICIES = [
     "number": "02",
     "tag": "กิจกรรม",
     "title": "\"What's Next? Center\"",
-    "subtitle": "ศูนย์รวมกิจจกรรมสร้างสรรค์ตามเทศกาล",
     "description": "ศูนย์รวมกิจจกรรมสร้างสรรค์ตามเทศกาล พวกเราจะจัดหากิจกรรมที่เหมาะสมเเละอินเทรนด์มาให้ได้ร่วมสนุก เพื่อให้น้องๆ และเพื่อนๆ ได้ผ่อนคลายและสนุกร่วมกัน",
     "icon": "🎬",
     "imageType": "emoji",
@@ -1137,7 +1173,6 @@ const DYN_DEFAULT_POLICIES = [
     "number": "03",
     "tag": "ทักษะอาชีพ",
     "title": "สภา เพิ่มช่องทางสร้างรายได้",
-    "subtitle": "เปิดพื้นที่สื่อช่วยประชาสัมพันธ์โปรโมทร้าน",
     "description": "เปิดพื้นที่สื่อช่วยประชาสัมพันธ์โปรโมทร้านเเละธุรกิจเล็กๆ ของเพื่อนๆ พี่ๆ น้องๆ ทุกคนเพื่อเพิ่มช่องทางสร้างรายได้และโปรโมททักษะความสามารถ",
     "icon": "🛍️",
     "imageType": "emoji",
@@ -1149,7 +1184,6 @@ const DYN_DEFAULT_POLICIES = [
     "number": "04",
     "tag": "กิจกรรม",
     "title": "THE CANVAS",
-    "subtitle": "ส่งเสริมการจัดกิจกรรมและการแข่งขัน",
     "description": "การส่งเสริมการจัดกิจกรรมหรือการแข่งขัน ที่ให้ทุกคนได้มาแสดงศักยภาพของตัวเอง ในทุกด้าน ไม่ว่าจะเป็นศิลปะ ดนตรี กีฬา หรือทักษะอื่นๆ",
     "icon": "🎮",
     "imageType": "emoji",
@@ -1160,8 +1194,7 @@ const DYN_DEFAULT_POLICIES = [
     "id": "policy-5",
     "number": "05",
     "tag": "การช่วยเหลือ",
-    "title": "มีร่มให้ยืม และ ผ้าอนามัยฉุกเฉิน",
-    "subtitle": "บริการยืมร่มและผ้าอนามัยฉุกเฉิน",
+    "title": "มีร่มให้ยืม",
     "description": "• สามารถยืมได้ในวันที่ฝนตกช่วงเย็น\n• ยืมได้ตั้งแต่เวลา15:50 และนำมาคืนในวันถัดไป\n• การยืมต้องลงชื่อ และถ่ายภาพเป็นหลักฐานก่อน",
     "icon": "✨",
     "imageType": "emoji",
@@ -1208,7 +1241,7 @@ const DYN_DEFAULT_POLICIES = [
     "id": "policy-9",
     "number": "09",
     "tag": "สวัสดิการ",
-    "title": "ปั่นใจให้น้ำ",
+    "title": "ปันใจให้น้ำ",
     "subtitle": "ช่วยซัพพอร์ตน้ำดื่มให้ในวันแข่งขันกรีฑา",
     "description": "ในช่วงแข่งขันกีฬาสีภายในเมื่อแข่งขันกีฬาชนะเลิศ 1 รายการพวกเราจะช่วยซัพพอร์ตน้ำดื่มให้ ในวันแข่งขันกรีฑา 1 แพ็ค เพื่อเป็นกำลังใจให้นักกีฬาทุกคน 1 รายการ ต่อ 1 แพ็ค เฉพาะกีฬาฟุตซอล เปตอง วอลเลย์บอล บาสเกตบอล",
     "icon": "🥤",
@@ -1219,13 +1252,13 @@ const DYN_DEFAULT_POLICIES = [
   {
     "id": "policy-10",
     "number": "10",
-    "tag": "จิตอาสา",
+    "tag": "การช่วยเหลือ",
     "title": "สภาพาทำจิตอาสา",
-    "subtitle": "จัดกิจกรรมจิตอาสาภายในโรงเรียน เพื่อเปิดโอกาสให้นักเรียนทุกคนได้เข้าร่วมกิจกรรมที่สร้างประโยชน์ต่อส่วนรวม",
+    "subtitle": "จัดกิจกรรมจิตอาสาภายในโรงเรียน เพื่อเปิดโอกาสให้นักเรียนทุกคนได้เข้าร่วมกิจกรรมที่สร้างประโยชน์ต่อส่วนรวมพัก",
     "description": "นโยบายนี้จะมุ่งเน้นไปที่กลุ่มนักเรียนชั้นมัธยมศึกษาตอนปลายเพราะกิจกรรมจิตอาสาเป็นหนึ่งในองค์ประกอบสำคัญของ PORTFOLIO เราจึงมีแนวคิดจัดกิจกรรมจิตอาสาภายในโรงเรียน เพื่อเปิดโอกาสให้นักเรียนทุกคนได้เข้าร่วมกิจกรรมที่สร้างประโยชน์ต่อส่วนรวมพร้อมทั้งได้เก็บเกี่ยวประสบการณ์และผลงาน ที่สามารถนำไปต่อยอดในการศึกษา",
-    "icon": "🤝",
+    "icon": "♻️",
     "imageType": "emoji",
-    "imageValue": "🤝",
+    "imageValue": "♻️",
     "gradientStyle": "10"
   },
   {
@@ -1235,45 +1268,45 @@ const DYN_DEFAULT_POLICIES = [
     "title": "เตรียมห้องพร้อมผู้ป่วย",
     "subtitle": "มีการผลัดเปลี่ยนเวรไปช่วยคุณครูดูแลที่ห้องพยาบาล",
     "description": "ใน 1 สัปดาห์พวกเราจะมีการผลัดเปลี่ยนเวรไป ช่วยคุณครูดูแลและเตรียมพร้อมของห้องพยาบาลไว้รองรับนักเรียน คุณครูและบุคลากรในโรงเรียน ที่มีอาการเจ็บป่วยต่างๆ เพื่อให้ห้องสะอาดและสะดวกต่อการเข้ามาใช้บริการ",
-    "icon": "🩹",
+    "icon": "🏥",
     "imageType": "emoji",
-    "imageValue": "🩹",
+    "imageValue": "🏥",
     "gradientStyle": "11"
   },
   {
     "id": "policy-12",
     "number": "12",
-    "tag": "สวัสดิการ",
-    "title": "She safe & Softly Clean",
-    "subtitle": "จัดหากระดาษReuse ไว้สำหรับเพื่อนๆผู้หญิงได้ใช้ห่อผ้าอนามัย และ จัดวางเจลล้างมือไว้บริเวณอ่างล้างมือภายในห้องน้ำ",
-    "description": "นโยบายสวัสดิการที่ใส่ใจสุขอนามัยและสิ่งแวดล้อมควบคู่กันเราจะจัดหากระดาษReuse ไว้สำหรับเพื่อนๆผู้หญิงได้ใช้ห่อผ้าอนามัยก่อนทิ้งลงถังขยะ และ เราจะจัดวางเจลล้างมือไว้บริเวณอ่างล้างมือภายในห้องน้ำ ให้ทุกคนได้ดูแลตัวเองง่ายๆและเพื่อสุขอนามัยที่ดี",
-    "icon": "✨",
+    "tag": "ห้องน้ำหญิง",
+    "title": "She safe ",
+    "subtitle": "จัดหากระดาษReuse ไว้สำหรับเพื่อนๆผู้หญิงได้ใช้ห่อผ้าอนามัย",
+    "description": "นโยบายสวัสดิการที่ใส่ใจสุขอนามัยและสิ่งแวดล้อมควบคู่กันเราจะจัดหากระดาษReuse ไว้สำหรับเพื่อนๆผู้หญิงได้ใช้ห่อผ้าอนามัยก่อนทิ้งลงถังขยะ",
+    "icon": "🚽",
     "imageType": "emoji",
-    "imageValue": "✨",
+    "imageValue": "🚽",
     "gradientStyle": "12"
   },
   {
     "id": "policy-13",
     "number": "13",
-    "tag": "กิจกรรม",
+    "tag": "ประชาสัมพันธ์",
     "title": "เสียงตามสาย",
     "subtitle": "สามารถขอเพลงได้โดยตรงจากพวกเราหรือส่งข้อความมาบอกพวกเราได้ทุกแพลตฟอร์ม",
     "description": "เช้าวันใหม่ที่ดี เริ่มต้นด้วยพลังงานบวกพวกเราพร้อมเสิร์ฟทำนองที่โดนใจ ปลุกความสดชื่นไล่ความง่วงเหงาหาวนอน ให้เสียงเพลงยามเช้าเป็นแรงผลักดันให้ทุกคนพร้อมสตาร์ทวันใหม่อย่างมีความสุขและมีพลังเต็มร้อย",
-    "icon": "🎙️",
+    "icon": "🎤",
     "imageType": "emoji",
-    "imageValue": "🎙️",
+    "imageValue": "🎤",
     "gradientStyle": "1"
   },
   {
     "id": "policy-14",
     "number": "14",
-    "tag": "สิ่งแวดล้อม",
-    "title": "ByeBye กลิ่นใหญ่บ๊อง!",
+    "tag": "ห้องน้ำ",
+    "title": "ByeBye กลิ่นยัยบ๊อง!",
     "subtitle": "นำเอาสมุนไพรธรรมชาติไปช่วยดับกลิ่นให้ปลอดภัย ไม่มีสารเคมี",
     "description": "ปัญหาเดินเข้าห้องน้ำแล้วต้องกลั้นหายใจพวกเราจะนำเอาสมุนไพรธรรมชาติไปช่วยดับกลิ่นให้ปลอดภัย ไม่มีสารเคมี และที่สำคัญพวกเราจะไม่เอาไปวางทิ้งไว้เฉยๆ แน่นอนแต่จะจัดทีมมาดูแลและเปลี่ยนใหม่ให้ทุกๆสัปดาห์ เพื่อพวกเราชาวม่วงขาวทุกคน",
-    "icon": "🌿",
+    "icon": "🚽",
     "imageType": "emoji",
-    "imageValue": "🌿",
+    "imageValue": "🚽",
     "gradientStyle": "2"
   },
   {
@@ -1283,22 +1316,70 @@ const DYN_DEFAULT_POLICIES = [
     "title": "Hug Space",
     "subtitle": "พื้นที่ฮีลใจสำหรับทุกคน",
     "description": "เราพร้อมรับฟังและให้คำปรึกษาแก่พี่น้องชาวม่วงขาว โดยเรื่องราวของทุกคนจะถูกเก็บไว้เป็นความลับอย่างดีที่สุด ให้เราได้กอดใจและผ่านวันยากๆ ไปด้วยกัน",
-    "icon": "❤️",
+    "icon": "🎸",
     "imageType": "emoji",
-    "imageValue": "❤️",
+    "imageValue": "🎸",
     "gradientStyle": "3"
   },
   {
     "id": "policy-16",
     "number": "16",
-    "tag": "การสื่อสาร",
+    "tag": "การช่วยเหลือ",
     "title": "สภาเปิดการมองเห็น",
     "subtitle": "ใช้พื้นที่สื่อของสภาในการแชร์ความรู้แนะนำแนวทางและส่งต่อโอกาสดีๆ",
-    "description": "เหล่าทีมงานสภาของเราจะใช้พื้นที่สื่อของสภาในการแชร์ความรู้แนะนำแนวทางและส่งต่อโอกาสดีๆ ที่เป็นประโยชน์แก่พี่น้องชาวม่วงขาว เพื่อผลักดันให้ชาวม่วงขาวมุ่งสู่โอกาสที่มากขึ้นกว่าเดิม",
-    "icon": "💡",
+    "description": "เหล่าทีมงานสภาของเราจะใช้พื้นที่สื่อของสภาในการแชร์ความรู้แนะนำแนวทางและส่งต่อโอกาสดีๆ ที่เป็นประโยชน์แก่พี่น้องชาวม่วงขาวเพื่อผลักดันให้ชาวม่วงขาวมุ่งสู่โอกาสที่มากขึ้นกว่าเดิม",
+    "icon": "🥤",
     "imageType": "emoji",
-    "imageValue": "💡",
+    "imageValue": "🥤",
     "gradientStyle": "4"
+  },
+  {
+    "id": "policy-17",
+    "number": "17",
+    "tag": "การช่วยเหลือ",
+    "title": "ผ้าอนามัยฉุกเฉิน",
+    "subtitle": "พวกเราจะจัดเตรียมผ้าอนามัยไว้2-4แผ่นต่อ 1 เดือน ไว้ในทุกห้องน้ำผู้หญิงง",
+    "description": "เพราะ 'วันนั้นของเดือน' มักมาแบบไม่ทันตั้งตัวนโยบายผ้าอนามัยฉุกเฉินนี้จึงพร้อมเป็นเซฟตี้โซนเล็กๆ เพื่อลดความกังวลและซัพพอร์ตให้คุณมั่นใจในทุกสถานการณ์พวกเราจะจัดเตรียมผ้าอนามัยไว้ 2-4แผ่นต่อ 1 เดือน ไว้ในทุกห้องน้ำผู้หญิง",
+    "icon": "✨",
+    "imageType": "emoji",
+    "imageValue": "✨",
+    "gradientStyle": "5"
+  },
+  {
+    "id": "policy-18",
+    "number": "18",
+    "tag": "ห้องน้ำ",
+    "title": "Softly Clean",
+    "subtitle": "จัดวางเจลล้างมือไว้บริเวณอ่างล้างมือภายในห้องน้ำ",
+    "description": "เราจะจัดวางเจลล้างมือไว้บริเวณอ่างล้างมือภายในห้องน้ำ ให้ทุกคนได้ดูแลตัวเองง่ายๆและเพื่อสุขอนามัยที่ดี",
+    "icon": "🚽",
+    "imageType": "emoji",
+    "imageValue": "🚽",
+    "gradientStyle": "6"
+  },
+  {
+    "id": "policy-19",
+    "number": "19",
+    "tag": "กิจกรรม",
+    "title": "All images",
+    "subtitle": "รวบรวมภาพทุกกิจกรรม",
+    "description": "เคยมั้ย? จะเลื่อนหารูปกิจกรรมต่างๆในเพจเลื่อนหาจนปวดนิ้ว “ก็ไม่เจอ” เราขอเสนอเว็บไซต์ที่จะรวบรวมภาพทุกกิจกรรมและรวบรวมข้อมูลข่าวสารดีๆไว้",
+    "icon": "🔥",
+    "imageType": "emoji",
+    "imageValue": "🔥",
+    "gradientStyle": "7"
+  },
+  {
+    "id": "policy-20",
+    "number": "20",
+    "tag": "กิจกรรม",
+    "title": "ปฏิทินกิจกรรม",
+    "subtitle": "เพราะการวางแผนที่ดี เริ่มต้นจากการรู้กำหนดการล่วงหน้า",
+    "description": "เพราะการวางแผนที่ดี เริ่มต้นจากการรู้กำหนดการล่วงหน้าเราจึงมีแนวคิดจัดทำ สรุปปฏิทินประจำเดือน  รวบรวมวันหยุด วันสำคัญ กิจกรรมและกำหนดการต่าง ๆ ของโรงเรียนไว้ในที่เดียว เพื่อให้ทุกคนสามารถติดตามข้อมูลได้สะดวก วางแผนการเรียน การทำกิจกรรม และการใช้ชีวิตได้อย่างมีประสิทธิภาพ",
+    "icon": "📅",
+    "imageType": "emoji",
+    "imageValue": "📅",
+    "gradientStyle": "8"
   }
 ];
 
@@ -1350,30 +1431,18 @@ async function initPoliciesLoader() {
 
   if (!policiesGrid && !bentoGrid) return;
 
-  // Load from localStorage (saved by admin panel) → fallback to JSON file → fallback to defaults
+  // Load from JSON file → fallback to defaults
   let list = [];
   try {
-    const saved = localStorage.getItem('pakping_policies');
-    if (saved) {
-      const parsed = JSON.parse(saved);
+    const res = await fetch('policies_data.json');
+    if (res.ok) {
+      const parsed = await res.json();
       if (Array.isArray(parsed) && parsed.length > 0) {
         list = parsed;
       }
     }
-  } catch (e) { /* ignore */ }
-
-  if (list.length === 0) {
-    try {
-      const res = await fetch('policies_data.json');
-      if (res.ok) {
-        const parsed = await res.json();
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          list = parsed;
-        }
-      }
-    } catch (e) {
-      console.warn("Could not fetch policies_data.json natively", e);
-    }
+  } catch (e) {
+    console.warn("Could not fetch policies_data.json natively", e);
   }
 
   if (list.length === 0) {
@@ -1541,7 +1610,7 @@ function initDeptModal() {
       });
 
       // Bind glow card hover effect on dynamically generated elements
-      initGlowCards();
+      initGlowCards(modalGrid);
     });
   });
 

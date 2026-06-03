@@ -3759,7 +3759,7 @@ span.ripple {
 .team-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(60px);
   opacity: 0.35;
   /* Brighter visibility in light theme */
   will-change: transform;
@@ -3801,31 +3801,31 @@ span.ripple {
 
 @keyframes team-orb-drift-1 {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   100% {
-    transform: translate(-100px, 80px) scale(1.2);
+    transform: translate3d(-100px, 80px, 0) scale(1.2);
   }
 }
 
 @keyframes team-orb-drift-2 {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   100% {
-    transform: translate(90px, -70px) scale(1.15);
+    transform: translate3d(90px, -70px, 0) scale(1.15);
   }
 }
 
 @keyframes team-orb-drift-3 {
   0% {
-    transform: translateX(-50%) translate(0, 0) scale(0.9);
+    transform: translate3d(-50%, 0, 0) scale(0.9);
   }
 
   100% {
-    transform: translateX(-50%) translate(60px, -60px) scale(1.25);
+    transform: translate3d(calc(-50% + 60px), -60px, 0) scale(1.25);
   }
 }
 
@@ -3850,7 +3850,7 @@ span.ripple {
   height: var(--size);
   border-radius: 50%;
   background: rgba(139, 92, 246, 0.85);
-  box-shadow: 0 0 15px 4px rgba(139, 92, 246, 0.6), 0 0 30px rgba(217, 70, 239, 0.4);
+  box-shadow: 0 0 8px 1px rgba(139, 92, 246, 0.8);
   animation: team-particle-float var(--d) ease-in-out infinite alternate;
   animation-delay: var(--delay);
   will-change: transform, opacity;
@@ -3858,7 +3858,7 @@ span.ripple {
 
 @keyframes team-particle-float {
   0% {
-    transform: translateY(0) translateX(0) scale(0.8);
+    transform: translate3d(0, 0, 0) scale(0.8);
     opacity: 0.3;
   }
 
@@ -3867,7 +3867,7 @@ span.ripple {
   }
 
   100% {
-    transform: translateY(-80px) translateX(40px) scale(1.4);
+    transform: translate3d(40px, -80px, 0) scale(1.4);
     opacity: 0.2;
   }
 }
@@ -3899,7 +3899,7 @@ span.ripple {
 
 @keyframes team-pulse-expand {
   0% {
-    transform: scale(0.4);
+    transform: scale3d(0.4, 0.4, 1);
     opacity: 0.8;
   }
 
@@ -3908,7 +3908,7 @@ span.ripple {
   }
 
   100% {
-    transform: scale(3.5);
+    transform: scale3d(3.5, 3.5, 1);
     opacity: 0;
   }
 }
@@ -3925,7 +3925,7 @@ span.ripple {
 .team-org-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(110px);
+  filter: blur(60px);
   opacity: 0.3;
   /* Brighter visibility in light theme */
   will-change: transform;
@@ -3956,21 +3956,21 @@ span.ripple {
 
 @keyframes team-org-orb-1 {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   100% {
-    transform: translate(100px, 70px) scale(1.25);
+    transform: translate3d(100px, 70px, 0) scale(1.25);
   }
 }
 
 @keyframes team-org-orb-2 {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   100% {
-    transform: translate(-90px, -60px) scale(1.2);
+    transform: translate3d(-90px, -60px, 0) scale(1.2);
   }
 }
 
@@ -4063,8 +4063,9 @@ span.ripple {
   position: absolute;
   inset: 0;
   background: rgba(3, 3, 8, 0.75);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  will-change: opacity;
 }
 
 .dept-modal-content {
@@ -4083,6 +4084,7 @@ span.ripple {
   z-index: 1;
   transform: translateY(30px) scale(0.95);
   transition: transform 0.4s var(--ease-bounce), opacity 0.4s ease;
+  will-change: transform, opacity;
 }
 
 .dept-modal.modal-open .dept-modal-content {
@@ -4162,14 +4164,17 @@ span.ripple {
 .dept-modal-body::-webkit-scrollbar {
   width: 6px;
 }
+
 .dept-modal-body::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.01);
   border-radius: 10px;
 }
+
 .dept-modal-body::-webkit-scrollbar-thumb {
   background: rgba(139, 92, 246, 0.2);
   border-radius: 10px;
 }
+
 .dept-modal-body::-webkit-scrollbar-thumb:hover {
   background: rgba(139, 92, 246, 0.4);
 }
